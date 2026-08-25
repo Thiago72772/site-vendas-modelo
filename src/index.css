@@ -1,0 +1,666 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   DESIGN SYSTEM — SISTEMA MODELO
+   Visual white-label premium, neutro e adaptável.
+
+   IMPORTANTE:
+   - Não altera lógica de negócio.
+   - Não altera Supabase.
+   - Não altera regras de pedido.
+   - Mantém as variáveis primary/secondary existentes.
+   - O layout permanece controlado pelos componentes.
+   ============================================================ */
+
+:root {
+  /* ==========================================================
+     BRAND / THEME
+     ========================================================== */
+
+  /*
+   * Rampas atuais continuam disponíveis para não quebrar
+   * os componentes existentes.
+   */
+
+  --cor-primaria-50: 255 247 237;
+  --cor-primaria-100: 255 237 213;
+  --cor-primaria-200: 254 215 170;
+  --cor-primaria-300: 253 186 116;
+  --cor-primaria-400: 251 146 60;
+  --cor-primaria-500: 249 115 22;
+  --cor-primaria-600: 234 88 12;
+  --cor-primaria-700: 194 65 12;
+  --cor-primaria-800: 154 52 18;
+  --cor-primaria-900: 124 45 18;
+
+  --cor-secundaria-50: 250 250 249;
+  --cor-secundaria-100: 245 245 244;
+  --cor-secundaria-200: 231 229 228;
+  --cor-secundaria-300: 214 211 209;
+  --cor-secundaria-400: 168 162 158;
+  --cor-secundaria-500: 120 113 108;
+  --cor-secundaria-600: 87 83 78;
+  --cor-secundaria-700: 68 64 60;
+  --cor-secundaria-800: 41 37 36;
+  --cor-secundaria-900: 28 25 23;
+
+  /* ==========================================================
+     SEMANTIC COLORS
+     ========================================================== */
+
+  --surface-page: 247 247 245;
+  --surface-card: 255 255 255;
+  --surface-soft: 250 250 249;
+  --surface-dark: 17 17 17;
+
+  --text-primary: 17 17 17;
+  --text-secondary: 82 82 91;
+  --text-muted: 113 113 122;
+  --text-soft: 161 161 170;
+
+  --border-soft: 228 228 231;
+  --border-strong: 212 212 216;
+
+  --success: 22 163 74;
+  --warning: 217 119 6;
+  --danger: 220 38 38;
+  --info: 37 99 235;
+
+  /* ==========================================================
+     DESIGN TOKENS
+     ========================================================== */
+
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 18px;
+  --radius-xl: 22px;
+  --radius-2xl: 28px;
+
+  --shadow-xs:
+    0 1px 2px rgb(0 0 0 / 0.04);
+
+  --shadow-sm:
+    0 2px 8px rgb(0 0 0 / 0.05);
+
+  --shadow-md:
+    0 8px 24px rgb(0 0 0 / 0.07);
+
+  --shadow-lg:
+    0 16px 40px rgb(0 0 0 / 0.09);
+
+  --shadow-xl:
+    0 24px 70px rgb(0 0 0 / 0.12);
+
+  --ease-standard:
+    cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  --transition-fast: 140ms;
+  --transition-base: 200ms;
+  --transition-slow: 280ms;
+}
+
+/* ============================================================
+   BASE
+   ============================================================ */
+
+@layer base {
+  html {
+    font-family:
+      Inter,
+      ui-sans-serif,
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      sans-serif;
+
+    color-scheme: light;
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    text-rendering: optimizeLegibility;
+
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-neutral-50 text-neutral-900;
+
+    margin: 0;
+    min-width: 320px;
+
+    line-height: 1.5;
+
+    background:
+      linear-gradient(
+        180deg,
+        rgb(var(--surface-page)) 0%,
+        rgb(250 250 249) 100%
+      );
+
+    color: rgb(var(--text-primary));
+
+    font-feature-settings:
+      "cv02" 1,
+      "cv03" 1,
+      "cv04" 1,
+      "cv11" 1;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  img,
+  video {
+    display: block;
+    max-width: 100%;
+  }
+
+  button,
+  input,
+  textarea,
+  select {
+    font: inherit;
+  }
+
+  button {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin: 0;
+
+    line-height: 1.15;
+    font-weight: 650;
+    letter-spacing: -0.025em;
+  }
+
+  h1 {
+    letter-spacing: -0.04em;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  ::selection {
+    background: rgb(var(--cor-primaria-200));
+    color: rgb(var(--cor-secundaria-900));
+  }
+
+  :focus-visible {
+    outline: 3px solid rgb(var(--cor-primaria-500) / 0.28);
+    outline-offset: 3px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 9px;
+    height: 9px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: rgb(var(--surface-soft));
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background: rgb(212 212 216);
+    border: 2px solid rgb(var(--surface-soft));
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(161 161 170);
+  }
+}
+
+/* ============================================================
+   UTILITIES
+   ============================================================ */
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .touch-target {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .surface-glass {
+    background: rgb(255 255 255 / 0.88);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .surface-elevated {
+    box-shadow: var(--shadow-md);
+  }
+
+  .surface-floating {
+    box-shadow: var(--shadow-xl);
+  }
+
+  .interactive-lift {
+    transition:
+      transform var(--transition-base) var(--ease-standard),
+      box-shadow var(--transition-base) var(--ease-standard),
+      border-color var(--transition-base) var(--ease-standard);
+  }
+
+  .interactive-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .interactive-press {
+    transition:
+      transform 120ms ease,
+      background-color var(--transition-fast) ease;
+  }
+
+  .interactive-press:active {
+    transform: scale(0.985);
+  }
+}
+
+/* ============================================================
+   COMPONENTS
+   ============================================================ */
+
+@layer components {
+  /* ----------------------------------------------------------
+     Cards
+     ---------------------------------------------------------- */
+
+  .card {
+    @apply bg-white;
+
+    border: 1px solid rgb(var(--border-soft));
+    border-radius: var(--radius-xl);
+
+    box-shadow: var(--shadow-sm);
+
+    transition:
+      box-shadow var(--transition-base) var(--ease-standard),
+      border-color var(--transition-base) var(--ease-standard),
+      transform var(--transition-base) var(--ease-standard);
+  }
+
+  .card-hover {
+    transition:
+      box-shadow var(--transition-base) var(--ease-standard),
+      border-color var(--transition-base) var(--ease-standard),
+      transform var(--transition-base) var(--ease-standard);
+  }
+
+  .card-hover:hover {
+    border-color: rgb(var(--border-strong));
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+
+  /* ----------------------------------------------------------
+     Primary button
+     ---------------------------------------------------------- */
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2;
+
+    min-height: 44px;
+
+    padding: 0.7rem 1.1rem;
+
+    border-radius: 14px;
+
+    background:
+      linear-gradient(
+        180deg,
+        rgb(var(--cor-primaria-500)) 0%,
+        rgb(var(--cor-primaria-600)) 100%
+      );
+
+    color: white;
+
+    font-size: 0.875rem;
+    font-weight: 650;
+
+    box-shadow:
+      0 5px 14px
+        rgb(var(--cor-primaria-600) / 0.18);
+
+    transition:
+      transform var(--transition-fast) var(--ease-standard),
+      box-shadow var(--transition-base) var(--ease-standard),
+      filter var(--transition-base) var(--ease-standard);
+  }
+
+  .btn-primary:hover {
+    filter: brightness(1.03);
+
+    box-shadow:
+      0 8px 20px
+        rgb(var(--cor-primaria-600) / 0.22);
+  }
+
+  .btn-primary:active {
+    transform: scale(0.985);
+  }
+
+  .btn-primary:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+    box-shadow: none;
+  }
+
+  /* ----------------------------------------------------------
+     Secondary button
+     ---------------------------------------------------------- */
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2;
+
+    min-height: 44px;
+
+    padding: 0.7rem 1.1rem;
+
+    border: 1px solid rgb(var(--border-soft));
+    border-radius: 14px;
+
+    background: white;
+    color: rgb(var(--text-primary));
+
+    font-size: 0.875rem;
+    font-weight: 600;
+
+    transition:
+      border-color var(--transition-base) var(--ease-standard),
+      background-color var(--transition-base) var(--ease-standard),
+      box-shadow var(--transition-base) var(--ease-standard),
+      transform var(--transition-fast) var(--ease-standard);
+  }
+
+  .btn-secondary:hover {
+    border-color: rgb(var(--border-strong));
+    background: rgb(var(--surface-soft));
+    box-shadow: var(--shadow-sm);
+  }
+
+  .btn-secondary:active {
+    transform: scale(0.985);
+  }
+
+  .btn-secondary:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  /* ----------------------------------------------------------
+     Ghost button
+     ---------------------------------------------------------- */
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2;
+
+    min-height: 44px;
+
+    padding: 0.65rem 0.9rem;
+
+    border-radius: 12px;
+
+    color: rgb(var(--text-secondary));
+
+    font-size: 0.875rem;
+    font-weight: 600;
+
+    transition:
+      background-color var(--transition-fast) ease,
+      color var(--transition-fast) ease,
+      transform 120ms ease;
+  }
+
+  .btn-ghost:hover {
+    background: rgb(var(--surface-soft));
+    color: rgb(var(--text-primary));
+  }
+
+  .btn-ghost:active {
+    transform: scale(0.985);
+  }
+
+  /* ----------------------------------------------------------
+     Inputs
+     ---------------------------------------------------------- */
+
+  .input {
+    width: 100%;
+    min-height: 46px;
+
+    padding: 0.7rem 0.9rem;
+
+    border: 1px solid rgb(var(--border-soft));
+    border-radius: 13px;
+
+    background: white;
+    color: rgb(var(--text-primary));
+
+    font-size: 0.9rem;
+
+    box-shadow:
+      inset 0 1px 1px rgb(0 0 0 / 0.02);
+
+    transition:
+      border-color var(--transition-base) var(--ease-standard),
+      box-shadow var(--transition-base) var(--ease-standard),
+      background-color var(--transition-base) var(--ease-standard);
+  }
+
+  .input::placeholder {
+    color: rgb(var(--text-soft));
+  }
+
+  .input:hover {
+    border-color: rgb(203 203 207);
+  }
+
+  .input:focus {
+    outline: none;
+
+    border-color: rgb(var(--cor-primaria-500));
+
+    background: white;
+
+    box-shadow:
+      0 0 0 4px
+        rgb(var(--cor-primaria-500) / 0.1);
+  }
+
+  .input:disabled {
+    cursor: not-allowed;
+    background: rgb(245 245 244);
+    color: rgb(var(--text-soft));
+  }
+
+  /* ----------------------------------------------------------
+     Labels
+     ---------------------------------------------------------- */
+
+  .label {
+    display: block;
+
+    margin-bottom: 0.4rem;
+
+    color: rgb(var(--text-secondary));
+
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+  }
+
+  /* ----------------------------------------------------------
+     Dividers
+     ---------------------------------------------------------- */
+
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: rgb(var(--border-soft));
+  }
+
+  /* ----------------------------------------------------------
+     Status badges
+     ---------------------------------------------------------- */
+
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+
+    min-height: 28px;
+
+    padding: 0.35rem 0.65rem;
+
+    border-radius: 999px;
+
+    font-size: 0.72rem;
+    font-weight: 650;
+  }
+
+  .status-success {
+    background: rgb(220 252 231);
+    color: rgb(22 101 52);
+  }
+
+  .status-warning {
+    background: rgb(254 243 199);
+    color: rgb(146 64 14);
+  }
+
+  .status-danger {
+    background: rgb(254 226 226);
+    color: rgb(153 27 27);
+  }
+
+  .status-neutral {
+    background: rgb(244 244 245);
+    color: rgb(82 82 91);
+  }
+
+  /* ----------------------------------------------------------
+     Product surface
+     ---------------------------------------------------------- */
+
+  .product-surface {
+    overflow: hidden;
+
+    border: 1px solid rgb(var(--border-soft));
+    border-radius: var(--radius-xl);
+
+    background: white;
+
+    box-shadow: var(--shadow-sm);
+
+    transition:
+      transform var(--transition-base) var(--ease-standard),
+      box-shadow var(--transition-base) var(--ease-standard),
+      border-color var(--transition-base) var(--ease-standard);
+  }
+
+  .product-surface:hover {
+    transform: translateY(-2px);
+
+    border-color: rgb(var(--border-strong));
+
+    box-shadow: var(--shadow-md);
+  }
+
+  /* ----------------------------------------------------------
+     Sticky mobile action area
+     ---------------------------------------------------------- */
+
+  .mobile-action-bar {
+    padding-bottom:
+      max(1rem, env(safe-area-inset-bottom));
+  }
+
+  /* ----------------------------------------------------------
+     Skeleton
+     ---------------------------------------------------------- */
+
+  .skeleton {
+    position: relative;
+    overflow: hidden;
+
+    background: rgb(244 244 245);
+
+    border-radius: 12px;
+  }
+
+  .skeleton::after {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    transform: translateX(-100%);
+
+    background:
+      linear-gradient(
+        90deg,
+        transparent,
+        rgb(255 255 255 / 0.6),
+        transparent
+      );
+
+    animation: skeleton-shimmer 1.5s infinite;
+  }
+}
+
+/* ============================================================
+   MOTION
+   ============================================================ */
+
+@keyframes skeleton-shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
