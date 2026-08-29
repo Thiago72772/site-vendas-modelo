@@ -36,7 +36,7 @@ export default function AdminCardapio() {
       <div className="flex gap-2 mb-6">
         <button
           onClick={() => setTab('produtos')}
-          className={`px-4 py-2 rounded-xl text-sm font-medium transition-colors ${
+          className={`px-4 py-2 rounded-card text-sm font-medium transition-colors ${
             tab === 'produtos' ? 'bg-primary-600 text-white' : 'bg-neutral-100 text-neutral-600'
           }`}
         >
@@ -44,7 +44,7 @@ export default function AdminCardapio() {
         </button>
         <button
           onClick={() => setTab('categorias')}
-          className={`px-4 py-2 rounded-xl text-sm font-medium transition-colors ${
+          className={`px-4 py-2 rounded-card text-sm font-medium transition-colors ${
             tab === 'categorias' ? 'bg-primary-600 text-white' : 'bg-neutral-100 text-neutral-600'
           }`}
         >
@@ -148,13 +148,13 @@ function CategoriasTab({ canEdit }: { canEdit: boolean }) {
               <div className="flex gap-1">
                 <button
                   onClick={() => { setEditing(cat); setShowForm(true); }}
-                  className="p-2 rounded-lg hover:bg-neutral-100"
+                  className="p-2 rounded-card hover:bg-neutral-100"
                 >
                   <Pencil className="w-4 h-4 text-neutral-400" />
                 </button>
                 <button
                   onClick={() => deleteCategoria(cat.id)}
-                  className="p-2 rounded-lg hover:bg-error-50"
+                  className="p-2 rounded-card hover:bg-error-50"
                 >
                   <Trash2 className="w-4 h-4 text-error-400" />
                 </button>
@@ -548,7 +548,7 @@ function AdicionaisSection({ produto, canEdit }: { produto: Produto; canEdit: bo
 
       <div className="space-y-2">
         {grupos.map((grupo) => (
-          <div key={grupo.id} className="rounded-xl bg-neutral-50 p-3">
+          <div key={grupo.id} className="rounded-card bg-neutral-50 p-3">
             <div className="flex items-center justify-between mb-2">
               <div>
                 <p className="text-sm font-medium text-neutral-900">{grupo.nome}</p>
@@ -559,10 +559,10 @@ function AdicionaisSection({ produto, canEdit }: { produto: Produto; canEdit: bo
               </div>
               {canEdit && (
                 <div className="flex gap-1">
-                  <button onClick={() => { setEditingGrupo(grupo); setShowGrupoForm(true); }} className="p-1.5 rounded-lg hover:bg-white">
+                  <button onClick={() => { setEditingGrupo(grupo); setShowGrupoForm(true); }} className="p-1.5 rounded-card hover:bg-white">
                     <Pencil className="w-3.5 h-3.5 text-neutral-400" />
                   </button>
-                  <button onClick={() => deleteGrupo(grupo.id)} className="p-1.5 rounded-lg hover:bg-white">
+                  <button onClick={() => deleteGrupo(grupo.id)} className="p-1.5 rounded-card hover:bg-white">
                     <Trash2 className="w-3.5 h-3.5 text-error-400" />
                   </button>
                 </div>
@@ -576,7 +576,7 @@ function AdicionaisSection({ produto, canEdit }: { produto: Produto; canEdit: bo
                   <div className="flex items-center gap-2">
                     <span className="text-neutral-500">+ {formatCurrency(adc.preco_extra)}</span>
                     {canEdit && (
-                      <button onClick={() => deleteAdicional(adc.id)} className="p-1 rounded hover:bg-white">
+                      <button onClick={() => deleteAdicional(adc.id)} className="p-1 rounded-card hover:bg-white">
                         <Trash2 className="w-3 h-3 text-error-400" />
                       </button>
                     )}
@@ -744,10 +744,10 @@ function Modal({ title, onClose, children }: { title: string; onClose: () => voi
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center">
       <div className="absolute inset-0 bg-black/50" onClick={onClose} />
-      <div className="relative bg-white w-full sm:max-w-md sm:rounded-2xl rounded-t-2xl max-h-[90vh] flex flex-col animate-slide-up">
+      <div className="relative bg-white w-full sm:max-w-md sm:rounded-modal rounded-t-modal max-h-[90vh] flex flex-col animate-slide-up">
         <div className="flex items-center justify-between px-5 py-4 border-b border-neutral-200">
           <h2 className="text-base font-semibold text-neutral-900">{title}</h2>
-          <button onClick={onClose} className="p-2 rounded-lg hover:bg-neutral-100">
+          <button onClick={onClose} className="p-2 rounded-card hover:bg-neutral-100">
             <X className="w-5 h-5 text-neutral-500" />
           </button>
         </div>

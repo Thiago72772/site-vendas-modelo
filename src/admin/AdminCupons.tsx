@@ -88,17 +88,17 @@ export default function AdminCupons() {
                 </div>
               </div>
               <div className="flex items-center gap-2">
-                <button onClick={() => toggleAtivo(cupom)} className="p-2 rounded-lg hover:bg-neutral-100">
+                <button onClick={() => toggleAtivo(cupom)} className="p-2 rounded-card hover:bg-neutral-100">
                   {cupom.ativo ? (
                     <Check className="w-4 h-4 text-success-500" />
                   ) : (
                     <XCircle className="w-4 h-4 text-neutral-300" />
                   )}
                 </button>
-                <button onClick={() => { setEditing(cupom); setShowForm(true); }} className="p-2 rounded-lg hover:bg-neutral-100">
+                <button onClick={() => { setEditing(cupom); setShowForm(true); }} className="p-2 rounded-card hover:bg-neutral-100">
                   <Pencil className="w-4 h-4 text-neutral-400" />
                 </button>
-                <button onClick={() => deleteCupom(cupom.id)} className="p-2 rounded-lg hover:bg-error-50">
+                <button onClick={() => deleteCupom(cupom.id)} className="p-2 rounded-card hover:bg-error-50">
                   <Trash2 className="w-4 h-4 text-error-400" />
                 </button>
               </div>
@@ -110,7 +110,7 @@ export default function AdminCupons() {
               {cupom.validade_fim && (
                 <span>Validade: {new Date(cupom.validade_fim).toLocaleDateString('pt-BR')}</span>
               )}
-              <span className={`px-2 py-0.5 rounded-full ${cupom.ativo ? 'bg-success-50 text-success-600' : 'bg-neutral-100 text-neutral-500'}`}>
+              <span className={`px-2 py-0.5 rounded-pill ${cupom.ativo ? 'bg-success-50 text-success-600' : 'bg-neutral-100 text-neutral-500'}`}>
                 {cupom.ativo ? 'Ativo' : 'Inativo'}
               </span>
             </div>
@@ -191,10 +191,10 @@ function CupomForm({
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center">
       <div className="absolute inset-0 bg-black/50" onClick={onClose} />
-      <div className="relative bg-white w-full sm:max-w-md sm:rounded-2xl rounded-t-2xl max-h-[90vh] flex flex-col animate-slide-up">
+      <div className="relative bg-white w-full sm:max-w-md sm:rounded-modal rounded-t-modal max-h-[90vh] flex flex-col animate-slide-up">
         <div className="flex items-center justify-between px-5 py-4 border-b border-neutral-200">
           <h2 className="text-base font-semibold text-neutral-900">{cupom ? 'Editar cupom' : 'Novo cupom'}</h2>
-          <button onClick={onClose} className="p-2 rounded-lg hover:bg-neutral-100">
+          <button onClick={onClose} className="p-2 rounded-card hover:bg-neutral-100">
             <X className="w-5 h-5 text-neutral-500" />
           </button>
         </div>
@@ -209,7 +209,7 @@ function CupomForm({
               <button
                 type="button"
                 onClick={() => setTipoDesconto('percentual')}
-                className={`px-4 py-2.5 rounded-xl text-sm font-medium transition-colors ${
+                className={`px-4 py-2.5 rounded-card text-sm font-medium transition-colors ${
                   tipoDesconto === 'percentual' ? 'bg-primary-600 text-white' : 'bg-neutral-100 text-neutral-600'
                 }`}
               >
@@ -218,7 +218,7 @@ function CupomForm({
               <button
                 type="button"
                 onClick={() => setTipoDesconto('fixo')}
-                className={`px-4 py-2.5 rounded-xl text-sm font-medium transition-colors ${
+                className={`px-4 py-2.5 rounded-card text-sm font-medium transition-colors ${
                   tipoDesconto === 'fixo' ? 'bg-primary-600 text-white' : 'bg-neutral-100 text-neutral-600'
                 }`}
               >

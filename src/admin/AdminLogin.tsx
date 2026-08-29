@@ -29,7 +29,7 @@ export default function AdminLogin() {
     <div className="min-h-screen flex items-center justify-center bg-neutral-50 px-4">
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
-          <div className="inline-flex w-14 h-14 rounded-2xl bg-primary-600 items-center justify-center mb-4">
+          <div className="inline-flex w-14 h-14 rounded-card bg-primary-600 items-center justify-center mb-4">
             <Store className="w-7 h-7 text-white" />
           </div>
           <h1 className="text-xl font-semibold text-neutral-900">Acessar painel</h1>
@@ -70,7 +70,7 @@ export default function AdminLogin() {
           </div>
 
           {error && (
-            <p className="text-sm text-error-600 bg-error-50 rounded-xl px-4 py-2.5">{error}</p>
+            <p className="text-sm text-error-600 bg-error-50 rounded-card px-4 py-2.5">{error}</p>
           )}
 
           <button type="submit" disabled={submitting} className="btn-primary w-full">

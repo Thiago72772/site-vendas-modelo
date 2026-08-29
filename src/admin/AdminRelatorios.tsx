@@ -129,7 +129,7 @@ export default function AdminRelatorios() {
           <button
             key={val}
             onClick={() => setPeriodo(val)}
-            className={`px-4 py-2 rounded-xl text-sm font-medium transition-colors ${
+            className={`px-4 py-2 rounded-card text-sm font-medium transition-colors ${
               periodo === val ? 'bg-primary-600 text-white' : 'bg-neutral-100 text-neutral-600'
             }`}
           >
@@ -142,7 +142,7 @@ export default function AdminRelatorios() {
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
         <div className="card">
           <div className="flex items-center justify-between mb-3">
-            <div className="w-10 h-10 rounded-xl bg-success-50 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-card bg-success-50 flex items-center justify-center">
               <TrendingUp className="w-5 h-5 text-success-600" />
             </div>
           </div>
@@ -151,7 +151,7 @@ export default function AdminRelatorios() {
         </div>
         <div className="card">
           <div className="flex items-center justify-between mb-3">
-            <div className="w-10 h-10 rounded-xl bg-primary-50 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-card bg-primary-50 flex items-center justify-center">
               <ShoppingBag className="w-5 h-5 text-primary-600" />
             </div>
           </div>
@@ -160,7 +160,7 @@ export default function AdminRelatorios() {
         </div>
         <div className="card">
           <div className="flex items-center justify-between mb-3">
-            <div className="w-10 h-10 rounded-xl bg-warning-50 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-card bg-warning-50 flex items-center justify-center">
               <Receipt className="w-5 h-5 text-warning-600" />
             </div>
           </div>

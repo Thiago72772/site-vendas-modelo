@@ -68,7 +68,7 @@ export function AdminLayout({ children }: { children: ReactNode }) {
     <>
       <div className="px-6 py-5 border-b border-neutral-200">
         <Link to={basePath} className="flex items-center gap-2">
-          <div className="w-9 h-9 rounded-xl bg-primary-600 flex items-center justify-center">
+          <div className="w-9 h-9 rounded-card bg-primary-600 flex items-center justify-center">
             <Store className="w-5 h-5 text-white" />
           </div>
           <div className="min-w-0">
@@ -87,7 +87,7 @@ export function AdminLayout({ children }: { children: ReactNode }) {
               key={item.area}
               to={basePath + item.to}
               onClick={() => setMobileOpen(false)}
-              className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 ${
+              className={`flex items-center gap-3 px-3 py-2.5 rounded-card text-sm font-medium transition-all duration-200 ${
                 active
                   ? 'bg-primary-50 text-primary-700'
                   : 'text-neutral-600 hover:bg-neutral-100'
@@ -109,7 +109,7 @@ export function AdminLayout({ children }: { children: ReactNode }) {
         )}
         <button
           onClick={handleSignOut}
-          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-neutral-500 hover:bg-neutral-100 transition-all duration-200"
+          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-card text-sm font-medium text-neutral-500 hover:bg-neutral-100 transition-all duration-200"
         >
           <LogOut className="w-4 h-4" />
           Sair
@@ -144,7 +144,7 @@ export function AdminLayout({ children }: { children: ReactNode }) {
         <div className="md:hidden flex items-center justify-between px-4 py-3 bg-white border-b border-neutral-200 sticky top-0 z-30">
           <button
             onClick={() => setMobileOpen(true)}
-            className="p-2 rounded-lg hover:bg-neutral-100"
+            className="p-2 rounded-card hover:bg-neutral-100"
           >
             <Menu className="w-5 h-5 text-neutral-600" />
           </button>

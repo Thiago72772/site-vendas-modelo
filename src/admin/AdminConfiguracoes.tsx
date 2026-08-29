@@ -97,8 +97,7 @@ export default function AdminConfiguracoes() {
     return (
       <AdminLayout>
         <h1 className="text-2xl font-semibold text-neutral-900 mb-1">Configurações</h1>
-        <div className="flex flex-col items-center justify-center py-20 text-center">
-          <div className="w-16 h-16 rounded-2xl bg-neutral-100 flex items-center justify-center mb-4">
+        <div className="flex flex-col items-center justify-center py-20 text-center">            <div className="w-16 h-16 rounded-card bg-neutral-100 flex items-center justify-center mb-4">
             <Lock className="w-8 h-8 text-neutral-400" />
           </div>
           <h2 className="text-lg font-semibold text-neutral-900">Acesso restrito</h2>
@@ -147,14 +146,14 @@ export default function AdminConfiguracoes() {
             <div>
               <label className="label">Cor primária</label>
               <div className="flex gap-2">
-                <input type="color" value={corPrimaria || '#2563eb'} onChange={(e) => setCorPrimaria(e.target.value)} className="w-12 h-10 rounded-lg border border-neutral-200" />
+                <input type="color" value={corPrimaria || '#2563eb'} onChange={(e) => setCorPrimaria(e.target.value)} className="w-12 h-10 rounded-card border border-neutral-200" />
                 <input className="input" value={corPrimaria} onChange={(e) => setCorPrimaria(e.target.value)} placeholder="#2563eb" />
               </div>
             </div>
             <div>
               <label className="label">Cor secundária</label>
               <div className="flex gap-2">
-                <input type="color" value={corSecundaria || '#10b981'} onChange={(e) => setCorSecundaria(e.target.value)} className="w-12 h-10 rounded-lg border border-neutral-200" />
+                <input type="color" value={corSecundaria || '#10b981'} onChange={(e) => setCorSecundaria(e.target.value)} className="w-12 h-10 rounded-card border border-neutral-200" />
                 <input className="input" value={corSecundaria} onChange={(e) => setCorSecundaria(e.target.value)} placeholder="#10b981" />
               </div>
             </div>

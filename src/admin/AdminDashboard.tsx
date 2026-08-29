@@ -136,7 +136,7 @@ export default function AdminDashboard() {
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
         <div className="card">
           <div className="flex items-center justify-between mb-3">
-            <div className="w-10 h-10 rounded-xl bg-success-50 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-card bg-success-50 flex items-center justify-center">
               <TrendingUp className="w-5 h-5 text-success-600" />
             </div>
             <span className="text-xs text-neutral-400">Hoje</span>
@@ -147,7 +147,7 @@ export default function AdminDashboard() {
 
         <div className="card">
           <div className="flex items-center justify-between mb-3">
-            <div className="w-10 h-10 rounded-xl bg-primary-50 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-card bg-primary-50 flex items-center justify-center">
               <ShoppingBag className="w-5 h-5 text-primary-600" />
             </div>
             <span className="text-xs text-neutral-400">Hoje</span>
@@ -158,7 +158,7 @@ export default function AdminDashboard() {
 
         <div className="card">
           <div className="flex items-center justify-between mb-3">
-            <div className="w-10 h-10 rounded-xl bg-warning-50 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-card bg-warning-50 flex items-center justify-center">
               <Receipt className="w-5 h-5 text-warning-600" />
             </div>
             <span className="text-xs text-neutral-400">Hoje</span>
@@ -203,7 +203,7 @@ export default function AdminDashboard() {
             {pedidosAndamento.map((pedido) => (
               <div
                 key={pedido.id}
-                className="flex items-center justify-between p-3 rounded-xl bg-neutral-50 hover:bg-neutral-100 transition-colors"
+                className="flex items-center justify-between p-3 rounded-card bg-neutral-50 hover:bg-neutral-100 transition-colors"
               >
                 <div className="min-w-0">
                   <p className="text-sm font-medium text-neutral-900 truncate">
@@ -212,7 +212,7 @@ export default function AdminDashboard() {
                   <p className="text-xs text-neutral-400">{formatDate(pedido.created_at)}</p>
                 </div>
                 <div className="flex items-center gap-3 shrink-0">
-                  <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-primary-50 text-primary-700">
+                  <span className="text-xs font-medium px-2.5 py-1 rounded-pill bg-primary-50 text-primary-700">
                     {STATUS_PEDIDO_LABELS[pedido.status]}
                   </span>
                   <span className="text-sm font-semibold text-neutral-900">
