@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
 import type { Produto, GrupoAdicional, Adicional } from '@/lib/types';
+import { scopedStorageKey, getOrCreateSessionId } from '@/lib/session';
 
 export interface CartItemAdicional {
   id: string;
@@ -40,7 +41,28 @@ export function CartProvider({
   slug: string;
   children: ReactNode;
 }) {
-  const storageKey = `cart_${slug}`;
+  // Session-scoped key: different anonymous users on the same device
+  // get isolated carts. The key includes the session UUID so each
+  // browser tab / user has its own cart.
+  const storageKey = scopedStorageKey('cart', slug);
+
+  // Migrate legacy unscoped key (`cart_{slug}`) into the new scoped
+  // key so returning users don't lose their existing cart.
+  useEffect(() => {
+    try {
+      const legacyKey = `cart_${slug}`;
+      const legacyData = localStorage.getItem(legacyKey);
+      if (legacyData && !localStorage.getItem(storageKey)) {
+        localStorage.setItem(storageKey, legacyData);
+      }
+      // Clean up the old unscoped key once migrated.
+      if (legacyData) {
+        localStorage.removeItem(legacyKey);
+      }
+    } catch {
+      // ignore
+    }
+  }, [slug, storageKey]);
 
   // Carrega o carrinho ANTES do primeiro render.
   // Assim não existe um estado inicial [] sendo gravado

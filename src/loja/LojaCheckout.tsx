@@ -29,6 +29,11 @@ import {
   AlertCircle,
   MapPin,
 } from 'lucide-react';
+import {
+  getOrCreateSessionId,
+  readScopedData,
+  writeScopedData,
+} from '@/lib/session';
 
 interface DadosClienteSalvos {
   nome: string;
@@ -88,43 +93,39 @@ function LojaCheckoutContent() {
 
     async function carregarDadosCliente() {
       /*
-       * Primeiro tenta os dados locais do cliente.
+       * Primeiro tenta os dados locais do cliente,
+       * escopados por sessão para não misturar dados
+       * entre usuários anônimos no mesmo dispositivo.
        */
       try {
-        const storageKey = `dados_cliente_${slug}`;
-        const stored = localStorage.getItem(storageKey);
+        const dados = readScopedData<DadosClienteSalvos>('dados_cliente', slug!);
 
-        if (stored) {
-          const dados =
-            JSON.parse(stored) as DadosClienteSalvos;
+        if (active && dados) {
+          setNome(dados.nome ?? '');
+          setTelefone(
+            dados.telefone
+              ? maskPhone(dados.telefone)
+              : ''
+          );
 
-          if (active && dados) {
-            setNome(dados.nome ?? '');
-            setTelefone(
-              dados.telefone
-                ? maskPhone(dados.telefone)
+          const endereco = dados.endereco;
+
+          if (endereco) {
+            setCEP(
+              endereco.cep
+                ? maskCEP(endereco.cep)
                 : ''
             );
-
-            const endereco = dados.endereco;
-
-            if (endereco) {
-              setCEP(
-                endereco.cep
-                  ? maskCEP(endereco.cep)
-                  : ''
-              );
-              setRua(endereco.rua ?? '');
-              setBairro(endereco.bairro ?? '');
-              setCidade(endereco.cidade ?? '');
-              setNumero(endereco.numero ?? '');
-              setComplemento(
-                endereco.complemento ?? ''
-              );
-              setReferencia(
-                endereco.referencia ?? ''
-              );
-            }
+            setRua(endereco.rua ?? '');
+            setBairro(endereco.bairro ?? '');
+            setCidade(endereco.cidade ?? '');
+            setNumero(endereco.numero ?? '');
+            setComplemento(
+              endereco.complemento ?? ''
+            );
+            setReferencia(
+              endereco.referencia ?? ''
+            );
           }
         }
       } catch {
@@ -417,8 +418,6 @@ function LojaCheckoutContent() {
   function salvarDadosCliente(endereco: Endereco) {
     if (!slug) return;
 
-    const storageKey = `dados_cliente_${slug}`;
-
     const dados: DadosClienteSalvos = {
       nome: nome.trim(),
       telefone: telefone.replace(/\D/g, ''),
@@ -427,14 +426,9 @@ function LojaCheckoutContent() {
         new Date().toISOString(),
     };
 
-    try {
-      localStorage.setItem(
-        storageKey,
-        JSON.stringify(dados)
-      );
-    } catch {
-      // ignore storage errors
-    }
+    // Save under session-scoped key so different anonymous
+    // users on the same device don't overwrite each other.
+    writeScopedData('dados_cliente', slug, dados);
   }
 
   async function handleSubmit(
@@ -478,35 +472,112 @@ function LojaCheckoutContent() {
       salvarDadosCliente(endereco);
 
       /*
-       * 1. Cria o cliente.
+       * 1. Cria ou atualiza o cliente.
        *
-       * Mantemos o comportamento atual do projeto.
+       * Para usuários logados, busca por auth_user_id
+       * para reutilizar o registro existente.
+       * Para convidados, tenta reutilizar o clienteId
+       * salvo na sessão anterior deste navegador.
        */
-      const {
-        data: clienteData,
-        error: clienteError,
-      } = await supabase
-        .from('clientes')
-        .insert({
-          tenant_id: tenant.id,
-          auth_user_id:
-            session?.user?.id ?? null,
-          nome: nome.trim(),
-          telefone:
-            telefone.replace(/\D/g, ''),
-          endereco,
-        })
-        .select()
-        .single();
+      let clienteId: string | null = null;
 
-      if (clienteError) {
-        throw new Error(
-          'Falha ao cadastrar cliente: ' +
-            clienteError.message
+      // Check if we have a previously stored client ID
+      // for this session on this store.
+      const dadosSalvos =
+        readScopedData<DadosClienteSalvos>(
+          'dados_cliente',
+          slug
         );
+      const clienteSalvo = (
+        dadosSalvos as DadosClienteSalvos & {
+          clienteId?: string;
+        }
+      )?.clienteId;
+
+      if (session?.user?.id) {
+        // Authenticated: try to find existing client
+        const { data: existingCliente } =
+          await supabase
+            .from('clientes')
+            .select('id')
+            .eq('auth_user_id', session.user.id)
+            .eq('tenant_id', tenant.id)
+            .order('updated_at', {
+              ascending: false,
+            })
+            .limit(1)
+            .maybeSingle();
+
+        if (existingCliente) {
+          clienteId = existingCliente.id;
+
+          // Update the existing record
+          await supabase
+            .from('clientes')
+            .update({
+              nome: nome.trim(),
+              telefone:
+                telefone.replace(/\D/g, ''),
+              endereco,
+            })
+            .eq('id', clienteId);
+        }
+      } else if (clienteSalvo) {
+        // Anonymous with previously stored ID:
+        // the Supabase RLS won't allow SELECT for anon,
+        // so we trust the locally stored ID and create
+        // a new record if it fails.
+        clienteId = clienteSalvo;
       }
 
-      const clienteId = clienteData.id;
+      // If no existing client found, create new
+      if (!clienteId) {
+        const {
+          data: clienteData,
+          error: clienteError,
+        } = await supabase
+          .from('clientes')
+          .insert({
+            tenant_id: tenant.id,
+            auth_user_id:
+              session?.user?.id ?? null,
+            nome: nome.trim(),
+            telefone:
+              telefone.replace(/\D/g, ''),
+            endereco,
+          })
+          .select()
+          .single();
+
+        if (clienteError) {
+          throw new Error(
+            'Falha ao cadastrar cliente: ' +
+              clienteError.message
+          );
+        }
+
+        clienteId = clienteData.id;
+      }
+
+      // Persist the client ID in session-scoped storage
+      // so the next checkout can reuse it.
+      try {
+        const dadosAtualizados = {
+          nome: nome.trim(),
+          telefone: telefone.replace(/\D/g, ''),
+          endereco,
+          atualizadoEm:
+            new Date().toISOString(),
+          clienteId,
+        };
+        writeScopedData(
+          'dados_cliente',
+          slug,
+          dadosAtualizados
+        );
+      } catch {
+        // ignore storage errors
+      }
 
       /*
        * 2. Cria o pedido.
@@ -597,17 +668,18 @@ function LojaCheckoutContent() {
       }
 
       /*
-       * 5. Salva o pedido ativo.
+       * 5. Salva o pedido ativo sob chave escopada por sessão.
+       *    Também mantém o ID da sessão para verificação
+       *    de propriedade na tela de acompanhamento.
        */
       try {
-        localStorage.setItem(
-          `ultimo_pedido_${slug}`,
-          JSON.stringify({
-            pedidoId,
-            createdAt:
-              new Date().toISOString(),
-          })
-        );
+        const sessionId = getOrCreateSessionId();
+        writeScopedData('ultimo_pedido', slug, {
+          pedidoId,
+          sessionId,
+          createdAt:
+            new Date().toISOString(),
+        });
       } catch {
         // ignore storage errors
       }

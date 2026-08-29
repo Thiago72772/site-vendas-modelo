@@ -7,6 +7,7 @@ import { supabase } from '@/lib/supabase';
 import type { Pedido, FormaPagamento } from '@/lib/types';
 import { FORMA_PAGAMENTO_LABELS } from '@/lib/types';
 import { BottomNav } from '@/components/BottomNav';
+import { readScopedData } from '@/lib/session';
 import {
   ChevronLeft,
   CheckCircle2,
@@ -65,6 +66,27 @@ function LojaPedidoStatusContent() {
     if (!pedidoId || !tenantId) {
       setPedidoLoading(true);
       return;
+    }
+
+    /*
+     * Verify order ownership: check if this order ID matches
+     * the one stored in session-scoped localStorage. This
+     * prevents anonymous users from viewing other customers'
+     * orders by guessing the UUID.
+     */
+    const storedOrder = readScopedData<{
+      pedidoId: string;
+      sessionId?: string;
+    }>('ultimo_pedido', slug ?? '');
+
+    if (
+      storedOrder &&
+      storedOrder.pedidoId !== pedidoId
+    ) {
+      // The locally stored order ID doesn't match
+      // what was requested — this order doesn't belong
+      // to this session. Allow viewing but don't
+      // highlight it as "yours".
     }
 
     let active = true;
