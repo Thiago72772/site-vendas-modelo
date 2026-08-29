@@ -325,7 +325,7 @@ function LojaHomeContent() {
 
       {/* HERO */}
       <section className="mx-auto max-w-7xl px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
-        <div className="relative overflow-hidden rounded-[30px] bg-neutral-950">
+        <div className="relative overflow-hidden rounded-2xl bg-neutral-950">
           {tenant.banner_url ? (
             <img
               src={tenant.banner_url}
@@ -426,7 +426,7 @@ function LojaHomeContent() {
         <div className="mb-8 flex flex-col gap-3 sm:mb-10 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">
-              <Sparkles className="h-3.5 w-3.5" />
+              
               Cardápio
             </div>
 
@@ -481,7 +481,7 @@ function LojaHomeContent() {
                 </div>
 
                 {produtosCategoria.length === 0 ? (
-                  <div className="rounded-[24px] border border-dashed border-neutral-200 bg-white px-6 py-10 text-center">
+                  <div className="rounded-2xl border border-dashed border-neutral-200 bg-white px-6 py-10 text-center">
                     <p className="text-sm text-neutral-400">
                       Nenhum produto nesta categoria.
                     </p>
@@ -500,9 +500,9 @@ function LojaHomeContent() {
                             )
                           }
                           disabled={!produto.disponivel}
-                          className={`group overflow-hidden rounded-[24px] border bg-white text-left shadow-sm transition duration-300 ${
+                          className={`group overflow-hidden rounded-2xl border bg-white text-left shadow-sm transition ${
                             produto.disponivel
-                              ? 'border-neutral-200 hover:-translate-y-1 hover:border-neutral-300 hover:shadow-xl'
+                              ? 'border-neutral-200 hover:border-neutral-300 hover:shadow-md'
                               : 'cursor-not-allowed border-neutral-200 opacity-60'
                           }`}
                         >
@@ -516,10 +516,10 @@ function LojaHomeContent() {
                                 alt={
                                   produto.nome
                                 }
-                                className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.035]"
+                                className="h-full w-full object-cover transition duration-300 group-hover:scale-[1.02]"
                               />
 
-                              <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/30 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                              
 
                               {!produto.disponivel && (
                                 <div className="absolute inset-0 flex items-center justify-center bg-black/35">

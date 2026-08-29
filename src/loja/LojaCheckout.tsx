@@ -73,6 +73,7 @@ function LojaCheckoutContent() {
     Record<string, string>
   >({});
   const [createdOrderId, setCreatedOrderId] = useState<string | null>(null);
+  const [finalTotal, setFinalTotal] = useState<number | null>(null);
 
   /*
    * 1. Recupera dados já salvos para esta loja.
@@ -612,8 +613,36 @@ function LojaCheckoutContent() {
       }
 
       /*
-       * 6. Limpa o carrinho.
+       * 6. Captura o total final ANTES de limpar o carrinho.
+       *    clearCart() zera o subtotal reativo, o que faria
+       *    a variável local 'total' reavaliar para apenas
+       *    a taxa de entrega. Salvamos em estado separado
+       *    para que o PixPayment sempre receba o valor correto.
        */
+      setFinalTotal(total);
+
+      /*
+       * Audit log (dev only): verifies the value chain
+       * before clearing state.
+       */
+      if (import.meta.env.DEV) {
+        console.group('%c[PIX AUDIT] Valor do pedido', 'color: #16a34a; font-weight: bold');
+        console.log('subtotal:', formatCurrency(subtotal));
+        console.log('taxa_entrega:', formatCurrency(taxaEntrega));
+        console.log('desconto:', formatCurrency(desconto));
+        console.log('total_final:', formatCurrency(total));
+        console.log('forma_pagamento:', formaPagamento);
+        console.assert(
+          total === Math.max(0, subtotal + taxaEntrega - desconto),
+          'Invariant violated: total !== subtotal + taxaEntrega - desconto'
+        );
+        console.assert(
+          total >= subtotal,
+          'Invariant violated: total < subtotal (should never be less)'
+        );
+        console.groupEnd();
+      }
+
       clearCart();
 
       /*
@@ -690,7 +719,7 @@ function LojaCheckoutContent() {
         <div className="mx-auto max-w-3xl px-4 py-6 sm:px-6 sm:py-8 space-y-5">
           <PixPayment
             orderId={createdOrderId}
-            amount={total}
+            amount={finalTotal ?? 0}
             onConfirmed={() => {
               navigate(`/loja/${slug}/pedido/${createdOrderId}`);
             }}
@@ -737,7 +766,7 @@ function LojaCheckoutContent() {
       >
         {/* Empty cart */}
         {items.length === 0 && (
-          <div className="flex flex-col items-center rounded-3xl border border-neutral-200 bg-white px-6 py-10 text-center">
+          <div className="flex flex-col items-center rounded-2xl border border-neutral-200 bg-white px-6 py-10 text-center">
             <ShoppingBag className="mb-3 h-10 w-10 text-neutral-300" />
 
             <p className="text-sm text-neutral-500">
@@ -754,7 +783,7 @@ function LojaCheckoutContent() {
         )}
 
         {/* Customer */}
-        <div className="space-y-4 rounded-3xl border border-neutral-200 bg-white p-5 shadow-sm sm:p-6">
+        <div className="space-y-4 rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm sm:p-6">
           <div>
             <h2 className="text-base font-semibold text-neutral-900">
               Seus dados
@@ -822,7 +851,7 @@ function LojaCheckoutContent() {
         </div>
 
         {/* Address */}
-        <div className="space-y-4 rounded-3xl border border-neutral-200 bg-white p-5 shadow-sm sm:p-6">
+        <div className="space-y-4 rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm sm:p-6">
           <div>
             <h2 className="flex items-center gap-2 text-base font-semibold text-neutral-900">
               <MapPin className="h-4 w-4 text-primary-500" />
@@ -1019,7 +1048,7 @@ function LojaCheckoutContent() {
         </div>
 
         {/* Payment */}
-        <div className="space-y-4 rounded-3xl border border-neutral-200 bg-white p-5 shadow-sm sm:p-6">
+        <div className="space-y-4 rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm sm:p-6">
           <h2 className="text-base font-semibold text-neutral-900">
             Pagamento
           </h2>
@@ -1077,7 +1106,7 @@ function LojaCheckoutContent() {
         </div>
 
         {/* Coupon */}
-        <div className="space-y-3 rounded-3xl border border-neutral-200 bg-white p-5 shadow-sm sm:p-6">
+        <div className="space-y-3 rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm sm:p-6">
           <h2 className="flex items-center gap-2 text-base font-semibold text-neutral-900">
             <Tag className="h-4 w-4 text-primary-500" />
             Cupom de desconto
@@ -1119,7 +1148,7 @@ function LojaCheckoutContent() {
         </div>
 
         {/* Summary */}
-        <div className="space-y-3 rounded-3xl border border-neutral-200 bg-white p-5 shadow-sm sm:p-6">
+        <div className="space-y-3 rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm sm:p-6">
           <h2 className="text-base font-semibold text-neutral-900">
             Resumo do pedido
           </h2>
@@ -1198,7 +1227,7 @@ function LojaCheckoutContent() {
 
         {/* Error */}
         {submitError && (
-          <div className="rounded-3xl border border-rose-100 bg-rose-50 p-5">
+          <div className="rounded-2xl border border-rose-100 bg-rose-50 p-5">
             <p className="text-sm text-error-700">
               {submitError}
             </p>

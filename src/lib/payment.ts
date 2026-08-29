@@ -58,6 +58,14 @@ function generatePixKey(): string {
  */
 export const paymentService: PaymentService = {
   async generatePix(_orderId: string, amount: number): Promise<PixPaymentData> {
+    // Safety invariant: amount must be a positive finite number
+    if (!amount || amount <= 0 || !isFinite(amount)) {
+      throw new Error(
+        `[PIX] Valor inválido recebido: ${amount}. ` +
+        'O valor deve ser o total do pedido (subtotal + entrega - desconto).'
+      );
+    }
+
     // Simulate a network delay
     await new Promise((r) => setTimeout(r, 600));
 

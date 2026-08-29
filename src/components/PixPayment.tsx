@@ -36,6 +36,24 @@ export function PixPayment({ orderId, amount, onConfirmed }: PixPaymentProps) {
       try {
         setLoading(true);
         setError(null);
+
+        // Safety validation: amount must be a positive number
+        if (!amount || amount <= 0 || !isFinite(amount)) {
+          if (active) {
+            setError('Valor do pagamento inválido. Volte ao cardápio e tente novamente.');
+            setLoading(false);
+          }
+          return;
+        }
+
+        // Dev audit log
+        if (import.meta.env.DEV) {
+          console.log(
+            `%c[PIX] Gerando cobrança: orderId=${orderId}, amount=${amount.toFixed(2)}`,
+            'color: #2563eb; font-weight: bold'
+          );
+        }
+
         const data = await paymentService.generatePix(orderId, amount);
         if (active) {
           setPixData(data);

@@ -65,7 +65,7 @@ export default function LojaClienteLogin() {
         <main className="flex flex-1 items-center justify-center py-8 sm:py-12">
           <div className="grid w-full max-w-5xl gap-5 lg:grid-cols-[1.05fr_0.95fr]">
             {/* Brand panel */}
-            <section className="relative hidden min-h-[620px] overflow-hidden rounded-[32px] bg-neutral-950 lg:block">
+            <section className="relative hidden min-h-[620px] overflow-hidden rounded-2xl bg-neutral-950 lg:block">
               {tenant?.banner_url ? (
                 <img
                   src={tenant.banner_url}
@@ -122,7 +122,7 @@ export default function LojaClienteLogin() {
             </section>
 
             {/* Form */}
-            <section className="flex min-h-[620px] flex-col justify-center rounded-[32px] border border-neutral-200 bg-white p-5 shadow-sm sm:p-8 xl:p-10">
+            <section className="flex min-h-[620px] flex-col justify-center rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm sm:p-8 xl:p-10">
               {/* Mobile brand */}
               <div className="mb-8 flex items-center gap-3 lg:hidden">
                 {tenant?.logo_url ? (

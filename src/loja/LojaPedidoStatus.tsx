@@ -235,7 +235,7 @@ function LojaPedidoStatusContent() {
       <main className="mx-auto max-w-3xl space-y-5 px-4 py-6 sm:px-6 sm:py-8">
         {/* Main status */}
         <section
-          className={`overflow-hidden rounded-[28px] border ${
+          className={`overflow-hidden rounded-2xl border ${
             isCancelled
               ? 'border-rose-100 bg-rose-50'
               : 'border-neutral-200 bg-white'
@@ -314,7 +314,7 @@ function LojaPedidoStatusContent() {
 
         {/* Progress */}
         {!isCancelled ? (
-          <section className="rounded-[28px] border border-neutral-200 bg-white p-5 sm:p-7">
+          <section className="rounded-2xl border border-neutral-200 bg-white p-5 sm:p-7">
             <div className="mb-7">
               <h2 className="text-base font-semibold text-neutral-900">
                 Status do pedido
@@ -381,7 +381,7 @@ function LojaPedidoStatusContent() {
             </div>
           </section>
         ) : (
-          <section className="rounded-[28px] border border-rose-100 bg-white p-6 text-center sm:p-8">
+          <section className="rounded-2xl border border-rose-100 bg-white p-6 text-center sm:p-8">
             <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-rose-50">
               <XCircle className="h-7 w-7 text-rose-500" />
             </div>
@@ -403,7 +403,7 @@ function LojaPedidoStatusContent() {
         )}
 
         {/* Items */}
-        <section className="rounded-[28px] border border-neutral-200 bg-white p-5 sm:p-7">
+        <section className="rounded-2xl border border-neutral-200 bg-white p-5 sm:p-7">
           <div className="flex items-center justify-between gap-4">
             <div>
               <div className="flex items-center gap-2">
@@ -486,7 +486,7 @@ function LojaPedidoStatusContent() {
         </section>
 
         {/* Payment */}
-        <section className="rounded-[28px] border border-neutral-200 bg-white p-5 sm:p-7">
+        <section className="rounded-2xl border border-neutral-200 bg-white p-5 sm:p-7">
           <h2 className="text-base font-semibold text-neutral-900">
             Resumo financeiro
           </h2>
@@ -565,7 +565,7 @@ function LojaPedidoStatusContent() {
 
         {/* Address */}
         {pedido.endereco_entrega && (
-          <section className="rounded-[28px] border border-neutral-200 bg-white p-5 sm:p-7">
+          <section className="rounded-2xl border border-neutral-200 bg-white p-5 sm:p-7">
             <div className="flex items-start gap-3">
               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-neutral-100">
                 <MapPin className="h-5 w-5 text-neutral-600" />

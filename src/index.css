@@ -329,12 +329,7 @@
 
     border-radius: 14px;
 
-    background:
-      linear-gradient(
-        180deg,
-        rgb(var(--cor-primaria-500)) 0%,
-        rgb(var(--cor-primaria-600)) 100%
-      );
+    background: rgb(var(--cor-primaria-600));
 
     color: white;
 
@@ -352,7 +347,7 @@
   }
 
   .btn-primary:hover {
-    filter: brightness(1.03);
+    background: rgb(var(--cor-primaria-700));
 
     box-shadow:
       0 8px 20px
