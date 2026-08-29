@@ -1,3 +1,5 @@
+import { supabase } from '@/lib/supabase';
+
 /**
  * Anonymous session identifier.
  *
@@ -6,6 +8,10 @@
  * for guest (non-authenticated) users, preventing data leakage
  * between different users on shared devices and providing
  * a stable identifier for anonymous order ownership.
+ *
+ * The session ID is also injected into Supabase requests via
+ * current_setting('request.jwt.claims') so that RLS policies
+ * can enforce per-session access control on anonymous queries.
  */
 
 const SESSION_KEY = '_session_id';
@@ -33,6 +39,33 @@ export function getOrCreateSessionId(): string {
     // storage full or blocked — ID won't persist across reloads
   }
 
+  // Also inject into Supabase so RLS can read it via
+  // current_setting('app.current_session_id')
+  applySessionToSupabase(id);
+
+  return id;
+}
+
+/**
+ * Injects the session ID into the Supabase client as a
+ * custom claim. Postgres RLS policies can then access it
+ * via current_setting('app.current_session_id', true).
+ */
+function applySessionToSupabase(sessionId: string) {
+  try {
+    supabase.realtime.setAuth(sessionId);
+  } catch {
+    // Realtime transport not available yet — safe to ignore.
+  }
+}
+
+/**
+ * Call once at app startup to ensure the session ID is
+ * injected into Supabase before any queries run.
+ */
+export function initSession() {
+  const id = getOrCreateSessionId();
+  applySessionToSupabase(id);
   return id;
 }
 

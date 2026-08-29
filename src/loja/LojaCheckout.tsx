@@ -511,16 +511,17 @@ function LojaCheckoutContent() {
         if (existingCliente) {
           clienteId = existingCliente.id;
 
-          // Update the existing record
-          await supabase
-            .from('clientes')
-            .update({
-              nome: nome.trim(),
-              telefone:
-                telefone.replace(/\D/g, ''),
-              endereco,
-            })
-            .eq('id', clienteId);
+        // Update the existing record with session_id
+        await supabase
+          .from('clientes')
+          .update({
+            nome: nome.trim(),
+            telefone:
+              telefone.replace(/\D/g, ''),
+            endereco,
+            session_id: getOrCreateSessionId(),
+          })
+          .eq('id', clienteId);
         }
       } else if (clienteSalvo) {
         // Anonymous with previously stored ID:
@@ -541,6 +542,8 @@ function LojaCheckoutContent() {
             tenant_id: tenant.id,
             auth_user_id:
               session?.user?.id ?? null,
+            session_id:
+              getOrCreateSessionId(),
             nome: nome.trim(),
             telefone:
               telefone.replace(/\D/g, ''),
