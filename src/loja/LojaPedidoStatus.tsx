@@ -6,6 +6,7 @@ import { formatCurrency, formatDate } from '@/lib/format';
 import { supabase } from '@/lib/supabase';
 import type { Pedido, FormaPagamento } from '@/lib/types';
 import { FORMA_PAGAMENTO_LABELS } from '@/lib/types';
+import { BottomNav } from '@/components/BottomNav';
 import {
   ChevronLeft,
   CheckCircle2,
@@ -616,6 +617,10 @@ function LojaPedidoStatusContent() {
           Voltar ao cardápio
         </Link>
       </main>
+
+      {/* Bottom nav — mobile only */}
+      <BottomNav slug={slug ?? ''} onCartClick={() => {}} />
+      <div className="h-16 md:hidden" />
     </div>
   );
 }

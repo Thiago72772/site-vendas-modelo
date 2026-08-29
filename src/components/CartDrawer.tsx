@@ -77,14 +77,14 @@ export function CartDrawer({
       <aside
         aria-label="Carrinho de compras"
         aria-hidden={!open}
-        className={`fixed right-0 top-0 z-50 flex h-[100dvh] w-full max-w-lg flex-col bg-[#fafaf8] shadow-elevated transition-transform duration-300 ease-out ${
+        className={`fixed right-0 top-0 z-50 flex h-[100dvh] w-full flex-col bg-page shadow-elevated transition-transform duration-300 ease-out sm:max-w-lg ${
           open
             ? 'translate-x-0'
             : 'translate-x-full'
         }`}
       >
         {/* Header */}
-        <header className="shrink-0 border-b border-line bg-white px-5 py-4 sm:px-6">
+        <header className="shrink-0 border-b border-line bg-raised px-5 py-4 sm:px-6">
           <div className="flex items-center justify-between gap-4">
             <div className="min-w-0">
               <div className="flex items-center gap-2">
@@ -265,7 +265,7 @@ export function CartDrawer({
 
         {/* Footer */}
         {items.length > 0 && (
-          <footer className="shrink-0 border-t border-line bg-white px-4 py-4 pb-[max(1rem,env(safe-area-inset-bottom))] sm:px-5 sm:py-5">
+          <footer className="shrink-0 border-t border-line bg-raised px-4 py-4 sm:px-5 sm:py-5" style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}>
             <div className="space-y-4">                <div className="rounded-md bg-neutral-50 p-4">
                 <div className="flex items-center justify-between gap-4">
                   <div>

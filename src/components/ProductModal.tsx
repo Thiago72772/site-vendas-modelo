@@ -254,7 +254,7 @@ export function ProductModal({
 
       {/* Modal container */}
       <div className="absolute inset-x-0 bottom-0 flex max-h-[94vh] justify-center sm:inset-0 sm:items-center sm:p-6">
-        <div className="relative flex max-h-[94vh] w-full max-w-2xl flex-col overflow-hidden rounded-t-lg bg-white shadow-elevated sm:max-h-[88vh] sm:rounded-lg">
+        <div className="relative flex max-h-[94vh] w-full max-w-2xl flex-col overflow-hidden rounded-t-lg bg-raised shadow-elevated sm:max-h-[88vh] sm:rounded-lg">
           {/* Header / close */}
           <div className="absolute right-4 top-4 z-10">
             <button

@@ -8,13 +8,13 @@ import { LoadingScreen, ErrorState } from '@/components/ui';
 import { isTenantOpen, formatCurrency } from '@/lib/format';
 import { supabase } from '@/lib/supabase';
 import type { Produto, Categoria } from '@/lib/types';
+import { BottomNav } from '@/components/BottomNav';
 import {
   Store,
   ShoppingBag,
   Clock,
   Search,
   ArrowRight,
-  Sparkles,
 } from 'lucide-react';
 
 function LojaHomeContent() {
@@ -571,6 +571,12 @@ function LojaHomeContent() {
           )}
         </div>
       </main>
+
+      {/* Bottom nav — mobile only */}
+      <BottomNav slug={slug!} onCartClick={() => setCartOpen(true)} />
+
+      {/* Spacer for bottom nav on mobile */}
+      <div className="h-16 md:hidden" />
 
       {/* Product modal */}
       <ProductModal

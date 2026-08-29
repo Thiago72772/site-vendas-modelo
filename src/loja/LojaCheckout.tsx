@@ -1234,12 +1234,13 @@ function LojaCheckoutContent() {
           </div>
         )}
 
-        {/* Submit */}
+        {/* Submit — fixed at bottom on mobile */}
         {items.length > 0 && (
+          <div className="sticky bottom-0 z-20 -mx-4 border-t border-line bg-raised px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-3 sm:mx-0 sm:rounded-md sm:border sm:sticky sm:bottom-4" style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}>
           <button
             type="submit"
             disabled={submitting}
-            className="sticky bottom-4 flex w-full items-center justify-center gap-2 rounded-md bg-neutral-900 py-4 text-base font-semibold text-white shadow-elevated transition hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-60"
+            className="flex w-full items-center justify-center gap-2 rounded-md bg-neutral-900 py-3.5 text-sm font-semibold text-white transition hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-60 sm:py-4 sm:text-base"
           >
             {submitting && (
               <Loader2 className="h-5 w-5 animate-spin" />
@@ -1251,6 +1252,7 @@ function LojaCheckoutContent() {
                   total
                 )}`}
           </button>
+          </div>
         )}
       </form>
     </div>
