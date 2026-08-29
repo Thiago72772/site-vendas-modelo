@@ -185,9 +185,9 @@ export function PixPayment({ orderId, amount, onConfirmed }: PixPaymentProps) {
 
   if (loading) {
     return (
-      <div className="rounded-2xl border border-neutral-200 bg-white p-6 text-center">
+      <div className="rounded-lg border border-line bg-white p-6 text-center">
         <Loader2 className="mx-auto h-8 w-8 animate-spin text-primary-500" />
-        <p className="mt-3 text-sm text-neutral-500">
+        <p className="mt-3 text-sm text-mid">
           Gerando código PIX...
         </p>
       </div>
@@ -196,7 +196,7 @@ export function PixPayment({ orderId, amount, onConfirmed }: PixPaymentProps) {
 
   if (error) {
     return (
-      <div className="rounded-2xl border border-rose-100 bg-rose-50 p-5">
+      <div className="rounded-lg border border-rose-100 bg-rose-50 p-5">
         <div className="flex items-start gap-3">
           <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-rose-500" />
           <div>
@@ -217,7 +217,7 @@ export function PixPayment({ orderId, amount, onConfirmed }: PixPaymentProps) {
 
   if (status === 'expired') {
     return (
-      <div className="rounded-2xl border border-amber-100 bg-amber-50 p-5 text-center">
+      <div className="rounded-lg border border-amber-100 bg-amber-50 p-5 text-center">
         <Clock className="mx-auto h-8 w-8 text-amber-500" />
         <p className="mt-3 text-sm font-semibold text-amber-700">
           Código PIX expirado
@@ -232,7 +232,7 @@ export function PixPayment({ orderId, amount, onConfirmed }: PixPaymentProps) {
 
   if (status === 'confirmed') {
     return (
-      <div className="rounded-2xl border border-emerald-100 bg-emerald-50 p-6 text-center">
+      <div className="rounded-lg border border-emerald-100 bg-emerald-50 p-6 text-center">
         <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-emerald-100">
           <ShieldCheck className="h-6 w-6 text-emerald-600" />
         </div>
@@ -248,17 +248,17 @@ export function PixPayment({ orderId, amount, onConfirmed }: PixPaymentProps) {
 
   // Pending state — show PIX details
   return (
-    <div className="rounded-2xl border border-neutral-200 bg-white overflow-hidden">
+    <div className="rounded-lg border border-line bg-white overflow-hidden">
       {/* Header */}
-      <div className="border-b border-neutral-100 bg-neutral-50 px-5 py-3">
+      <div className="border-b border-line bg-neutral-50 px-5 py-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <QrCode className="h-4 w-4 text-primary-600" />
-            <h3 className="text-sm font-semibold text-neutral-900">
+            <h3 className="text-sm font-semibold text-strong">
               Pagamento via PIX
             </h3>
           </div>
-          <div className="flex items-center gap-1.5 rounded-full bg-primary-50 px-3 py-1">
+          <div className="flex items-center gap-1.5 rounded-sm bg-primary-50 px-3 py-1">
             <span className="relative flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary-400 opacity-75" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-primary-500" />
@@ -273,7 +273,7 @@ export function PixPayment({ orderId, amount, onConfirmed }: PixPaymentProps) {
       <div className="p-5 space-y-5">
         {/* QR Code */}
         <div className="flex justify-center">
-          <div className="rounded-2xl border border-neutral-200 bg-white p-4 shadow-sm">
+          <div className="rounded-lg border border-line bg-white p-4">
             {pixData && (() => {
               const grid = renderQrPattern(pixData.pixKey);
               const cellSize = 7;
@@ -309,7 +309,7 @@ export function PixPayment({ orderId, amount, onConfirmed }: PixPaymentProps) {
 
         {/* Amount */}
         <div className="text-center">
-          <p className="text-xs text-neutral-500">Valor a pagar</p>
+          <p className="text-xs text-mid">Valor a pagar</p>
           <p className="mt-1 text-2xl font-bold tracking-tight text-neutral-950">
             {formatCurrency(amount)}
           </p>
@@ -317,17 +317,17 @@ export function PixPayment({ orderId, amount, onConfirmed }: PixPaymentProps) {
 
         {/* PIX Key — Copy & Paste */}
         <div>
-          <p className="text-xs font-medium text-neutral-500 mb-2">
+          <p className="text-xs font-medium text-mid mb-2">
             Copie a chave PIX abaixo e cole no seu app do banco:
           </p>
-          <div className="flex items-center gap-2 rounded-xl border border-neutral-200 bg-neutral-50 p-3">
-            <p className="min-w-0 flex-1 truncate font-mono text-sm text-neutral-700">
+          <div className="flex items-center gap-2 rounded-md border border-line bg-neutral-50 p-3">
+            <p className="min-w-0 flex-1 truncate font-mono text-sm text-mid">
               {pixData?.pixKey}
             </p>
             <button
               type="button"
               onClick={handleCopy}
-              className="flex h-9 shrink-0 items-center gap-1.5 rounded-card bg-neutral-900 px-3 text-xs font-semibold text-white transition hover:bg-neutral-800"
+              className="flex h-9 shrink-0 items-center gap-1.5 rounded-md bg-neutral-900 px-3 text-xs font-semibold text-white transition hover:bg-neutral-800"
             >
               {copied ? (
                 <>
@@ -345,18 +345,18 @@ export function PixPayment({ orderId, amount, onConfirmed }: PixPaymentProps) {
         </div>
 
         {/* Timer */}
-        <div className="flex items-center justify-center gap-2 rounded-xl bg-neutral-50 py-3">
-          <Clock className="h-4 w-4 text-neutral-400" />
-          <span className="text-sm text-neutral-600">
+        <div className="flex items-center justify-center gap-2 rounded-md bg-neutral-50 py-3">
+          <Clock className="h-4 w-4 text-dim" />
+          <span className="text-sm text-mid">
             Expira em{' '}
-            <span className="font-mono font-semibold text-neutral-900">
+            <span className="font-mono font-semibold text-strong">
               {formatTime(timeLeft)}
             </span>
           </span>
         </div>
 
         {/* Demo: Manual confirmation */}
-        <div className="rounded-xl border border-dashed border-amber-200 bg-amber-50 p-4">
+        <div className="rounded-md border border-dashed border-amber-200 bg-amber-50 p-4">
           <p className="text-xs font-medium text-amber-700 mb-2">
             Modo de demonstração
           </p>
@@ -367,15 +367,15 @@ export function PixPayment({ orderId, amount, onConfirmed }: PixPaymentProps) {
           <button
             type="button"
             onClick={handleConfirmPayment}
-            className="w-full rounded-card bg-amber-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-amber-700"
+            className="w-full rounded-md bg-amber-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-amber-700"
           >
             Confirmar pagamento (demo)
           </button>
         </div>
 
         {/* Instructions */}
-        <div className="space-y-2 text-xs text-neutral-500">
-          <p className="font-medium text-neutral-700">Como pagar:</p>
+        <div className="space-y-2 text-xs text-mid">
+          <p className="font-medium text-mid">Como pagar:</p>
           <ol className="list-inside list-decimal space-y-1 pl-1">
             <li>Abra o app do seu banco ou carteira digital</li>
             <li>Escolha a opção <strong>Pagar com PIX</strong></li>

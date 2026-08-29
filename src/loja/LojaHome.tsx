@@ -210,7 +210,7 @@ function LojaHomeContent() {
   return (
     <div className="min-h-screen bg-[#f6f6f4] text-neutral-950">
       {/* HEADER */}
-      <header className="sticky top-0 z-40 border-b border-neutral-200 bg-white">
+      <header className="sticky top-0 z-40 border-b border-line bg-white">
         <div className="mx-auto flex h-[72px] max-w-7xl items-center gap-3 px-4 sm:px-6 lg:px-8">
           {/* Brand */}
           <Link
@@ -222,10 +222,10 @@ function LojaHomeContent() {
               <img
                 src={tenant.logo_url}
                 alt={tenant.nome}
-                className="h-10 w-10 shrink-0 rounded-card object-cover ring-1 ring-black/5"
+                className="h-10 w-10 shrink-0 rounded-md object-cover ring-1 ring-black/5"
               />
             ) : (
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-card bg-neutral-950 text-white">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-neutral-950 text-white">
                 <Store className="h-5 w-5" />
               </div>
             )}
@@ -237,7 +237,7 @@ function LojaHomeContent() {
                 </h1>
 
                 <span
-                  className={`hidden rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide sm:inline-flex ${
+                  className={`hidden rounded-sm px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide sm:inline-flex ${
                     aberto
                       ? 'bg-emerald-50 text-emerald-700'
                       : 'bg-rose-50 text-rose-700'
@@ -247,7 +247,7 @@ function LojaHomeContent() {
                 </span>
               </div>
 
-              <div className="mt-0.5 flex items-center gap-2 text-xs text-neutral-500">
+              <div className="mt-0.5 flex items-center gap-2 text-xs text-mid">
                 <span className="flex items-center gap-1.5">
                   <span
                     className={`h-1.5 w-1.5 rounded-full ${
@@ -263,7 +263,7 @@ function LojaHomeContent() {
 
                 {tenant.tempo_medio_preparo_min && (
                   <>
-                    <span className="text-neutral-300">•</span>
+                    <span className="text-dim">•</span>
 
                     <span className="inline-flex items-center gap-1">
                       <Clock className="h-3 w-3" />
@@ -279,7 +279,7 @@ function LojaHomeContent() {
           <div className="flex items-center gap-2">
             {pedidoAtivoId && (
               <Link
-                to={`/loja/${slug}/pedido/${pedidoAtivoId}`}                  className="hidden h-11 items-center gap-2 rounded-pill border border-neutral-200 bg-white px-4 text-sm font-semibold text-neutral-800 transition hover:border-neutral-300 hover:bg-neutral-50 sm:inline-flex"
+                to={`/loja/${slug}/pedido/${pedidoAtivoId}`}                  className="hidden h-11 items-center gap-2 rounded-pill border border-line bg-white px-4 text-sm font-semibold text-neutral-800 transition hover:border-strong hover:bg-page sm:inline-flex"
               >
                 <span>Acompanhar pedido</span>
                 <ArrowRight className="h-4 w-4" />
@@ -298,7 +298,7 @@ function LojaHomeContent() {
               </span>
 
               {totalItems > 0 && (
-                <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-white px-1.5 text-[11px] font-bold text-neutral-950">
+                <span className="flex h-5 min-w-5 items-center justify-center rounded-sm bg-white px-1.5 text-[11px] font-bold text-neutral-950">
                   {totalItems}
                 </span>
               )}
@@ -308,11 +308,11 @@ function LojaHomeContent() {
 
         {/* Mobile active order */}
         {pedidoAtivoId && (
-          <div className="border-t border-neutral-100 bg-white sm:hidden">
+          <div className="border-t border-line bg-white sm:hidden">
             <div className="mx-auto max-w-7xl px-4 py-2.5">
               <Link
                 to={`/loja/${slug}/pedido/${pedidoAtivoId}`}
-                className="flex min-h-11 items-center justify-between rounded-xl bg-neutral-950 px-4 text-sm font-semibold text-white"
+                className="flex min-h-11 items-center justify-between rounded-md bg-neutral-950 px-4 text-sm font-semibold text-white"
               >
                 <span>Acompanhar pedido</span>
                 <ArrowRight className="h-4 w-4 text-white/70" />
@@ -323,7 +323,7 @@ function LojaHomeContent() {
       </header>
 
       {/* HERO */}
-      <section className="mx-auto max-w-7xl px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">              <div className="relative overflow-hidden rounded-modal bg-neutral-950">
+      <section className="mx-auto max-w-7xl px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">              <div className="relative overflow-hidden rounded-lg bg-neutral-950">
           {tenant.banner_url ? (
             <img
               src={tenant.banner_url}
@@ -338,7 +338,7 @@ function LojaHomeContent() {
           <div className="relative min-h-[300px] px-5 py-7 sm:min-h-[380px] sm:px-8 sm:py-9 lg:min-h-[420px] lg:px-12">
             <div className="flex h-full min-h-[260px] flex-col justify-end sm:min-h-[340px] lg:min-h-[380px]">
               <div className="max-w-2xl">
-                <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-2 text-xs font-medium text-white/90">
+                <div className="mb-5 inline-flex items-center gap-2 rounded-sm border border-white/15 bg-white/10 px-3 py-2 text-xs font-medium text-white/90">
                   <span
                     className={`h-1.5 w-1.5 rounded-full ${
                       aberto
@@ -367,11 +367,11 @@ function LojaHomeContent() {
       </section>
 
       {/* SEARCH + CATEGORIES */}
-      <section className="sticky top-[72px] z-30 mt-4 border-y border-neutral-200 bg-neutral-50 sm:mt-5">
+      <section className="sticky top-[72px] z-30 mt-4 border-y border-line bg-neutral-50 sm:mt-5">
         <div className="mx-auto max-w-7xl px-4 py-3 sm:px-6 lg:px-8">
           <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
             <div className="relative lg:w-[320px] lg:shrink-0">
-              <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-400" />
+              <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-dim" />
 
               <input
                 type="search"
@@ -380,7 +380,7 @@ function LojaHomeContent() {
                   setBusca(event.target.value)
                 }
                 placeholder="Buscar no cardápio"
-                className="h-11 w-full rounded-card border border-neutral-200 bg-white pl-10 pr-4 text-sm text-neutral-900 outline-none transition placeholder:text-neutral-400 hover:border-neutral-300 focus:border-neutral-400 focus:ring-4 focus:ring-black/[0.04]"
+                className="h-11 w-full rounded-md border border-line bg-white pl-10 pr-4 text-sm text-strong outline-none transition placeholder:text-dim hover:border-strong focus:border-neutral-400 focus:ring-4 focus:ring-black/[0.04]"
               />
             </div>
 
@@ -400,10 +400,10 @@ function LojaHomeContent() {
                             categoria.id
                           )
                         }
-                        className={`shrink-0 rounded-full border px-4 py-2.5 text-sm font-medium transition ${
+                        className={`shrink-0 rounded-sm border px-4 py-2.5 text-sm font-medium transition ${
                           ativa
-                            ? 'border-neutral-950 bg-neutral-950 text-white shadow-sm'
-                            : 'border-neutral-200 bg-white text-neutral-600 hover:border-neutral-300 hover:bg-neutral-50 hover:text-neutral-950'
+                            ? 'border-neutral-950 bg-neutral-950 text-white'
+                            : 'border-line bg-white text-mid hover:border-strong hover:bg-page hover:text-neutral-950'
                         }`}
                       >
                         {categoria.nome}
@@ -422,7 +422,7 @@ function LojaHomeContent() {
         {/* Intro */}
         <div className="mb-8 flex flex-col gap-3 sm:mb-10 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">
+            <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-dim">
               
               Cardápio
             </div>
@@ -431,7 +431,7 @@ function LojaHomeContent() {
               Escolha o que você deseja
             </h2>
 
-            <p className="mt-2 text-sm text-neutral-500">
+            <p className="mt-2 text-sm text-mid">
               {termo
                 ? `${totalProdutosVisiveis} resultado(s) encontrado(s)`
                 : 'Produtos, categorias e favoritos da loja.'}
@@ -461,7 +461,7 @@ function LojaHomeContent() {
                       {categoria.nome}
                     </h3>
 
-                    <p className="mt-1 text-sm text-neutral-500">
+                    <p className="mt-1 text-sm text-mid">
                       {produtosCategoria.length}{' '}
                       {produtosCategoria.length === 1
                         ? 'opção disponível'
@@ -469,7 +469,7 @@ function LojaHomeContent() {
                     </p>
                   </div>
 
-                  <span className="hidden text-xs font-medium text-neutral-400 sm:block">
+                  <span className="hidden text-xs font-medium text-dim sm:block">
                     {produtosCategoria.length}{' '}
                     {produtosCategoria.length === 1
                       ? 'item'
@@ -478,8 +478,8 @@ function LojaHomeContent() {
                 </div>
 
                 {produtosCategoria.length === 0 ? (
-                  <div className="rounded-2xl border border-dashed border-neutral-200 bg-white px-6 py-10 text-center">
-                    <p className="text-sm text-neutral-400">
+                  <div className="rounded-lg border border-dashed border-line bg-white px-6 py-10 text-center">
+                    <p className="text-sm text-dim">
                       Nenhum produto nesta categoria.
                     </p>
                   </div>
@@ -497,15 +497,15 @@ function LojaHomeContent() {
                             )
                           }
                           disabled={!produto.disponivel}
-                          className={`group overflow-hidden rounded-2xl border bg-white text-left shadow-sm transition ${
+                          className={`group overflow-hidden rounded-lg border bg-white text-left transition ${
                             produto.disponivel
-                              ? 'border-neutral-200 hover:border-neutral-300 hover:shadow-md'
-                              : 'cursor-not-allowed border-neutral-200 opacity-60'
+                              ? 'border-line hover:border-strong hover:shadow-md'
+                              : 'cursor-not-allowed border-line opacity-60'
                           }`}
                         >
                           {/* Product image */}
                           {produto.imagem_url ? (
-                            <div className="relative aspect-[1.42/1] overflow-hidden bg-neutral-100">
+                            <div className="relative aspect-[1.42/1] overflow-hidden bg-surface">
                               <img
                                 src={
                                   produto.imagem_url
@@ -521,15 +521,15 @@ function LojaHomeContent() {
 
                               {!produto.disponivel && (
                                 <div className="absolute inset-0 flex items-center justify-center bg-black/35">
-                                  <span className="rounded-pill bg-white px-3 py-1.5 text-xs font-semibold text-neutral-700 shadow-card">
+                                  <span className="rounded-pill bg-white px-3 py-1.5 text-xs font-semibold text-mid ">
                                     Indisponível
                                   </span>
                                 </div>
                               )}
                             </div>
                           ) : (
-                            <div className="flex aspect-[1.42/1] items-center justify-center bg-neutral-100">
-                              <div className="flex h-14 w-14 items-center justify-center rounded-card bg-white text-neutral-300 shadow-card">
+                            <div className="flex aspect-[1.42/1] items-center justify-center bg-surface">
+                              <div className="flex h-14 w-14 items-center justify-center rounded-md bg-white text-dim ">
                                 <ShoppingBag className="h-6 w-6" />
                               </div>
                             </div>
@@ -543,15 +543,15 @@ function LojaHomeContent() {
                               </h4>
 
                               {produto.descricao && (
-                                <p className="mt-2 line-clamp-2 text-sm leading-5 text-neutral-500">
+                                <p className="mt-2 line-clamp-2 text-sm leading-5 text-mid">
                                   {produto.descricao}
                                 </p>
                               )}
                             </div>
 
-                            <div className="mt-4 flex items-center justify-between gap-3 border-t border-neutral-100 pt-4">
+                            <div className="mt-4 flex items-center justify-between gap-3 border-t border-line pt-4">
                               <div>
-                                <p className="text-[11px] font-medium uppercase tracking-[0.12em] text-neutral-400">
+                                <p className="text-[11px] font-medium uppercase tracking-[0.12em] text-dim">
                                   A partir de
                                 </p>
 

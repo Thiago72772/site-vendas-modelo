@@ -17,10 +17,7 @@ export default function AdminClientes() {
     (async () => {
       if (!tenantId) return;
       const { data } = await supabase
-        .from('clientes')
-        .select('*')
-        .eq('tenant_id', tenantId)
-        .order('created_at', { ascending: false });
+        .from('clientes').select('*').eq('tenant_id', tenantId).order('created_at', { ascending: false });
       setClientes((data as Cliente[]) ?? []);
       setLoading(false);
     })();
@@ -36,7 +33,7 @@ export default function AdminClientes() {
     return (
       <AdminLayout>
         <div className="flex items-center justify-center py-20">
-          <Loader2 className="w-6 h-6 text-primary-500 animate-spin" />
+          <Loader2 className="w-5 h-5 text-primary-500 animate-spin" />
         </div>
       </AdminLayout>
     );
@@ -44,36 +41,36 @@ export default function AdminClientes() {
 
   return (
     <AdminLayout>
-      <h1 className="text-2xl font-semibold text-neutral-900 mb-1">Clientes</h1>
-      <p className="text-sm text-neutral-500 mb-6">Veja e gerencie seus clientes</p>
+      <h1 className="text-lg font-semibold text-strong mb-0.5">Clientes</h1>
+      <p className="text-sm text-mid mb-5">Veja e gerencie seus clientes</p>
 
-      <div className="relative mb-4">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400" />
+      <div className="relative mb-3">
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-dim" />
         <input
-          className="input pl-10"
+          className="input pl-9"
           placeholder="Buscar por nome ou telefone..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
       </div>
 
-      <div className="space-y-2">
+      <div className="space-y-1">
         {filtered.map((cliente) => (
-          <div key={cliente.id} className="card flex items-center gap-3 py-4">
-            <div className="w-10 h-10 rounded-card bg-primary-50 flex items-center justify-center shrink-0">
-              <Users className="w-5 h-5 text-primary-600" />
+          <div key={cliente.id} className="card flex items-center gap-2.5 py-3 px-3">
+            <div className="w-8 h-8 rounded-md bg-primary-600/15 flex items-center justify-center shrink-0">
+              <Users className="w-4 h-4 text-primary-500" />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-neutral-900 truncate">{cliente.nome}</p>
+              <p className="text-sm font-medium text-strong truncate">{cliente.nome}</p>
               {cliente.telefone && (
-                <p className="text-xs text-neutral-400">{formatPhone(cliente.telefone)}</p>
+                <p className="text-2xs text-dim">{formatPhone(cliente.telefone)}</p>
               )}
             </div>
-            <span className="text-xs text-neutral-400">{formatDate(cliente.created_at)}</span>
+            <span className="text-2xs text-dim">{formatDate(cliente.created_at)}</span>
           </div>
         ))}
         {filtered.length === 0 && (
-          <p className="text-sm text-neutral-400 text-center py-8">Nenhum cliente encontrado.</p>
+          <p className="text-sm text-dim text-center py-6">Nenhum cliente encontrado.</p>
         )}
       </div>
     </AdminLayout>

@@ -5,16 +5,7 @@ import { supabase } from '@/lib/supabase';
 import { formatPhone, maskPhone } from '@/lib/format';
 import type { Entregador } from '@/lib/types';
 import { useAuth } from '@/hooks/useAuth';
-import {
-  Plus,
-  X,
-  Pencil,
-  Trash2,
-  Loader2,
-  Bike,
-  Check,
-  XCircle,
-} from 'lucide-react';
+import { Plus, X, Pencil, Trash2, Loader2, Bike, Check, XCircle } from 'lucide-react';
 
 export default function AdminEntregadores() {
   const { perfil } = useAuth();
@@ -24,17 +15,12 @@ export default function AdminEntregadores() {
   const [editing, setEditing] = useState<Entregador | null>(null);
   const [showForm, setShowForm] = useState(false);
 
-  useEffect(() => {
-    load();
-  }, [tenantId]);
+  useEffect(() => { load(); }, [tenantId]);
 
   async function load() {
     if (!tenantId) return;
     const { data } = await supabase
-      .from('entregadores')
-      .select('*')
-      .eq('tenant_id', tenantId)
-      .order('created_at', { ascending: false });
+      .from('entregadores').select('*').eq('tenant_id', tenantId).order('created_at', { ascending: false });
     setEntregadores((data as Entregador[]) ?? []);
     setLoading(false);
   }
@@ -54,7 +40,7 @@ export default function AdminEntregadores() {
     return (
       <AdminLayout>
         <div className="flex items-center justify-center py-20">
-          <Loader2 className="w-6 h-6 text-primary-500 animate-spin" />
+          <Loader2 className="w-5 h-5 text-primary-500 animate-spin" />
         </div>
       </AdminLayout>
     );
@@ -62,81 +48,62 @@ export default function AdminEntregadores() {
 
   return (
     <AdminLayout>
-      <h1 className="text-2xl font-semibold text-neutral-900 mb-1">Entregadores</h1>
-      <p className="text-sm text-neutral-500 mb-6">Cadastre e gerencie entregadores</p>
+      <h1 className="text-lg font-semibold text-strong mb-0.5">Entregadores</h1>
+      <p className="text-sm text-mid mb-5">Cadastre e gerencie entregadores</p>
 
-      <button
-        onClick={() => { setEditing(null); setShowForm(true); }}
-        className="btn-primary mb-4"
-      >
+      <button onClick={() => { setEditing(null); setShowForm(true); }} className="btn-primary mb-3">
         <Plus className="w-4 h-4" /> Novo entregador
       </button>
 
-      <div className="space-y-3">
+      <div className="space-y-1.5">
         {entregadores.map((entregador) => (
-          <div key={entregador.id} className="card">
+          <div key={entregador.id} className="card p-3">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-card bg-primary-50 flex items-center justify-center">
-                  <Bike className="w-5 h-5 text-primary-600" />
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-md bg-primary-600/15 flex items-center justify-center">
+                  <Bike className="w-4 h-4 text-primary-500" />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-neutral-900">{entregador.nome}</p>
+                  <p className="text-sm font-semibold text-strong">{entregador.nome}</p>
                   {entregador.telefone && (
-                    <p className="text-xs text-neutral-400">{formatPhone(entregador.telefone)}</p>
+                    <p className="text-2xs text-dim">{formatPhone(entregador.telefone)}</p>
                   )}
                 </div>
               </div>
-              <div className="flex items-center gap-2">
-                <button onClick={() => toggleAtivo(entregador)} className="p-2 rounded-card hover:bg-neutral-100">
-                  {entregador.ativo ? (
-                    <Check className="w-4 h-4 text-success-500" />
-                  ) : (
-                    <XCircle className="w-4 h-4 text-neutral-300" />
-                  )}
+              <div className="flex items-center gap-0.5">
+                <button onClick={() => toggleAtivo(entregador)} className="p-1.5 rounded-md hover:bg-raised">
+                  {entregador.ativo ? <Check className="w-4 h-4 text-success-500" /> : <XCircle className="w-4 h-4 text-dim" />}
                 </button>
-                <button onClick={() => { setEditing(entregador); setShowForm(true); }} className="p-2 rounded-card hover:bg-neutral-100">
-                  <Pencil className="w-4 h-4 text-neutral-400" />
+                <button onClick={() => { setEditing(entregador); setShowForm(true); }} className="p-1.5 rounded-md hover:bg-raised">
+                  <Pencil className="w-4 h-4 text-dim" />
                 </button>
-                <button onClick={() => deleteEntregador(entregador.id)} className="p-2 rounded-card hover:bg-error-50">
-                  <Trash2 className="w-4 h-4 text-error-400" />
+                <button onClick={() => deleteEntregador(entregador.id)} className="p-1.5 rounded-md hover:bg-error-500/10">
+                  <Trash2 className="w-4 h-4 text-error-500" />
                 </button>
               </div>
             </div>
-            <div className="mt-2">
-              <span className={`text-xs px-2 py-0.5 rounded-pill ${entregador.ativo ? 'bg-success-50 text-success-600' : 'bg-neutral-100 text-neutral-500'}`}>
+            <div className="mt-1.5">
+              <span className={`text-2xs px-1.5 py-0.5 rounded-sm ${entregador.ativo ? 'bg-success-500/15 text-success-500' : 'bg-raised text-dim'}`}>
                 {entregador.ativo ? 'Ativo' : 'Inativo'}
               </span>
             </div>
           </div>
         ))}
         {entregadores.length === 0 && (
-          <p className="text-sm text-neutral-400 text-center py-8">Nenhum entregador cadastrado.</p>
+          <p className="text-sm text-dim text-center py-6">Nenhum entregador cadastrado.</p>
         )}
       </div>
 
       {showForm && (
-        <EntregadorForm
-          entregador={editing}
-          tenantId={tenantId!}
-          onClose={() => setShowForm(false)}
-          onSaved={() => { setShowForm(false); load(); }}
-        />
+        <EntregadorForm entregador={editing} tenantId={tenantId!}
+          onClose={() => setShowForm(false)} onSaved={() => { setShowForm(false); load(); }} />
       )}
     </AdminLayout>
   );
 }
 
-function EntregadorForm({
-  entregador,
-  tenantId,
-  onClose,
-  onSaved,
-}: {
-  entregador: Entregador | null;
-  tenantId: string;
-  onClose: () => void;
-  onSaved: () => void;
+function EntregadorForm({ entregador, tenantId, onClose, onSaved }: {
+  entregador: Entregador | null; tenantId: string; onClose: () => void; onSaved: () => void;
 }) {
   const [nome, setNome] = useState(entregador?.nome ?? '');
   const [telefone, setTelefone] = useState(entregador?.telefone ?? '');
@@ -145,12 +112,7 @@ function EntregadorForm({
 
   async function save() {
     setSaving(true);
-    const payload = {
-      tenant_id: tenantId,
-      nome,
-      telefone: telefone.replace(/\D/g, '') || null,
-      ativo,
-    };
+    const payload = { tenant_id: tenantId, nome, telefone: telefone.replace(/\D/g, '') || null, ativo };
     if (entregador) {
       await supabase.from('entregadores').update(payload).eq('id', entregador.id);
     } else {
@@ -161,42 +123,34 @@ function EntregadorForm({
   }
 
   useScrollLock(true);
-
   useEffect(() => {
-    function onKeyDown(e: KeyboardEvent) {
-      if (e.key === 'Escape') onClose();
-    }
+    function onKeyDown(e: KeyboardEvent) { if (e.key === 'Escape') onClose(); }
     document.addEventListener('keydown', onKeyDown);
     return () => document.removeEventListener('keydown', onKeyDown);
   }, [onClose]);
 
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center">
-      <div className="absolute inset-0 bg-black/50" onClick={onClose} />
-      <div className="relative bg-white w-full sm:max-w-sm sm:rounded-2xl rounded-t-2xl max-h-[90vh] flex flex-col animate-slide-up">
-        <div className="flex items-center justify-between px-5 py-4 border-b border-neutral-200">
-          <h2 className="text-base font-semibold text-neutral-900">{entregador ? 'Editar entregador' : 'Novo entregador'}</h2>
-          <button onClick={onClose} className="p-2 rounded-lg hover:bg-neutral-100">
-            <X className="w-5 h-5 text-neutral-500" />
+      <div className="absolute inset-0 bg-black/60" onClick={onClose} />
+      <div className="relative bg-surface w-full sm:max-w-sm sm:rounded-lg rounded-t-lg max-h-[90vh] flex flex-col animate-slide-up shadow-elevated">
+        <div className="flex items-center justify-between px-4 py-3 border-b border-line">
+          <h2 className="text-sm font-semibold text-strong">{entregador ? 'Editar entregador' : 'Novo entregador'}</h2>
+          <button onClick={onClose} className="p-1 rounded-md hover:bg-raised">
+            <X className="w-4 h-4 text-dim" />
           </button>
         </div>
-        <div className="overflow-y-auto flex-1 px-5 py-4 space-y-4">
+        <div className="overflow-y-auto flex-1 px-4 py-3 space-y-3">
           <div>
             <label className="label">Nome</label>
             <input className="input" value={nome} onChange={(e) => setNome(e.target.value)} autoFocus />
           </div>
           <div>
             <label className="label">Telefone</label>
-            <input
-              className="input"
-              value={telefone}
-              onChange={(e) => setTelefone(maskPhone(e.target.value))}
-              placeholder="(11) 99999-9999"
-            />
+            <input className="input" value={telefone} onChange={(e) => setTelefone(maskPhone(e.target.value))} placeholder="(11) 99999-9999" />
           </div>
           <label className="flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" checked={ativo} onChange={(e) => setAtivo(e.target.checked)} className="w-4 h-4 rounded" />
-            <span className="text-sm text-neutral-700">Ativo</span>
+            <input type="checkbox" checked={ativo} onChange={(e) => setAtivo(e.target.checked)} className="w-4 h-4 rounded-sm" />
+            <span className="text-sm text-mid">Ativo</span>
           </label>
           <button onClick={save} disabled={saving || !nome.trim()} className="btn-primary w-full">
             {saving && <Loader2 className="w-4 h-4 animate-spin" />}

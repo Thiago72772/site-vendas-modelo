@@ -50,13 +50,13 @@ export default function LojaClienteLogin() {
         <header className="flex items-center justify-between">
           <Link
             to={slug ? `/loja/${slug}` : '/'}
-            className="inline-flex min-h-11 items-center gap-2 rounded-full border border-neutral-200 bg-white px-4 text-sm font-medium text-neutral-700 shadow-sm transition hover:border-neutral-300 hover:bg-neutral-50"
+            className="inline-flex min-h-11 items-center gap-2 rounded-md border border-line bg-white px-4 text-sm font-medium text-mid transition hover:border-strong hover:bg-page"
           >
             <ChevronLeft className="h-4 w-4" />
             Voltar para a loja
           </Link>
 
-          <span className="hidden text-xs font-medium uppercase tracking-[0.14em] text-neutral-400 sm:block">
+          <span className="hidden text-xs font-medium uppercase tracking-[0.14em] text-dim sm:block">
             Área do cliente
           </span>
         </header>
@@ -65,7 +65,7 @@ export default function LojaClienteLogin() {
         <main className="flex flex-1 items-center justify-center py-8 sm:py-12">
           <div className="grid w-full max-w-5xl gap-5 lg:grid-cols-[1.05fr_0.95fr]">
             {/* Brand panel */}
-            <section className="relative hidden min-h-[620px] overflow-hidden rounded-2xl bg-neutral-950 lg:block">
+            <section className="relative hidden min-h-[620px] overflow-hidden rounded-lg bg-neutral-950 lg:block">
               {tenant?.banner_url ? (
                 <img
                   src={tenant.banner_url}
@@ -84,10 +84,10 @@ export default function LojaClienteLogin() {
                     <img
                       src={tenant.logo_url}
                       alt={tenant.nome}
-                      className="h-12 w-12 rounded-2xl border border-white/20 object-cover"
+                      className="h-12 w-12 rounded-lg border border-white/20 object-cover"
                     />
                   ) : (
-                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/15 bg-white/10 text-white">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-lg border border-white/15 bg-white/10 text-white">
                       <Store className="h-5 w-5" />
                     </div>
                   )}
@@ -122,17 +122,17 @@ export default function LojaClienteLogin() {
             </section>
 
             {/* Form */}
-            <section className="flex min-h-[620px] flex-col justify-center rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm sm:p-8 xl:p-10">
+            <section className="flex min-h-[620px] flex-col justify-center rounded-lg border border-line bg-white p-5 sm:p-8 xl:p-10">
               {/* Mobile brand */}
               <div className="mb-8 flex items-center gap-3 lg:hidden">
                 {tenant?.logo_url ? (
                   <img
                     src={tenant.logo_url}
                     alt={tenant.nome}
-                    className="h-12 w-12 rounded-2xl object-cover ring-1 ring-black/5"
+                    className="h-12 w-12 rounded-lg object-cover ring-1 ring-black/5"
                   />
                 ) : (
-                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-neutral-950 text-white">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-neutral-950 text-white">
                     <Store className="h-5 w-5" />
                   </div>
                 )}
@@ -142,14 +142,14 @@ export default function LojaClienteLogin() {
                     {tenant?.nome ?? 'Loja'}
                   </p>
 
-                  <p className="mt-0.5 text-xs text-neutral-400">
+                  <p className="mt-0.5 text-xs text-dim">
                     Pedidos online
                   </p>
                 </div>
               </div>
 
               <div className="max-w-md">
-                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-dim">
                   {isLogin ? 'Bem-vindo de volta' : 'Novo cadastro'}
                 </p>
 
@@ -159,7 +159,7 @@ export default function LojaClienteLogin() {
                     : 'Crie sua conta'}
                 </h2>
 
-                <p className="mt-3 text-sm leading-6 text-neutral-500">
+                <p className="mt-3 text-sm leading-6 text-mid">
                   {isLogin
                     ? 'Acesse sua conta para agilizar seus próximos pedidos.'
                     : 'Crie sua conta para salvar seus dados e facilitar as próximas compras.'}
@@ -188,7 +188,7 @@ export default function LojaClienteLogin() {
                     }
                     placeholder="voce@exemplo.com"
                     autoComplete="email"
-                    className="input h-12 rounded-card"
+                    className="input h-12 rounded-md"
                   />
                 </div>
 
@@ -201,7 +201,7 @@ export default function LojaClienteLogin() {
                       Senha
                     </label>
 
-                    <span className="text-xs text-neutral-400">
+                    <span className="text-xs text-dim">
                       Mínimo recomendado: 8 caracteres
                     </span>
                   </div>
@@ -220,12 +220,12 @@ export default function LojaClienteLogin() {
                         ? 'current-password'
                         : 'new-password'
                     }
-                    className="input h-12 rounded-card"
+                    className="input h-12 rounded-md"
                   />
                 </div>
 
                 {error && (
-                  <div className="rounded-2xl border border-rose-100 bg-rose-50 px-4 py-3.5">
+                  <div className="rounded-lg border border-rose-100 bg-rose-50 px-4 py-3.5">
                     <p className="text-sm leading-5 text-rose-700">
                       {error}
                     </p>
@@ -235,7 +235,7 @@ export default function LojaClienteLogin() {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="flex h-12 w-full items-center justify-center gap-2 rounded-card bg-neutral-950 px-5 text-sm font-semibold text-white transition hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="flex h-12 w-full items-center justify-center gap-2 rounded-md bg-neutral-950 px-5 text-sm font-semibold text-white transition hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   {submitting && (
                     <Loader2 className="h-4 w-4 animate-spin" />
@@ -248,15 +248,15 @@ export default function LojaClienteLogin() {
                     : 'Criar conta'}
                 </button>
 
-                <div className="rounded-2xl bg-neutral-50 px-4 py-3.5">
-                  <p className="text-center text-xs leading-5 text-neutral-500">
+                <div className="rounded-lg bg-neutral-50 px-4 py-3.5">
+                  <p className="text-center text-xs leading-5 text-mid">
                     Você também pode fazer seu pedido como convidado, sem
                     criar uma conta.
                   </p>
                 </div>
               </form>
 
-              <div className="mt-7 max-w-md border-t border-neutral-100 pt-6 text-center">
+              <div className="mt-7 max-w-md border-t border-line pt-6 text-center">
                 {isLogin ? (
                   <button
                     type="button"
@@ -264,7 +264,7 @@ export default function LojaClienteLogin() {
                       setError(null);
                       setMode('signup');
                     }}
-                    className="text-sm font-semibold text-neutral-900 transition hover:text-primary-600"
+                    className="text-sm font-semibold text-strong transition hover:text-primary-600"
                   >
                     Ainda não tem conta?{' '}
                     <span className="underline underline-offset-4">
@@ -278,7 +278,7 @@ export default function LojaClienteLogin() {
                       setError(null);
                       setMode('login');
                     }}
-                    className="text-sm font-semibold text-neutral-900 transition hover:text-primary-600"
+                    className="text-sm font-semibold text-strong transition hover:text-primary-600"
                   >
                     Já tem conta?{' '}
                     <span className="underline underline-offset-4">
@@ -291,7 +291,7 @@ export default function LojaClienteLogin() {
           </div>
         </main>
 
-        <footer className="pb-2 text-center text-xs text-neutral-400">
+        <footer className="pb-2 text-center text-xs text-dim">
           Uma experiência de pedidos simples, moderna e segura.
         </footer>
       </div>

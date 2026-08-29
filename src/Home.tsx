@@ -30,19 +30,19 @@ export default function Home() {
   const loja = tenants[0];
 
   return (
-    <div className="min-h-screen bg-[#f7f7f5] text-neutral-900">
+    <div className="min-h-screen bg-[#f7f7f5] text-strong">
       {/* Header */}
-      <header className="sticky top-0 z-30 border-b border-neutral-200 bg-white">
+      <header className="sticky top-0 z-30 border-b border-line bg-white">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
           <div className="flex min-w-0 items-center gap-3">
             {loja?.logo_url ? (
               <img
                 src={loja.logo_url}
                 alt={loja.nome}
-                className="h-10 w-10 shrink-0 rounded-2xl object-cover ring-1 ring-black/5"
+                className="h-10 w-10 shrink-0 rounded-lg object-cover ring-1 ring-black/5"
               />
             ) : (
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-neutral-900 text-white">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-neutral-900 text-white">
                 <Store className="h-5 w-5" />
               </div>
             )}
@@ -52,13 +52,13 @@ export default function Home() {
                 {loja?.nome ?? 'Loja Teste'}
               </p>
 
-              <p className="mt-0.5 text-xs text-neutral-400">
+              <p className="mt-0.5 text-xs text-dim">
                 Pedidos online
               </p>
             </div>
           </div>
 
-          <div className="hidden items-center gap-2 sm:flex">                  <div className="flex items-center gap-2 rounded-pill border border-neutral-200 bg-white px-3 py-2 text-xs font-medium text-neutral-600">
+          <div className="hidden items-center gap-2 sm:flex">                  <div className="flex items-center gap-2 rounded-pill border border-line bg-white px-3 py-2 text-xs font-medium text-mid">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
               Experiência online
             </div>
@@ -69,22 +69,22 @@ export default function Home() {
       {loading ? (
         <main className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-10">
           <div className="grid gap-5 lg:grid-cols-[1.2fr_0.8fr]">
-            <div className="skeleton h-[470px] rounded-modal sm:h-[560px]" />
-            <div className="skeleton h-[470px] rounded-modal sm:h-[560px]" />
+            <div className="skeleton h-[470px] rounded-lg sm:h-[560px]" />
+            <div className="skeleton h-[470px] rounded-lg sm:h-[560px]" />
           </div>
         </main>
       ) : !loja ? (
         <main className="flex min-h-[calc(100vh-64px)] items-center justify-center px-4">
-          <div className="w-full max-w-md rounded-modal border border-neutral-200 bg-white p-8 text-center shadow-card">
-            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-card bg-neutral-100">
-              <Store className="h-7 w-7 text-neutral-500" />
+          <div className="w-full max-w-md rounded-lg border border-line bg-white p-8 text-center ">
+            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-md bg-neutral-100">
+              <Store className="h-7 w-7 text-mid" />
             </div>
 
             <h1 className="mt-6 text-2xl font-semibold tracking-tight text-neutral-950">
               Nenhuma loja disponível
             </h1>
 
-            <p className="mx-auto mt-2 max-w-sm text-sm leading-6 text-neutral-500">
+            <p className="mx-auto mt-2 max-w-sm text-sm leading-6 text-mid">
               A loja ainda não foi configurada para esta demonstração.
             </p>
           </div>
@@ -93,7 +93,7 @@ export default function Home() {
         <main className="mx-auto max-w-6xl px-4 py-5 sm:px-6 sm:py-8">
           <div className="grid gap-5 lg:grid-cols-[1.18fr_0.82fr]">
             {/* Main visual */}
-            <section className="relative min-h-[460px] overflow-hidden rounded-modal border border-neutral-900 bg-neutral-950 shadow-elevated sm:min-h-[560px]">
+            <section className="relative min-h-[460px] overflow-hidden rounded-lg border border-neutral-900 bg-neutral-950  sm:min-h-[560px]">
               {loja.banner_url ? (
                 <img
                   src={loja.banner_url}
@@ -109,12 +109,12 @@ export default function Home() {
 
               <div className="relative flex h-full min-h-[460px] flex-col justify-between p-5 sm:min-h-[560px] sm:p-8">
                 <div className="flex items-start justify-between gap-4">
-                  <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-2 text-xs font-medium text-white/85">
+                  <div className="inline-flex items-center gap-2 rounded-sm border border-white/15 bg-white/10 px-3 py-2 text-xs font-medium text-white/85">
                     <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
                     Loja online
                   </div>
 
-                  <div className="hidden rounded-full border border-white/15 bg-black/20 px-3 py-2 text-xs text-white/70 sm:block">
+                  <div className="hidden rounded-sm border border-white/15 bg-black/20 px-3 py-2 text-xs text-white/70 sm:block">
                     Modelo de demonstração
                   </div>
                 </div>
@@ -126,10 +126,10 @@ export default function Home() {
                         src={loja.logo_url}
                         alt=""
                         loading="lazy"
-                        className="h-12 w-12 rounded-card border border-white/20 object-cover"
+                        className="h-12 w-12 rounded-md border border-white/20 object-cover"
                       />
                     ) : (
-                      <div className="flex h-12 w-12 items-center justify-center rounded-card border border-white/15 bg-white/10 text-white">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-md border border-white/15 bg-white/10 text-white">
                         <Store className="h-5 w-5" />
                       </div>
                     )}
@@ -157,14 +157,14 @@ export default function Home() {
                   <div className="mt-7 flex flex-col gap-3 sm:flex-row">
                     <Link
                       to={`/loja/${loja.slug}`}
-                      className="inline-flex min-h-12 items-center justify-center gap-2 rounded-card bg-white px-5 text-sm font-semibold text-neutral-950 transition hover:bg-neutral-100"
+                      className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-white px-5 text-sm font-semibold text-neutral-950 transition hover:bg-surface"
                     >
                       Ver experiência
                       <ArrowRight className="h-4 w-4" />
                     </Link>
 
                     {loja.tempo_medio_preparo_min && (
-                      <div className="inline-flex min-h-12 items-center justify-center gap-2 rounded-card border border-white/15 bg-white/10 px-4 text-sm font-medium text-white/85">
+                      <div className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md border border-white/15 bg-white/10 px-4 text-sm font-medium text-white/85">
                         <Clock className="h-4 w-4" />
                         ~{loja.tempo_medio_preparo_min} min
                       </div>
@@ -175,9 +175,9 @@ export default function Home() {
             </section>
 
             {/* Supporting panel */}
-            <section className="flex flex-col rounded-modal border border-neutral-200 bg-white p-5 shadow-card sm:p-7">
+            <section className="flex flex-col rounded-lg border border-line bg-white p-5  sm:p-7">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-400">
+                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-dim">
                   Sistema modelo
                 </p>
 
@@ -185,7 +185,7 @@ export default function Home() {
                   Uma base pronta para ser personalizada.
                 </h2>
 
-                <p className="mt-3 text-sm leading-6 text-neutral-500">
+                <p className="mt-3 text-sm leading-6 text-mid">
                   Estrutura visual neutra, moderna e adaptável para
                   diferentes segmentos de alimentação.
                 </p>
@@ -211,9 +211,9 @@ export default function Home() {
                 ].map((item) => {
                   const Icon = item.icon;
 
-                  return (                    <div key={item.title} className="group rounded-card border border-neutral-200 bg-neutral-50/70 p-4 transition hover:border-neutral-300 hover:bg-white hover:shadow-card">
+                  return (                    <div key={item.title} className="group rounded-md border border-line bg-neutral-50/70 p-4 transition hover:border-strong hover:bg-white hover:">
                       <div className="flex gap-4">
-                        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-card bg-neutral-900 text-white">
+                        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-md bg-neutral-900 text-white">
                           <Icon className="h-5 w-5" />
                         </div>
 
@@ -222,7 +222,7 @@ export default function Home() {
                             {item.title}
                           </h3>
 
-                          <p className="mt-1 text-sm leading-5 text-neutral-500">
+                          <p className="mt-1 text-sm leading-5 text-mid">
                             {item.text}
                           </p>
                         </div>
@@ -233,7 +233,7 @@ export default function Home() {
               </div>
 
               <div className="mt-auto pt-7">
-                <div className="rounded-card border border-neutral-200 bg-neutral-950 p-5 text-white">
+                <div className="rounded-md border border-line bg-neutral-950 p-5 text-white">
                   <p className="text-xs font-medium uppercase tracking-[0.14em] text-white/45">
                     Modelo de demonstração
                   </p>

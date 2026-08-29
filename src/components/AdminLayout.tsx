@@ -66,19 +66,19 @@ export function AdminLayout({ children }: { children: ReactNode }) {
 
   const sidebarContent = (
     <>
-      <div className="px-6 py-5 border-b border-neutral-200">
-        <Link to={basePath} className="flex items-center gap-2">
-          <div className="w-9 h-9 rounded-card bg-primary-600 flex items-center justify-center">
-            <Store className="w-5 h-5 text-white" />
+      <div className="px-5 py-4 border-b border-line">
+        <Link to={basePath} className="flex items-center gap-2.5">
+          <div className="w-8 h-8 rounded-md bg-primary-600 flex items-center justify-center">
+            <Store className="w-4 h-4 text-white" />
           </div>
           <div className="min-w-0">
-            <p className="font-semibold text-neutral-900 text-sm truncate">{tenantName}</p>
-            <p className="text-xs text-neutral-400 truncate">{slug}</p>
+            <p className="font-semibold text-strong text-sm truncate">{tenantName}</p>
+            <p className="text-xs text-dim truncate">{slug}</p>
           </div>
         </Link>
       </div>
 
-      <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
+      <nav className="flex-1 px-2 py-3 space-y-0.5 overflow-y-auto">
         {navItems.map((item) => {
           const Icon = item.icon;
           const active = isActive(item);
@@ -87,10 +87,10 @@ export function AdminLayout({ children }: { children: ReactNode }) {
               key={item.area}
               to={basePath + item.to}
               onClick={() => setMobileOpen(false)}
-              className={`flex items-center gap-3 px-3 py-2.5 rounded-card text-sm font-medium transition-all duration-200 ${
+              className={`flex items-center gap-2.5 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                 active
-                  ? 'bg-primary-50 text-primary-700'
-                  : 'text-neutral-600 hover:bg-neutral-100'
+                  ? 'bg-primary-600/15 text-primary-400'
+                  : 'text-mid hover:bg-raised hover:text-strong'
               }`}
             >
               <Icon className="w-4 h-4 shrink-0" />
@@ -100,16 +100,16 @@ export function AdminLayout({ children }: { children: ReactNode }) {
         })}
       </nav>
 
-      <div className="px-3 py-4 border-t border-neutral-200">
+      <div className="px-2 py-3 border-t border-line">
         {perfil && (
-          <div className="px-3 py-2 mb-2">
-            <p className="text-sm font-medium text-neutral-900 truncate">{perfil.nome}</p>
-            <p className="text-xs text-neutral-400">{PAPEL_LABELS[papel ?? 'dono']}</p>
+          <div className="px-3 py-2 mb-1">
+            <p className="text-sm font-medium text-strong truncate">{perfil.nome}</p>
+            <p className="text-xs text-dim">{PAPEL_LABELS[papel ?? 'dono']}</p>
           </div>
         )}
         <button
           onClick={handleSignOut}
-          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-card text-sm font-medium text-neutral-500 hover:bg-neutral-100 transition-all duration-200"
+          className="w-full flex items-center gap-2.5 px-3 py-2 rounded-md text-sm font-medium text-dim hover:bg-raised hover:text-strong transition-colors"
         >
           <LogOut className="w-4 h-4" />
           Sair
@@ -119,9 +119,9 @@ export function AdminLayout({ children }: { children: ReactNode }) {
   );
 
   return (
-    <div className="min-h-screen bg-neutral-50 flex">
+    <div className="dark-admin min-h-screen bg-page flex">
       {/* Desktop sidebar */}
-      <aside className="w-64 bg-white border-r border-neutral-200 flex flex-col shrink-0 hidden md:flex">
+      <aside className="w-56 bg-surface border-r border-line flex flex-col shrink-0 hidden md:flex">
         {sidebarContent}
       </aside>
 
@@ -129,10 +129,16 @@ export function AdminLayout({ children }: { children: ReactNode }) {
       {mobileOpen && (
         <>
           <div
-            className="fixed inset-0 bg-black/40 z-40 md:hidden"
+            className="fixed inset-0 bg-black/60 z-40 md:hidden"
             onClick={() => setMobileOpen(false)}
           />
-          <aside className="fixed top-0 left-0 h-full w-64 bg-white border-r border-neutral-200 flex flex-col z-50 md:hidden animate-slide-in-left">
+          <aside className="fixed top-0 left-0 h-full w-56 bg-surface border-r border-line flex flex-col z-50 md:hidden animate-fade-in">
+            <div className="flex items-center justify-between px-5 py-4 border-b border-line">
+              <span className="font-semibold text-strong text-sm">{tenantName}</span>
+              <button onClick={() => setMobileOpen(false)} className="p-1 rounded-md hover:bg-raised">
+                <X className="w-4 h-4 text-dim" />
+              </button>
+            </div>
             {sidebarContent}
           </aside>
         </>
@@ -141,21 +147,21 @@ export function AdminLayout({ children }: { children: ReactNode }) {
       {/* Main content */}
       <main className="flex-1 overflow-y-auto min-w-0">
         {/* Mobile header */}
-        <div className="md:hidden flex items-center justify-between px-4 py-3 bg-white border-b border-neutral-200 sticky top-0 z-30">
+        <div className="md:hidden flex items-center justify-between px-4 py-3 bg-surface border-b border-line sticky top-0 z-30">
           <button
             onClick={() => setMobileOpen(true)}
-            className="p-2 rounded-card hover:bg-neutral-100"
+            className="p-2 rounded-md hover:bg-raised"
           >
-            <Menu className="w-5 h-5 text-neutral-600" />
+            <Menu className="w-5 h-5 text-mid" />
           </button>
           <Link to={basePath} className="flex items-center gap-2">
-            <Store className="w-5 h-5 text-primary-600" />
-            <span className="font-semibold text-sm truncate max-w-[120px]">{tenantName}</span>
+            <Store className="w-4 h-4 text-primary-500" />
+            <span className="font-semibold text-sm text-strong truncate max-w-[120px]">{tenantName}</span>
           </Link>
           <div className="w-9" />
         </div>
 
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8">{children}</div>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-5 sm:py-6">{children}</div>
       </main>
     </div>
   );

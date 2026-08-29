@@ -52,14 +52,12 @@ export default function AdminRelatorios() {
       setNumPedidos(validos.length);
       setTicketMedio(validos.length > 0 ? vendido / validos.length : 0);
 
-      // Por status
       const statusCount: Record<string, number> = {};
       (pedidos ?? []).forEach((p: any) => {
         statusCount[p.status] = (statusCount[p.status] ?? 0) + 1;
       });
       setPorStatus(statusCount);
 
-      // Vendas por dia
       const dias: { dia: string; total: number }[] = [];
       for (let i = numDays - 1; i >= 0; i--) {
         const d = new Date(now.getTime() - i * 86400000);
@@ -73,7 +71,6 @@ export default function AdminRelatorios() {
       }
       setVendasPorDia(dias);
 
-      // Top produtos
       const pedidoIds = (pedidos ?? []).map((p: any) => p.id);
       if (pedidoIds.length > 0) {
         const { data: itens } = await supabase
@@ -112,7 +109,7 @@ export default function AdminRelatorios() {
     return (
       <AdminLayout>
         <div className="flex items-center justify-center py-20">
-          <Loader2 className="w-6 h-6 text-primary-500 animate-spin" />
+          <Loader2 className="w-5 h-5 text-primary-500 animate-spin" />
         </div>
       </AdminLayout>
     );
@@ -120,17 +117,16 @@ export default function AdminRelatorios() {
 
   return (
     <AdminLayout>
-      <h1 className="text-2xl font-semibold text-neutral-900 mb-1">Relatórios</h1>
-      <p className="text-sm text-neutral-500 mb-6">Análise de desempenho do seu negócio</p>
+      <h1 className="text-lg font-semibold text-strong mb-0.5">Relatórios</h1>
+      <p className="text-sm text-mid mb-5">Análise de desempenho do seu negócio</p>
 
-      {/* Period selector */}
-      <div className="flex gap-2 mb-6">
+      <div className="flex gap-1.5 mb-5">
         {([['hoje', 'Hoje'], ['7d', '7 dias'], ['30d', '30 dias']] as const).map(([val, label]) => (
           <button
             key={val}
             onClick={() => setPeriodo(val)}
-            className={`px-4 py-2 rounded-card text-sm font-medium transition-colors ${
-              periodo === val ? 'bg-primary-600 text-white' : 'bg-neutral-100 text-neutral-600'
+            className={`px-3.5 py-1.5 rounded-md text-sm font-medium transition-colors ${
+              periodo === val ? 'bg-primary-600 text-white' : 'bg-raised text-mid hover:text-strong'
             }`}
           >
             {label}
@@ -138,81 +134,78 @@ export default function AdminRelatorios() {
         ))}
       </div>
 
-      {/* Summary cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
-        <div className="card">
-          <div className="flex items-center justify-between mb-3">
-            <div className="w-10 h-10 rounded-card bg-success-50 flex items-center justify-center">
-              <TrendingUp className="w-5 h-5 text-success-600" />
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
+        <div className="card p-4">
+          <div className="flex items-center justify-between mb-2">
+            <div className="w-8 h-8 rounded-md bg-success-500/15 flex items-center justify-center">
+              <TrendingUp className="w-4 h-4 text-success-500" />
             </div>
           </div>
-          <p className="text-2xl font-bold text-neutral-900">{formatCurrency(totalVendido)}</p>
-          <p className="text-sm text-neutral-500 mt-1">Receita total</p>
+          <p className="text-xl font-semibold text-strong">{formatCurrency(totalVendido)}</p>
+          <p className="text-xs text-mid mt-0.5">Receita total</p>
         </div>
-        <div className="card">
-          <div className="flex items-center justify-between mb-3">
-            <div className="w-10 h-10 rounded-card bg-primary-50 flex items-center justify-center">
-              <ShoppingBag className="w-5 h-5 text-primary-600" />
+        <div className="card p-4">
+          <div className="flex items-center justify-between mb-2">
+            <div className="w-8 h-8 rounded-md bg-primary-500/15 flex items-center justify-center">
+              <ShoppingBag className="w-4 h-4 text-primary-500" />
             </div>
           </div>
-          <p className="text-2xl font-bold text-neutral-900">{numPedidos}</p>
-          <p className="text-sm text-neutral-500 mt-1">Pedidos</p>
+          <p className="text-xl font-semibold text-strong">{numPedidos}</p>
+          <p className="text-xs text-mid mt-0.5">Pedidos</p>
         </div>
-        <div className="card">
-          <div className="flex items-center justify-between mb-3">
-            <div className="w-10 h-10 rounded-card bg-warning-50 flex items-center justify-center">
-              <Receipt className="w-5 h-5 text-warning-600" />
+        <div className="card p-4">
+          <div className="flex items-center justify-between mb-2">
+            <div className="w-8 h-8 rounded-md bg-warning-500/15 flex items-center justify-center">
+              <Receipt className="w-4 h-4 text-warning-500" />
             </div>
           </div>
-          <p className="text-2xl font-bold text-neutral-900">{formatCurrency(ticketMedio)}</p>
-          <p className="text-sm text-neutral-500 mt-1">Ticket médio</p>
+          <p className="text-xl font-semibold text-strong">{formatCurrency(ticketMedio)}</p>
+          <p className="text-xs text-mid mt-0.5">Ticket médio</p>
         </div>
       </div>
 
-      {/* Sales chart */}
-      <div className="card mb-8">
-        <h2 className="text-sm font-semibold text-neutral-900 mb-4 flex items-center gap-2">
-          <BarChart3 className="w-4 h-4 text-primary-500" />
+      <div className="card p-4 mb-6">
+        <h2 className="text-xs font-semibold text-mid uppercase tracking-wide mb-3 flex items-center gap-1.5">
+          <BarChart3 className="w-3.5 h-3.5 text-primary-500" />
           Vendas por dia
         </h2>
         {vendasPorDia.length === 0 ? (
-          <p className="text-sm text-neutral-400 py-6 text-center">Sem dados.</p>
+          <p className="text-sm text-dim py-4 text-center">Sem dados.</p>
         ) : (
-          <div className="flex items-end gap-1 h-40">
+          <div className="flex items-end gap-1 h-36">
             {vendasPorDia.map((v, i) => (
-              <div key={i} className="flex-1 flex flex-col items-center gap-1 group">
+              <div key={i} className="flex-1 flex flex-col items-center gap-0.5 group">
                 <div className="w-full flex-1 flex items-end">
                   <div
-                    className="w-full rounded-t-md bg-primary-400 hover:bg-primary-500 transition-colors relative"
-                    style={{ height: `${(v.total / maxVenda) * 100}%`, minHeight: v.total > 0 ? '4px' : '0' }}
+                    className="w-full rounded-t-sm bg-primary-500 hover:bg-primary-400 transition-colors relative"
+                    style={{ height: `${(v.total / maxVenda) * 100}%`, minHeight: v.total > 0 ? '3px' : '0' }}
                   >
-                    <span className="absolute -top-6 left-1/2 -translate-x-1/2 text-xs text-neutral-500 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                    <span className="absolute -top-5 left-1/2 -translate-x-1/2 text-2xs text-mid opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
                       {formatCurrency(v.total)}
                     </span>
                   </div>
                 </div>
-                <span className="text-xs text-neutral-400">{v.dia}</span>
+                <span className="text-2xs text-dim">{v.dia}</span>
               </div>
             ))}
           </div>
         )}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Status distribution */}
-        <div className="card">
-          <h2 className="text-sm font-semibold text-neutral-900 mb-4">Distribuição por status</h2>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div className="card p-4">
+          <h2 className="text-xs font-semibold text-mid uppercase tracking-wide mb-3">Distribuição por status</h2>
           <div className="space-y-2">
             {Object.entries(STATUS_PEDIDO_LABELS).map(([status, label]) => {
               const count = porStatus[status] ?? 0;
               const pct = numPedidos > 0 ? (count / (Object.values(porStatus).reduce((a, b) => a + b, 0) || 1)) * 100 : 0;
               return (
                 <div key={status}>
-                  <div className="flex justify-between text-sm mb-1">
-                    <span className="text-neutral-600">{label}</span>
-                    <span className="text-neutral-900 font-medium">{count}</span>
+                  <div className="flex justify-between text-sm mb-0.5">
+                    <span className="text-mid">{label}</span>
+                    <span className="text-strong font-medium">{count}</span>
                   </div>
-                  <div className="h-2 rounded-full bg-neutral-100 overflow-hidden">
+                  <div className="h-1.5 rounded-full bg-raised overflow-hidden">
                     <div className="h-full rounded-full bg-primary-500" style={{ width: `${pct}%` }} />
                   </div>
                 </div>
@@ -221,26 +214,25 @@ export default function AdminRelatorios() {
           </div>
         </div>
 
-        {/* Top products by revenue */}
-        <div className="card">
-          <h2 className="text-sm font-semibold text-neutral-900 mb-4">Produtos por receita</h2>
+        <div className="card p-4">
+          <h2 className="text-xs font-semibold text-mid uppercase tracking-wide mb-3">Produtos por receita</h2>
           {topProdutos.length === 0 ? (
-            <p className="text-sm text-neutral-400 py-6 text-center">Sem dados.</p>
+            <p className="text-sm text-dim py-4 text-center">Sem dados.</p>
           ) : (
             <div className="space-y-2">
               {topProdutos.map((p, i) => (
-                <div key={i} className="flex items-center gap-3">
-                  <span className="text-xs text-neutral-400 w-5">{i + 1}</span>
+                <div key={i} className="flex items-center gap-2.5">
+                  <span className="text-2xs text-dim w-4">{i + 1}</span>
                   <div className="flex-1 min-w-0">
-                    <div className="flex justify-between text-sm mb-1">
-                      <span className="text-neutral-700 truncate">{p.nome}</span>
-                      <span className="text-neutral-900 font-medium">{formatCurrency(p.receita)}</span>
+                    <div className="flex justify-between text-sm mb-0.5">
+                      <span className="text-mid truncate">{p.nome}</span>
+                      <span className="text-strong font-medium">{formatCurrency(p.receita)}</span>
                     </div>
-                    <div className="h-1.5 rounded-full bg-neutral-100 overflow-hidden">
-                      <div className="h-full rounded-full bg-success-400" style={{ width: `${(p.receita / maxProduto) * 100}%` }} />
+                    <div className="h-1 rounded-full bg-raised overflow-hidden">
+                      <div className="h-full rounded-full bg-success-500" style={{ width: `${(p.receita / maxProduto) * 100}%` }} />
                     </div>
                   </div>
-                  <span className="text-xs text-neutral-400 w-10 text-right">{p.total}x</span>
+                  <span className="text-2xs text-dim w-8 text-right">{p.total}x</span>
                 </div>
               ))}
             </div>

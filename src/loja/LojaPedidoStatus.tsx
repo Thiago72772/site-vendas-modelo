@@ -208,24 +208,24 @@ function LojaPedidoStatusContent() {
       : 0;
 
   return (
-    <div className="min-h-screen bg-[#f7f7f5] text-neutral-900">
+    <div className="min-h-screen bg-[#f7f7f5] text-strong">
       {/* Header */}
-      <header className="sticky top-0 z-20 border-b border-neutral-200 bg-white">
+      <header className="sticky top-0 z-20 border-b border-line bg-white">
         <div className="mx-auto flex h-16 max-w-3xl items-center gap-3 px-4 sm:px-6">
           <Link
             to={`/loja/${slug}`}
-            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition-colors hover:bg-neutral-100"
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md transition-colors hover:bg-surface"
             aria-label="Voltar para a loja"
           >
-            <ChevronLeft className="h-5 w-5 text-neutral-700" />
+            <ChevronLeft className="h-5 w-5 text-mid" />
           </Link>
 
           <div className="min-w-0">
-            <p className="truncate text-xs font-medium text-neutral-400">
+            <p className="truncate text-xs font-medium text-dim">
               {tenant.nome}
             </p>
 
-            <h1 className="text-base font-semibold tracking-tight text-neutral-900">
+            <h1 className="text-base font-semibold tracking-tight text-strong">
               Acompanhar pedido
             </h1>
           </div>
@@ -235,10 +235,10 @@ function LojaPedidoStatusContent() {
       <main className="mx-auto max-w-3xl space-y-5 px-4 py-6 sm:px-6 sm:py-8">
         {/* Main status */}
         <section
-          className={`overflow-hidden rounded-2xl border ${
+          className={`overflow-hidden rounded-lg border ${
             isCancelled
               ? 'border-rose-100 bg-rose-50'
-              : 'border-neutral-200 bg-white'
+              : 'border-line bg-white'
           }`}
         >
           <div className="p-5 sm:p-7">
@@ -254,7 +254,7 @@ function LojaPedidoStatusContent() {
                     </span>
                   )}
 
-                  <span className="text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">
+                  <span className="text-xs font-semibold uppercase tracking-[0.14em] text-dim">
                     {isCancelled
                       ? 'Pedido encerrado'
                       : 'Pedido em tempo real'}
@@ -269,16 +269,16 @@ function LojaPedidoStatusContent() {
                     : 'Seu pedido está em andamento'}
                 </h2>
 
-                <p className="mt-2 text-sm text-neutral-500">
+                <p className="mt-2 text-sm text-mid">
                   Pedido feito em {formatDate(pedido.created_at)}
                 </p>
               </div>
 
-              <div className="hidden shrink-0 rounded-2xl bg-neutral-50 px-4 py-3 text-right sm:block">
-                <p className="text-[11px] font-medium uppercase tracking-[0.12em] text-neutral-400">
+              <div className="hidden shrink-0 rounded-lg bg-neutral-50 px-4 py-3 text-right sm:block">
+                <p className="text-[11px] font-medium uppercase tracking-[0.12em] text-dim">
                   Total
                 </p>
-                <p className="mt-1 text-lg font-semibold text-neutral-900">
+                <p className="mt-1 text-lg font-semibold text-strong">
                   {formatCurrency(
                     Number(pedido.total || 0)
                   )}
@@ -287,10 +287,10 @@ function LojaPedidoStatusContent() {
             </div>
 
             {!isCancelled && (
-              <div className="mt-7 rounded-2xl bg-neutral-50 p-4">
+              <div className="mt-7 rounded-lg bg-neutral-50 p-4">
                 <div className="flex items-center gap-3">
                   <Radio className="h-4 w-4 shrink-0 text-primary-500" />
-                  <p className="text-sm text-neutral-600">
+                  <p className="text-sm text-mid">
                     O status deste pedido é atualizado automaticamente.
                   </p>
                 </div>
@@ -300,12 +300,12 @@ function LojaPedidoStatusContent() {
         </section>
 
         {/* Mobile total */}
-        <div className="flex items-center justify-between rounded-2xl border border-neutral-200 bg-white px-4 py-3 sm:hidden">
-          <span className="text-sm text-neutral-500">
+        <div className="flex items-center justify-between rounded-lg border border-line bg-white px-4 py-3 sm:hidden">
+          <span className="text-sm text-mid">
             Total do pedido
           </span>
 
-          <span className="text-lg font-semibold text-neutral-900">
+          <span className="text-lg font-semibold text-strong">
             {formatCurrency(
               Number(pedido.total || 0)
             )}
@@ -314,13 +314,13 @@ function LojaPedidoStatusContent() {
 
         {/* Progress */}
         {!isCancelled ? (
-          <section className="rounded-2xl border border-neutral-200 bg-white p-5 sm:p-7">
+          <section className="rounded-lg border border-line bg-white p-5 sm:p-7">
             <div className="mb-7">
-              <h2 className="text-base font-semibold text-neutral-900">
+              <h2 className="text-base font-semibold text-strong">
                 Status do pedido
               </h2>
 
-              <p className="mt-1 text-sm text-neutral-500">
+              <p className="mt-1 text-sm text-mid">
                 Acompanhe cada etapa sem precisar atualizar a página.
               </p>
             </div>
@@ -354,8 +354,8 @@ function LojaPedidoStatusContent() {
                       <div
                         className={`relative z-10 flex h-10 w-10 items-center justify-center rounded-full border-4 border-white transition-all duration-300 ${
                           isCompleted
-                            ? 'bg-primary-500 text-white shadow-sm'
-                            : 'bg-neutral-100 text-neutral-400'
+                            ? 'bg-primary-500 text-white'
+                            : 'bg-surface text-dim'
                         } ${
                           isCurrent
                             ? 'ring-4 ring-primary-100'
@@ -368,8 +368,8 @@ function LojaPedidoStatusContent() {
                       <p
                         className={`mt-3 max-w-[90px] text-[11px] font-medium leading-4 sm:text-xs ${
                           isCompleted
-                            ? 'text-neutral-900'
-                            : 'text-neutral-400'
+                            ? 'text-strong'
+                            : 'text-dim'
                         }`}
                       >
                         {step.label}
@@ -381,39 +381,39 @@ function LojaPedidoStatusContent() {
             </div>
           </section>
         ) : (
-          <section className="rounded-2xl border border-rose-100 bg-white p-6 text-center sm:p-8">
-            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-rose-50">
+          <section className="rounded-lg border border-rose-100 bg-white p-6 text-center sm:p-8">
+            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-lg bg-rose-50">
               <XCircle className="h-7 w-7 text-rose-500" />
             </div>
 
-            <h2 className="mt-4 text-lg font-semibold text-neutral-900">
+            <h2 className="mt-4 text-lg font-semibold text-strong">
               Este pedido foi cancelado
             </h2>
 
             {pedido.observacoes && (
-              <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-neutral-500">
+              <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-mid">
                 {pedido.observacoes}
               </p>
             )}
 
-            <p className="mt-2 text-sm text-neutral-400">
+            <p className="mt-2 text-sm text-dim">
               Entre em contato com a loja para mais informações.
             </p>
           </section>
         )}
 
         {/* Items */}
-        <section className="rounded-2xl border border-neutral-200 bg-white p-5 sm:p-7">
+        <section className="rounded-lg border border-line bg-white p-5 sm:p-7">
           <div className="flex items-center justify-between gap-4">
             <div>
               <div className="flex items-center gap-2">
-                <Receipt className="h-4 w-4 text-neutral-500" />
-                <h2 className="text-base font-semibold text-neutral-900">
+                <Receipt className="h-4 w-4 text-mid" />
+                <h2 className="text-base font-semibold text-strong">
                   Seu pedido
                 </h2>
               </div>
 
-              <p className="mt-1 text-sm text-neutral-500">
+              <p className="mt-1 text-sm text-mid">
                 {itens.length}{' '}
                 {itens.length === 1
                   ? 'item'
@@ -425,7 +425,7 @@ function LojaPedidoStatusContent() {
           <div className="mt-5 divide-y divide-neutral-100">
             {itens.length === 0 ? (
               <div className="py-8 text-center">
-                <p className="text-sm text-neutral-400">
+                <p className="text-sm text-dim">
                   Nenhum item encontrado neste pedido.
                 </p>
               </div>
@@ -458,13 +458,13 @@ function LojaPedidoStatusContent() {
                     className="flex items-start justify-between gap-4 py-4 first:pt-0 last:pb-0"
                   >
                     <div className="min-w-0">
-                      <p className="text-sm font-semibold text-neutral-900">
+                      <p className="text-sm font-semibold text-strong">
                         {item.quantidade}x{' '}
                         {item.produtos?.nome ?? 'Produto'}
                       </p>
 
                       {adicionais.length > 0 && (
-                        <p className="mt-1 text-xs leading-5 text-neutral-500">
+                        <p className="mt-1 text-xs leading-5 text-mid">
                           {adicionais
                             .map(
                               (adicional) =>
@@ -475,7 +475,7 @@ function LojaPedidoStatusContent() {
                       )}
                     </div>
 
-                    <p className="shrink-0 text-sm font-semibold text-neutral-900">
+                    <p className="shrink-0 text-sm font-semibold text-strong">
                       {formatCurrency(itemTotal)}
                     </p>
                   </div>
@@ -486,18 +486,18 @@ function LojaPedidoStatusContent() {
         </section>
 
         {/* Payment */}
-        <section className="rounded-2xl border border-neutral-200 bg-white p-5 sm:p-7">
-          <h2 className="text-base font-semibold text-neutral-900">
+        <section className="rounded-lg border border-line bg-white p-5 sm:p-7">
+          <h2 className="text-base font-semibold text-strong">
             Resumo financeiro
           </h2>
 
           <div className="mt-5 space-y-3 text-sm">
             <div className="flex items-center justify-between gap-4">
-              <span className="text-neutral-500">
+              <span className="text-mid">
                 Pagamento
               </span>
 
-              <span className="font-medium text-neutral-900">
+              <span className="font-medium text-strong">
                 {
                   FORMA_PAGAMENTO_LABELS[
                     pedido.forma_pagamento as FormaPagamento
@@ -507,11 +507,11 @@ function LojaPedidoStatusContent() {
             </div>
 
             <div className="flex items-center justify-between gap-4">
-              <span className="text-neutral-500">
+              <span className="text-mid">
                 Subtotal
               </span>
 
-              <span className="font-medium text-neutral-900">
+              <span className="font-medium text-strong">
                 {formatCurrency(
                   Number(pedido.subtotal || 0)
                 )}
@@ -536,11 +536,11 @@ function LojaPedidoStatusContent() {
             )}
 
             <div className="flex items-center justify-between gap-4">
-              <span className="text-neutral-500">
+              <span className="text-mid">
                 Entrega
               </span>
 
-              <span className="font-medium text-neutral-900">
+              <span className="font-medium text-strong">
                 {formatCurrency(
                   Number(
                     pedido.taxa_entrega || 0
@@ -549,12 +549,12 @@ function LojaPedidoStatusContent() {
               </span>
             </div>
 
-            <div className="flex items-center justify-between gap-4 border-t border-neutral-100 pt-4 text-base">
-              <span className="font-semibold text-neutral-900">
+            <div className="flex items-center justify-between gap-4 border-t border-line pt-4 text-base">
+              <span className="font-semibold text-strong">
                 Total
               </span>
 
-              <span className="font-semibold text-neutral-900">
+              <span className="font-semibold text-strong">
                 {formatCurrency(
                   Number(pedido.total || 0)
                 )}
@@ -565,18 +565,18 @@ function LojaPedidoStatusContent() {
 
         {/* Address */}
         {pedido.endereco_entrega && (
-          <section className="rounded-2xl border border-neutral-200 bg-white p-5 sm:p-7">
+          <section className="rounded-lg border border-line bg-white p-5 sm:p-7">
             <div className="flex items-start gap-3">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-neutral-100">
-                <MapPin className="h-5 w-5 text-neutral-600" />
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-surface">
+                <MapPin className="h-5 w-5 text-mid" />
               </div>
 
               <div className="min-w-0">
-                <h2 className="text-base font-semibold text-neutral-900">
+                <h2 className="text-base font-semibold text-strong">
                   Entrega
                 </h2>
 
-                <p className="mt-2 text-sm leading-6 text-neutral-600">
+                <p className="mt-2 text-sm leading-6 text-mid">
                   {pedido.endereco_entrega.rua},{' '}
                   {pedido.endereco_entrega.numero}
                   {pedido.endereco_entrega
@@ -584,18 +584,18 @@ function LojaPedidoStatusContent() {
                     `, ${pedido.endereco_entrega.complemento}`}
                 </p>
 
-                <p className="text-sm leading-6 text-neutral-600">
+                <p className="text-sm leading-6 text-mid">
                   {pedido.endereco_entrega.bairro} -{' '}
                   {pedido.endereco_entrega.cidade}
                 </p>
 
-                <p className="text-sm text-neutral-500">
+                <p className="text-sm text-mid">
                   CEP: {pedido.endereco_entrega.cep}
                 </p>
 
                 {pedido.endereco_entrega
                   .referencia && (
-                  <p className="mt-1 text-sm text-neutral-500">
+                  <p className="mt-1 text-sm text-mid">
                     Referência:{' '}
                     {
                       pedido.endereco_entrega
@@ -611,7 +611,7 @@ function LojaPedidoStatusContent() {
         {/* Back to store */}
         <Link
           to={`/loja/${slug}`}
-          className="flex w-full items-center justify-center rounded-2xl bg-neutral-900 px-5 py-4 text-sm font-semibold text-white transition hover:bg-neutral-800"
+          className="flex w-full items-center justify-center rounded-lg bg-neutral-900 px-5 py-4 text-sm font-semibold text-white transition hover:bg-neutral-800"
         >
           Voltar ao cardápio
         </Link>

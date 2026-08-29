@@ -28,13 +28,21 @@ interface ItemPedidoWithProduto extends ItemPedido {
   produtos: { nome: string } | null;
 }
 
-const COLUMNS: { status: StatusPedido; label: string; color: string }[] = [
-  { status: 'recebido', label: 'Recebido', color: 'bg-blue-50 text-blue-700' },
-  { status: 'preparo', label: 'Em preparo', color: 'bg-amber-50 text-amber-700' },
-  { status: 'saiu_entrega', label: 'Saiu para entrega', color: 'bg-purple-50 text-purple-700' },
-  { status: 'entregue', label: 'Entregue', color: 'bg-green-50 text-green-700' },
-  { status: 'cancelado', label: 'Cancelado', color: 'bg-red-50 text-red-700' },
+const COLUMNS: { status: StatusPedido; label: string; accent: string }[] = [
+  { status: 'recebido', label: 'Recebido', accent: 'border-l-blue-500' },
+  { status: 'preparo', label: 'Em preparo', accent: 'border-l-amber-500' },
+  { status: 'saiu_entrega', label: 'Saiu para entrega', accent: 'border-l-purple-500' },
+  { status: 'entregue', label: 'Entregue', accent: 'border-l-green-500' },
+  { status: 'cancelado', label: 'Cancelado', accent: 'border-l-red-500' },
 ];
+
+const STATUS_DOT: Record<StatusPedido, string> = {
+  recebido: 'bg-blue-500',
+  preparo: 'bg-amber-500',
+  saiu_entrega: 'bg-purple-500',
+  entregue: 'bg-green-500',
+  cancelado: 'bg-red-500',
+};
 
 export default function AdminPedidos() {
   const { perfil } = useAuth();
@@ -169,7 +177,7 @@ export default function AdminPedidos() {
     return (
       <AdminLayout>
         <div className="flex items-center justify-center py-20">
-          <Loader2 className="w-6 h-6 text-primary-500 animate-spin" />
+          <Loader2 className="w-5 h-5 text-primary-500 animate-spin" />
         </div>
       </AdminLayout>
     );
@@ -177,13 +185,13 @@ export default function AdminPedidos() {
 
   return (
     <AdminLayout>
-      <h1 className="text-2xl font-semibold text-neutral-900 mb-1">Pedidos</h1>
-      <p className="text-sm text-neutral-500 mb-6">
+      <h1 className="text-lg font-semibold text-strong mb-0.5">Pedidos</h1>
+      <p className="text-sm text-mid mb-5">
         {isCozinha ? 'Acompanhamento de pedidos (somente leitura)' : 'Arraste cards entre colunas para alterar status'}
       </p>
 
       {/* Kanban */}
-      <div className="flex gap-4 overflow-x-auto pb-4 -mx-4 px-4 sm:mx-0 sm:px-0">
+      <div className="flex gap-3 overflow-x-auto pb-4 -mx-4 px-4 sm:mx-0 sm:px-0">
         {COLUMNS.map((col) => {
           const colPedidos = pedidos.filter((p) => p.status === col.status);
           const isDragOver = dragOverCol === col.status;
@@ -191,23 +199,24 @@ export default function AdminPedidos() {
           return (
             <div
               key={col.status}
-              className="w-72 shrink-0"
+              className="w-64 shrink-0"
               onDragOver={(e) => handleDragOver(e, col.status)}
               onDragLeave={() => setDragOverCol(null)}
               onDrop={(e) => handleDrop(e, col.status)}
             >
-              <div className="flex items-center justify-between mb-3 px-1">
-                <div className="flex items-center gap-2">
-                  <span className={`text-xs font-semibold px-2.5 py-1 rounded-pill ${col.color}`}>
+              <div className="flex items-center justify-between mb-2 px-1">
+                <div className="flex items-center gap-1.5">
+                  <span className={`inline-block w-2 h-2 rounded-full ${STATUS_DOT[col.status]}`} />
+                  <span className="text-xs font-medium text-mid">
                     {col.label}
                   </span>
                 </div>
-                <span className="flex items-center justify-center min-w-[20px] h-5 rounded-pill bg-neutral-200 text-xs font-medium text-neutral-600 px-1.5">{colPedidos.length}</span>
+                <span className="text-xs text-dim bg-raised px-1.5 py-0.5 rounded-sm">{colPedidos.length}</span>
               </div>
 
               <div
-                className={`space-y-2 min-h-[200px] rounded-card p-2 transition-colors ${
-                  isDragOver ? 'bg-primary-50 border-2 border-dashed border-primary-300' : 'bg-neutral-100/50'
+                className={`space-y-1.5 min-h-[200px] rounded-md p-1.5 transition-colors ${
+                  isDragOver ? 'bg-primary-600/10 ring-1 ring-primary-500/30' : ''
                 }`}
               >
                 {colPedidos.map((pedido) => {
@@ -218,50 +227,48 @@ export default function AdminPedidos() {
                       draggable={canEdit}
                       onDragStart={(e) => handleDragStart(e, pedido.id)}
                       onClick={() => setSelectedPedido(pedido)}
-                      className={`bg-white rounded-card shadow-card p-3 cursor-pointer hover:shadow-soft transition-all duration-200 ${
+                      className={`bg-surface border border-line rounded-md p-3 cursor-pointer border-l-[3px] ${col.accent} transition-colors ${
                         canEdit ? 'cursor-grab active:cursor-grabbing' : ''
-                      } ${isNew ? 'animate-flash ring-2 ring-primary-400' : ''} ${
-                        draggedId === pedido.id ? 'opacity-40' : ''
+                      } ${isNew ? 'animate-flash ring-1 ring-primary-500/40' : ''} ${
+                        draggedId === pedido.id ? 'opacity-30' : ''
                       }`}
                     >
                       {isNew && (
                         <div className="flex items-center gap-1 mb-1">
                           <span className="inline-block w-1.5 h-1.5 rounded-full bg-primary-500 animate-pulse" />
-                          <span className="text-xs font-medium text-primary-600">Novo</span>
+                          <span className="text-2xs font-medium text-primary-400">Novo</span>
                         </div>
                       )}
-                      <p className="text-sm font-medium text-neutral-900 truncate">
+                      <p className="text-sm font-medium text-strong truncate">
                         {pedido.clientes?.nome ?? 'Cliente'}
                       </p>
-                      <div className="flex items-center gap-2 mt-0.5">
-                        <span className="text-xs text-neutral-400">
+                      <div className="flex items-center gap-1.5 mt-0.5">
+                        <span className="text-2xs text-dim">
                           {new Date(pedido.created_at).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}
                         </span>
-                        <span className="text-xs text-neutral-400">•</span>
-                        <span className="text-xs text-neutral-400">
+                        <span className="text-2xs text-dim">·</span>
+                        <span className="text-2xs text-dim">
                           {Math.floor((Date.now() - new Date(pedido.created_at).getTime()) / 60000)} min
                         </span>
                       </div>
-                      {/* Item summary */}
                       {pedido.itens_pedido && pedido.itens_pedido.length > 0 && (
-                        <p className="text-xs text-neutral-500 mt-1.5 truncate">
+                        <p className="text-2xs text-mid mt-1 truncate">
                           {pedido.itens_pedido.slice(0, 2).map((it) => `${it.quantidade}x ${it.produtos?.nome ?? 'Produto'}`).join(', ')}
                           {pedido.itens_pedido.length > 2 && ` +${pedido.itens_pedido.length - 2}`}
                         </p>
                       )}
-                      <div className="flex items-center justify-between mt-2">
-                        <span className="text-xs text-neutral-500">
-                          {pedido.itens_pedido?.length ?? 0} {pedido.itens_pedido?.length === 1 ? 'item' : 'itens'}
+                      <div className="flex items-center justify-between mt-1.5">
+                        <span className="text-2xs text-dim">
+                          {pedido.itens_pedido?.length ?? 0} {(pedido.itens_pedido?.length ?? 0) === 1 ? 'item' : 'itens'}
                         </span>
-                        <span className="text-sm font-semibold text-neutral-900">
+                        <span className="text-sm font-semibold text-strong">
                           {formatCurrency(Number(pedido.total))}
                         </span>
                       </div>
-                      {/* Quick actions for kitchen/read-only roles */}
                       {isCozinha && pedido.status === 'recebido' && (
                         <button
                           onClick={(e) => { e.stopPropagation(); updateStatus(pedido.id, 'preparo'); }}
-                          className="mt-2 w-full text-xs font-semibold py-1.5 rounded-card bg-primary-50 text-primary-700 hover:bg-primary-100 transition-colors"
+                          className="mt-2 w-full text-xs font-medium py-1.5 rounded-md bg-primary-600 text-white hover:opacity-90 transition-opacity"
                         >
                           Aceitar e preparar
                         </button>
@@ -269,13 +276,13 @@ export default function AdminPedidos() {
                       {isCozinha && pedido.status === 'preparo' && (
                         <button
                           onClick={(e) => { e.stopPropagation(); updateStatus(pedido.id, 'saiu_entrega'); }}
-                          className="mt-2 w-full text-xs font-semibold py-1.5 rounded-card bg-success-50 text-success-700 hover:bg-success-100 transition-colors"
+                          className="mt-2 w-full text-xs font-medium py-1.5 rounded-md bg-success-600 text-white hover:opacity-90 transition-opacity"
                         >
                           Marcar como pronto
                         </button>
                       )}
                       {pedido.entregador_id && (
-                        <div className="flex items-center gap-1 mt-2 text-xs text-neutral-400">
+                        <div className="flex items-center gap-1 mt-1.5 text-2xs text-dim">
                           <Bike className="w-3 h-3" />
                           {entregadores.find((e) => e.id === pedido.entregador_id)?.nome ?? 'Entregador'}
                         </div>
@@ -284,7 +291,7 @@ export default function AdminPedidos() {
                   );
                 })}
                 {colPedidos.length === 0 && (
-                  <p className="text-xs text-neutral-300 text-center py-8">Vazio</p>
+                  <p className="text-2xs text-dim text-center py-8">Vazio</p>
                 )}
               </div>
             </div>
@@ -339,21 +346,21 @@ function PedidoDetailModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center">
-      <div className="absolute inset-0 bg-black/50" onClick={onClose} />
-      <div className="relative bg-white w-full sm:max-w-lg sm:rounded-modal rounded-t-modal max-h-[90vh] flex flex-col animate-slide-up">
-        <div className="flex items-center justify-between px-5 py-4 border-b border-neutral-200">
-          <h2 className="text-base font-semibold text-neutral-900">Pedido #{pedido.id.slice(0, 8)}</h2>
-          <button onClick={onClose} className="p-2 rounded-card hover:bg-neutral-100">
-            <X className="w-5 h-5 text-neutral-500" />
+      <div className="absolute inset-0 bg-black/60" onClick={onClose} />
+      <div className="relative bg-surface w-full sm:max-w-lg sm:rounded-lg rounded-t-lg max-h-[90vh] flex flex-col animate-slide-up shadow-elevated">
+        <div className="flex items-center justify-between px-5 py-3.5 border-b border-line">
+          <h2 className="text-sm font-semibold text-strong">Pedido #{pedido.id.slice(0, 8)}</h2>
+          <button onClick={onClose} className="p-1.5 rounded-md hover:bg-raised">
+            <X className="w-4 h-4 text-dim" />
           </button>
         </div>
 
-        <div className="overflow-y-auto flex-1 px-5 py-4 space-y-5">
+        <div className="overflow-y-auto flex-1 px-5 py-4 space-y-4">
           {/* Status */}
           <div>
-            <p className="text-xs text-neutral-400 mb-1">Status atual</p>
+            <p className="text-2xs text-dim mb-1">Status atual</p>
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-sm font-medium px-3 py-1.5 rounded-pill bg-primary-50 text-primary-700">
+              <span className="text-sm font-medium px-2.5 py-1 rounded-sm bg-primary-600/15 text-primary-400">
                 {STATUS_PEDIDO_LABELS[pedido.status]}
               </span>
               {canEdit && (
@@ -361,7 +368,7 @@ function PedidoDetailModal({
                   value={pedido.status}
                   onChange={(e) => onStatusChange(pedido.id, e.target.value as StatusPedido)}
                   disabled={updating}
-                  className="input py-1.5 text-sm w-auto"
+                  className="input py-1 text-sm w-auto"
                 >
                   {COLUMNS.map((c) => (
                     <option key={c.status} value={c.status}>{c.label}</option>
@@ -373,17 +380,17 @@ function PedidoDetailModal({
 
           {/* Customer */}
           <div>
-            <p className="text-xs text-neutral-400 mb-1">Cliente</p>
-            <p className="text-sm font-medium text-neutral-900">{pedido.clientes?.nome ?? 'N/A'}</p>
+            <p className="text-2xs text-dim mb-1">Cliente</p>
+            <p className="text-sm font-medium text-strong">{pedido.clientes?.nome ?? 'N/A'}</p>
             {pedido.clientes?.telefone && (
-              <p className="text-sm text-neutral-500">{formatPhone(pedido.clientes.telefone)}</p>
+              <p className="text-sm text-mid">{formatPhone(pedido.clientes.telefone)}</p>
             )}
           </div>
 
           {/* Items */}
           <div>
-            <p className="text-xs text-neutral-400 mb-2">Itens</p>
-            <div className="space-y-2">
+            <p className="text-2xs text-dim mb-1.5">Itens</p>
+            <div className="space-y-1.5">
               {pedido.itens_pedido?.map((item) => {
                 const adicionaisTotal = (item.adicionais_selecionados ?? []).reduce(
                   (s, a) => s + a.preco_extra, 0
@@ -392,14 +399,14 @@ function PedidoDetailModal({
                 return (
                   <div key={item.id} className="flex justify-between text-sm">
                     <div className="flex-1">
-                      <span className="text-neutral-900">{item.quantidade}x {item.produtos?.nome ?? 'Produto'}</span>
+                      <span className="text-strong">{item.quantidade}x {item.produtos?.nome ?? 'Produto'}</span>
                       {item.adicionais_selecionados && item.adicionais_selecionados.length > 0 && (
-                        <p className="text-xs text-neutral-400 mt-0.5">
+                        <p className="text-xs text-dim mt-0.5">
                           {item.adicionais_selecionados.map((a) => a.nome).join(', ')}
                         </p>
                       )}
                     </div>
-                    <span className="text-neutral-900 font-medium">{formatCurrency(itemTotal)}</span>
+                    <span className="text-strong font-medium">{formatCurrency(itemTotal)}</span>
                   </div>
                 );
               })}
@@ -409,46 +416,46 @@ function PedidoDetailModal({
           {/* Address */}
           {end && (
             <div>
-              <p className="text-xs text-neutral-400 mb-1 flex items-center gap-1">
+              <p className="text-2xs text-dim mb-1 flex items-center gap-1">
                 <MapPin className="w-3 h-3" /> Endereço de entrega
               </p>
-              <p className="text-sm text-neutral-700">
+              <p className="text-sm text-mid">
                 {end.rua}, {end.numero}{end.complemento ? `, ${end.complemento}` : ''}
               </p>
-              <p className="text-sm text-neutral-500">{end.bairro} - {end.cidade}</p>
-              <p className="text-sm text-neutral-500">CEP: {end.cep}</p>
-              {end.referencia && <p className="text-sm text-neutral-400">Ref: {end.referencia}</p>}
+              <p className="text-sm text-dim">{end.bairro} - {end.cidade}</p>
+              <p className="text-sm text-dim">CEP: {end.cep}</p>
+              {end.referencia && <p className="text-sm text-dim">Ref: {end.referencia}</p>}
             </div>
           )}
 
           {/* Payment */}
           <div>
-            <p className="text-xs text-neutral-400 mb-1 flex items-center gap-1">
+            <p className="text-2xs text-dim mb-1 flex items-center gap-1">
               <CreditCard className="w-3 h-3" /> Pagamento
             </p>
-            <p className="text-sm text-neutral-700">{FORMA_PAGAMENTO_LABELS[pedido.forma_pagamento]}</p>
+            <p className="text-sm text-mid">{FORMA_PAGAMENTO_LABELS[pedido.forma_pagamento]}</p>
           </div>
 
           {/* Observations */}
           {pedido.observacoes && (
             <div>
-              <p className="text-xs text-neutral-400 mb-1 flex items-center gap-1">
+              <p className="text-2xs text-dim mb-1 flex items-center gap-1">
                 <StickyNote className="w-3 h-3" /> Observações
               </p>
-              <p className="text-sm text-neutral-700">{pedido.observacoes}</p>
+              <p className="text-sm text-mid">{pedido.observacoes}</p>
             </div>
           )}
 
           {/* Entregador */}
           {canEdit && (
             <div>
-              <p className="text-xs text-neutral-400 mb-1 flex items-center gap-1">
+              <p className="text-2xs text-dim mb-1 flex items-center gap-1">
                 <Bike className="w-3 h-3" /> Entregador
               </p>
               <select
                 value={pedido.entregador_id ?? ''}
                 onChange={(e) => onAssign(pedido.id, e.target.value || null)}
-                className="input py-2 text-sm"
+                className="input py-1.5 text-sm"
               >
                 <option value="">Sem entregador</option>
                 {entregadores.map((e) => (
@@ -459,28 +466,28 @@ function PedidoDetailModal({
           )}
 
           {/* Totals */}
-          <div className="border-t border-neutral-100 pt-3 space-y-1">
+          <div className="border-t border-line pt-3 space-y-1">
             <div className="flex justify-between text-sm">
-              <span className="text-neutral-500">Subtotal</span>
-              <span>{formatCurrency(Number(pedido.subtotal))}</span>
+              <span className="text-mid">Subtotal</span>
+              <span className="text-strong">{formatCurrency(Number(pedido.subtotal))}</span>
             </div>
             {Number(pedido.desconto) > 0 && (
               <div className="flex justify-between text-sm">
-                <span className="text-success-600">Desconto</span>
-                <span className="text-success-600">- {formatCurrency(Number(pedido.desconto))}</span>
+                <span className="text-success-500">Desconto</span>
+                <span className="text-success-500">- {formatCurrency(Number(pedido.desconto))}</span>
               </div>
             )}
             <div className="flex justify-between text-sm">
-              <span className="text-neutral-500">Taxa de entrega</span>
-              <span>{formatCurrency(Number(pedido.taxa_entrega))}</span>
+              <span className="text-mid">Taxa de entrega</span>
+              <span className="text-strong">{formatCurrency(Number(pedido.taxa_entrega))}</span>
             </div>
-            <div className="flex justify-between text-base font-semibold pt-1">
-              <span>Total</span>
-              <span className="text-primary-600">{formatCurrency(Number(pedido.total))}</span>
+            <div className="flex justify-between text-sm font-semibold pt-1">
+              <span className="text-strong">Total</span>
+              <span className="text-primary-400">{formatCurrency(Number(pedido.total))}</span>
             </div>
           </div>
 
-          <div className="flex items-center gap-1 text-xs text-neutral-400">
+          <div className="flex items-center gap-1 text-2xs text-dim">
             <Clock className="w-3 h-3" />
             {formatDate(pedido.created_at)}
           </div>

@@ -694,22 +694,22 @@ function LojaCheckoutContent() {
   if (createdOrderId) {
     return (
       <div className="min-h-screen bg-[#f7f7f5]">
-        <header className="sticky top-0 z-10 border-b border-neutral-200 bg-white">
+        <header className="sticky top-0 z-10 border-b border-line bg-white">
           <div className="mx-auto flex max-w-3xl items-center gap-3 px-4 py-4 sm:px-6">
             <Link
               to={`/loja/${slug}/pedido/${createdOrderId}`}
-              className="-ml-2 flex h-10 w-10 items-center justify-center rounded-pill transition-colors hover:bg-neutral-100"
+              className="-ml-2 flex h-10 w-10 items-center justify-center rounded-pill transition-colors hover:bg-surface"
               aria-label="Acompanhar pedido"
             >
-              <ChevronLeft className="h-5 w-5 text-neutral-600" />
+              <ChevronLeft className="h-5 w-5 text-mid" />
             </Link>
 
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-400">
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-dim">
                 {tenant.nome}
               </p>
 
-              <h1 className="mt-0.5 text-lg font-semibold tracking-tight text-neutral-900">
+              <h1 className="mt-0.5 text-lg font-semibold tracking-tight text-strong">
                 Pagamento PIX
               </h1>
             </div>
@@ -727,7 +727,7 @@ function LojaCheckoutContent() {
 
           <Link
             to={`/loja/${slug}/pedido/${createdOrderId}`}
-            className="flex w-full items-center justify-center rounded-card border border-neutral-200 bg-white py-3.5 text-sm font-semibold text-neutral-700 transition hover:bg-neutral-50"
+            className="flex w-full items-center justify-center rounded-md border border-line bg-white py-3.5 text-sm font-semibold text-mid transition hover:bg-page"
           >
             Acompanhar pedido
           </Link>
@@ -738,22 +738,22 @@ function LojaCheckoutContent() {
 
   return (
     <div className="min-h-screen bg-[#f7f7f5]">
-      <header className="sticky top-0 z-10 border-b border-neutral-200 bg-white">
+      <header className="sticky top-0 z-10 border-b border-line bg-white">
         <div className="mx-auto flex max-w-3xl items-center gap-3 px-4 py-4 sm:px-6">
           <Link
             to={`/loja/${slug}`}
-            className="-ml-2 flex h-10 w-10 items-center justify-center rounded-full transition-colors hover:bg-neutral-100"
+            className="-ml-2 flex h-10 w-10 items-center justify-center rounded-md transition-colors hover:bg-surface"
             aria-label="Voltar para a loja"
           >
-            <ChevronLeft className="h-5 w-5 text-neutral-600" />
+            <ChevronLeft className="h-5 w-5 text-mid" />
           </Link>
 
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-400">
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-dim">
               {tenant.nome}
             </p>
 
-            <h1 className="mt-0.5 text-lg font-semibold tracking-tight text-neutral-900">
+            <h1 className="mt-0.5 text-lg font-semibold tracking-tight text-strong">
               Finalizar pedido
             </h1>
           </div>
@@ -766,10 +766,10 @@ function LojaCheckoutContent() {
       >
         {/* Empty cart */}
         {items.length === 0 && (
-          <div className="flex flex-col items-center rounded-card border border-neutral-200 bg-white px-6 py-10 text-center">
-            <ShoppingBag className="mb-3 h-10 w-10 text-neutral-300" />
+          <div className="flex flex-col items-center rounded-md border border-line bg-white px-6 py-10 text-center">
+            <ShoppingBag className="mb-3 h-10 w-10 text-dim" />
 
-            <p className="text-sm text-neutral-500">
+            <p className="text-sm text-mid">
               Seu carrinho está vazio.
             </p>
 
@@ -783,13 +783,13 @@ function LojaCheckoutContent() {
         )}
 
         {/* Customer */}
-        <div className="space-y-4 rounded-card border border-neutral-200 bg-white p-5 shadow-card sm:p-6">
+        <div className="space-y-4 rounded-md border border-line bg-white p-5 sm:p-6">
           <div>
-            <h2 className="text-base font-semibold text-neutral-900">
+            <h2 className="text-base font-semibold text-strong">
               Seus dados
             </h2>
 
-            <p className="mt-1 text-sm text-neutral-500">
+            <p className="mt-1 text-sm text-mid">
               Seus dados ficam salvos neste dispositivo para facilitar a próxima compra.
             </p>
           </div>
@@ -851,14 +851,14 @@ function LojaCheckoutContent() {
         </div>
 
         {/* Address */}
-        <div className="space-y-4 rounded-card border border-neutral-200 bg-white p-5 shadow-card sm:p-6">
+        <div className="space-y-4 rounded-md border border-line bg-white p-5 sm:p-6">
           <div>
-            <h2 className="flex items-center gap-2 text-base font-semibold text-neutral-900">
+            <h2 className="flex items-center gap-2 text-base font-semibold text-strong">
               <MapPin className="h-4 w-4 text-primary-500" />
               Endereço de entrega
             </h2>
 
-            <p className="mt-1 text-sm text-neutral-500">
+            <p className="mt-1 text-sm text-mid">
               O endereço será salvo para facilitar seus próximos pedidos.
             </p>
           </div>
@@ -886,7 +886,7 @@ function LojaCheckoutContent() {
             />
 
             {cepLoading && (
-              <p className="mt-1 flex items-center gap-1 text-xs text-neutral-400">
+              <p className="mt-1 flex items-center gap-1 text-xs text-dim">
                 <Loader2 className="h-3 w-3 animate-spin" />
                 Buscando CEP...
               </p>
@@ -1048,8 +1048,8 @@ function LojaCheckoutContent() {
         </div>
 
         {/* Payment */}
-        <div className="space-y-4 rounded-card border border-neutral-200 bg-white p-5 shadow-card sm:p-6">
-          <h2 className="text-base font-semibold text-neutral-900">
+        <div className="space-y-4 rounded-md border border-line bg-white p-5 sm:p-6">
+          <h2 className="text-base font-semibold text-strong">
             Pagamento
           </h2>
 
@@ -1069,10 +1069,10 @@ function LojaCheckoutContent() {
                     forma
                   )
                 }
-                className={`rounded-card px-3 py-3 text-sm font-medium transition-all ${
+                className={`rounded-md px-3 py-3 text-sm font-medium transition-all ${
                   formaPagamento === forma
                     ? 'bg-neutral-900 text-white'
-                    : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'
+                    : 'bg-surface text-mid hover:border-strong'
                 }`}
               >
                 {forma === 'pix'
@@ -1106,15 +1106,15 @@ function LojaCheckoutContent() {
         </div>
 
         {/* Coupon */}
-        <div className="space-y-3 rounded-card border border-neutral-200 bg-white p-5 shadow-card sm:p-6">
-          <h2 className="flex items-center gap-2 text-base font-semibold text-neutral-900">
+        <div className="space-y-3 rounded-md border border-line bg-white p-5 sm:p-6">
+          <h2 className="flex items-center gap-2 text-base font-semibold text-strong">
             <Tag className="h-4 w-4 text-primary-500" />
             Cupom de desconto
           </h2>
 
           <div className="relative">
             <input
-              className="input pr-11 uppercase rounded-card"
+              className="input pr-11 uppercase rounded-md"
               value={cupomCodigo}
               onChange={(e) =>
                 setCupomCodigo(
@@ -1148,13 +1148,13 @@ function LojaCheckoutContent() {
         </div>
 
         {/* Summary */}
-        <div className="space-y-3 rounded-card border border-neutral-200 bg-white p-5 shadow-card sm:p-6">
-          <h2 className="text-base font-semibold text-neutral-900">
+        <div className="space-y-3 rounded-md border border-line bg-white p-5 sm:p-6">
+          <h2 className="text-base font-semibold text-strong">
             Resumo do pedido
           </h2>
 
           {items.length > 0 && (
-            <div className="space-y-2 border-b border-neutral-100 pb-3">
+            <div className="space-y-2 border-b border-line pb-3">
               {items.map((item) => {
                 const itemTotal =
                   calculateItemPrice(
@@ -1168,12 +1168,12 @@ function LojaCheckoutContent() {
                     key={item.id}
                     className="flex justify-between gap-4 text-sm"
                   >
-                    <span className="text-neutral-600">
+                    <span className="text-mid">
                       {item.quantidade}x{' '}
                       {item.nome}
                     </span>
 
-                    <span className="shrink-0 font-medium text-neutral-900">
+                    <span className="shrink-0 font-medium text-strong">
                       {formatCurrency(
                         itemTotal
                       )}
@@ -1185,11 +1185,11 @@ function LojaCheckoutContent() {
           )}
 
           <div className="flex justify-between text-sm">
-            <span className="text-neutral-500">
+            <span className="text-mid">
               Subtotal
             </span>
 
-            <span className="font-medium text-neutral-900">
+            <span className="font-medium text-strong">
               {formatCurrency(subtotal)}
             </span>
           </div>
@@ -1207,19 +1207,19 @@ function LojaCheckoutContent() {
           )}
 
           <div className="flex justify-between text-sm">
-            <span className="text-neutral-500">
+            <span className="text-mid">
               Taxa de entrega
             </span>
 
-            <span className="font-medium text-neutral-900">
+            <span className="font-medium text-strong">
               {formatCurrency(taxaEntrega)}
             </span>
           </div>
 
-          <div className="flex justify-between border-t border-neutral-100 pt-3 text-lg font-semibold">
+          <div className="flex justify-between border-t border-line pt-3 text-lg font-semibold">
             <span>Total</span>
 
-            <span className="text-neutral-900">
+            <span className="text-strong">
               {formatCurrency(total)}
             </span>
           </div>
@@ -1227,7 +1227,7 @@ function LojaCheckoutContent() {
 
         {/* Error */}
         {submitError && (
-          <div className="rounded-card border border-rose-100 bg-rose-50 p-5">
+          <div className="rounded-md border border-rose-100 bg-rose-50 p-5">
             <p className="text-sm text-error-700">
               {submitError}
             </p>
@@ -1239,7 +1239,7 @@ function LojaCheckoutContent() {
           <button
             type="submit"
             disabled={submitting}
-            className="sticky bottom-4 flex w-full items-center justify-center gap-2 rounded-card bg-neutral-900 py-4 text-base font-semibold text-white shadow-elevated transition hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-60"
+            className="sticky bottom-4 flex w-full items-center justify-center gap-2 rounded-md bg-neutral-900 py-4 text-base font-semibold text-white shadow-elevated transition hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-60"
           >
             {submitting && (
               <Loader2 className="h-5 w-5 animate-spin" />

@@ -84,11 +84,11 @@ export function CartDrawer({
         }`}
       >
         {/* Header */}
-        <header className="shrink-0 border-b border-neutral-200 bg-white px-5 py-4 sm:px-6">
+        <header className="shrink-0 border-b border-line bg-white px-5 py-4 sm:px-6">
           <div className="flex items-center justify-between gap-4">
             <div className="min-w-0">
               <div className="flex items-center gap-2">
-                <ShoppingBag className="h-5 w-5 text-neutral-900" />
+                <ShoppingBag className="h-5 w-5 text-strong" />
 
                 <h2 className="text-lg font-semibold tracking-tight text-neutral-950">
                   Seu pedido
@@ -96,17 +96,17 @@ export function CartDrawer({
               </div>
 
               <div className="mt-1 flex items-center gap-2">
-                <p className="truncate text-xs text-neutral-500">
+                <p className="truncate text-xs text-mid">
                   {tenant.nome}
                 </p>
 
                 {totalItems > 0 && (
                   <>
-                    <span className="text-neutral-300">
+                    <span className="text-dim">
                       •
                     </span>
 
-                    <p className="text-xs text-neutral-500">
+                    <p className="text-xs text-mid">
                       {totalItems}{' '}
                       {totalItems === 1
                         ? 'item'
@@ -120,7 +120,7 @@ export function CartDrawer({
             <button
               type="button"
               onClick={onClose}
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-neutral-200 bg-white text-neutral-600 transition hover:bg-neutral-50 hover:text-neutral-950"
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-line bg-white text-mid transition hover:bg-page hover:text-neutral-950"
               aria-label="Fechar carrinho"
             >
               <X className="h-5 w-5" />
@@ -132,22 +132,22 @@ export function CartDrawer({
         <div className="min-h-0 flex-1 overflow-y-auto">
           {items.length === 0 ? (
             <div className="flex min-h-full flex-col items-center justify-center px-8 py-16 text-center">
-              <div className="flex h-16 w-16 items-center justify-center rounded-card bg-neutral-100">
-                <ShoppingBag className="h-7 w-7 text-neutral-400" />
+              <div className="flex h-16 w-16 items-center justify-center rounded-md bg-surface">
+                <ShoppingBag className="h-7 w-7 text-dim" />
               </div>
 
-              <h3 className="mt-5 text-lg font-semibold tracking-tight text-neutral-900">
+              <h3 className="mt-5 text-lg font-semibold tracking-tight text-strong">
                 Seu pedido está vazio
               </h3>
 
-              <p className="mt-2 max-w-xs text-sm leading-6 text-neutral-500">
+              <p className="mt-2 max-w-xs text-sm leading-6 text-mid">
                 Adicione produtos do cardápio para começar seu pedido.
               </p>
 
               <button
                 type="button"
                 onClick={onClose}
-                className="mt-6 rounded-full bg-neutral-900 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-neutral-800"
+                className="mt-6 rounded-md bg-neutral-900 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-neutral-800"
               >
                 Ver cardápio
               </button>
@@ -165,7 +165,7 @@ export function CartDrawer({
                 return (
                   <article
                     key={item.id}
-                    className="rounded-card border border-neutral-200 bg-white p-4"
+                    className="rounded-md border border-line bg-white p-4"
                   >
                     <div className="flex gap-3.5">
                       {/* Image */}
@@ -173,11 +173,11 @@ export function CartDrawer({
                         <img
                           src={item.imagem_url}
                           alt={item.nome}
-                          className="h-20 w-20 shrink-0 rounded-xl object-cover sm:h-24 sm:w-24"
+                          className="h-20 w-20 shrink-0 rounded-md object-cover sm:h-24 sm:w-24"
                         />
                       ) : (
-                        <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-xl bg-neutral-100 sm:h-24 sm:w-24">
-                          <ShoppingBag className="h-5 w-5 text-neutral-300" />
+                        <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-md bg-surface sm:h-24 sm:w-24">
+                          <ShoppingBag className="h-5 w-5 text-dim" />
                         </div>
                       )}
 
@@ -190,7 +190,7 @@ export function CartDrawer({
                             </h3>
 
                             {item.adicionais.length > 0 && (
-                              <p className="mt-1 line-clamp-2 text-xs leading-5 text-neutral-500">
+                              <p className="mt-1 line-clamp-2 text-xs leading-5 text-mid">
                                 {item.adicionais
                                   .map(
                                     (adicional) =>
@@ -206,7 +206,7 @@ export function CartDrawer({
                             onClick={() =>
                               removeItem(item.id)
                             }
-                            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-neutral-400 transition hover:bg-rose-50 hover:text-rose-600"
+                            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md text-dim transition hover:bg-rose-50 hover:text-rose-600"
                             aria-label={`Remover ${item.nome}`}
                           >
                             <Trash2 className="h-4 w-4" />
@@ -215,7 +215,7 @@ export function CartDrawer({
 
                         <div className="mt-4 flex items-end justify-between gap-3">
                           {/* Quantity */}
-                          <div className="inline-flex items-center rounded-card border border-neutral-200 bg-neutral-50 p-1">
+                          <div className="inline-flex items-center rounded-md border border-line bg-neutral-50 p-1">
                             <button
                               type="button"
                               onClick={() =>
@@ -224,13 +224,13 @@ export function CartDrawer({
                                   -1
                                 )
                               }
-                              className="flex h-8 w-8 items-center justify-center rounded-lg text-neutral-600 transition hover:bg-white hover:text-neutral-950"
+                              className="flex h-8 w-8 items-center justify-center rounded-lg text-mid transition hover:bg-white hover:text-neutral-950"
                               aria-label="Diminuir quantidade"
                             >
                               <Minus className="h-3.5 w-3.5" />
                             </button>
 
-                            <span className="w-8 text-center text-sm font-semibold text-neutral-900">
+                            <span className="w-8 text-center text-sm font-semibold text-strong">
                               {item.quantidade}
                             </span>
 
@@ -242,7 +242,7 @@ export function CartDrawer({
                                   1
                                 )
                               }
-                              className="flex h-8 w-8 items-center justify-center rounded-lg text-neutral-600 transition hover:bg-white hover:text-neutral-950"
+                              className="flex h-8 w-8 items-center justify-center rounded-lg text-mid transition hover:bg-white hover:text-neutral-950"
                               aria-label="Aumentar quantidade"
                             >
                               <Plus className="h-3.5 w-3.5" />
@@ -265,11 +265,11 @@ export function CartDrawer({
 
         {/* Footer */}
         {items.length > 0 && (
-          <footer className="shrink-0 border-t border-neutral-200 bg-white px-4 py-4 pb-[max(1rem,env(safe-area-inset-bottom))] sm:px-5 sm:py-5">
-            <div className="space-y-4">                <div className="rounded-card bg-neutral-50 p-4">
+          <footer className="shrink-0 border-t border-line bg-white px-4 py-4 pb-[max(1rem,env(safe-area-inset-bottom))] sm:px-5 sm:py-5">
+            <div className="space-y-4">                <div className="rounded-md bg-neutral-50 p-4">
                 <div className="flex items-center justify-between gap-4">
                   <div>
-                    <p className="text-xs font-medium text-neutral-500">
+                    <p className="text-xs font-medium text-mid">
                       Subtotal
                     </p>
 
@@ -278,7 +278,7 @@ export function CartDrawer({
                     </p>
                   </div>
 
-                  <p className="max-w-[170px] text-right text-xs leading-5 text-neutral-400">
+                  <p className="max-w-[170px] text-right text-xs leading-5 text-dim">
                     A taxa de entrega será calculada no checkout.
                   </p>
                 </div>
@@ -287,7 +287,7 @@ export function CartDrawer({
               <button
                 type="button"
                 onClick={handleCheckout}
-                className="flex w-full items-center justify-between gap-4 rounded-card bg-neutral-900 px-5 py-4 text-white transition hover:bg-neutral-800 active:scale-[0.99]"
+                className="flex w-full items-center justify-between gap-4 rounded-md bg-neutral-900 px-5 py-4 text-white transition hover:bg-neutral-800"
               >
                 <span className="text-sm font-semibold sm:text-base">
                   Continuar para finalizar

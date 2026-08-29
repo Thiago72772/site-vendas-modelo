@@ -12,8 +12,6 @@ import {
   Trash2,
   GripVertical,
   Loader2,
-  UtensilsCrossed,
-  Package,
   ChevronDown,
   ChevronRight,
   Image as ImageIcon,
@@ -30,22 +28,22 @@ export default function AdminCardapio() {
 
   return (
     <AdminLayout>
-      <h1 className="text-2xl font-semibold text-neutral-900 mb-1">Cardápio</h1>
-      <p className="text-sm text-neutral-500 mb-6">Gerencie produtos, categorias e adicionais</p>
+      <h1 className="text-lg font-semibold text-strong mb-0.5">Cardápio</h1>
+      <p className="text-sm text-mid mb-5">Gerencie produtos, categorias e adicionais</p>
 
-      <div className="flex gap-2 mb-6">
+      <div className="flex gap-1.5 mb-5">
         <button
           onClick={() => setTab('produtos')}
-          className={`px-4 py-2 rounded-card text-sm font-medium transition-colors ${
-            tab === 'produtos' ? 'bg-primary-600 text-white' : 'bg-neutral-100 text-neutral-600'
+          className={`px-3.5 py-1.5 rounded-md text-sm font-medium transition-colors ${
+            tab === 'produtos' ? 'bg-primary-600 text-white' : 'bg-raised text-mid hover:text-strong'
           }`}
         >
           Produtos
         </button>
         <button
           onClick={() => setTab('categorias')}
-          className={`px-4 py-2 rounded-card text-sm font-medium transition-colors ${
-            tab === 'categorias' ? 'bg-primary-600 text-white' : 'bg-neutral-100 text-neutral-600'
+          className={`px-3.5 py-1.5 rounded-md text-sm font-medium transition-colors ${
+            tab === 'categorias' ? 'bg-primary-600 text-white' : 'bg-raised text-mid hover:text-strong'
           }`}
         >
           Categorias
@@ -57,8 +55,6 @@ export default function AdminCardapio() {
   );
 }
 
-// ============ CATEGORIAS TAB ============
-
 function CategoriasTab({ canEdit }: { canEdit: boolean }) {
   const { perfil } = useAuth();
   const tenantId = perfil?.tenant_id;
@@ -68,9 +64,7 @@ function CategoriasTab({ canEdit }: { canEdit: boolean }) {
   const [showForm, setShowForm] = useState(false);
   const [draggedId, setDraggedId] = useState<string | null>(null);
 
-  useEffect(() => {
-    load();
-  }, [tenantId]);
+  useEffect(() => { load(); }, [tenantId]);
 
   async function load() {
     if (!tenantId) return;
@@ -88,24 +82,18 @@ function CategoriasTab({ canEdit }: { canEdit: boolean }) {
     e.dataTransfer.effectAllowed = 'move';
   }
 
-  function handleDragOver(e: DragEvent) {
-    e.preventDefault();
-  }
+  function handleDragOver(e: DragEvent) { e.preventDefault(); }
 
   async function handleDrop(e: DragEvent, targetId: string) {
     e.preventDefault();
     if (!draggedId || draggedId === targetId) return;
-
     const reordered = [...categorias];
     const fromIdx = reordered.findIndex((c) => c.id === draggedId);
     const toIdx = reordered.findIndex((c) => c.id === targetId);
     const [moved] = reordered.splice(fromIdx, 1);
     reordered.splice(toIdx, 0, moved);
-
-    // Update ordem for all
     const updates = reordered.map((c, i) => ({ id: c.id, ordem: i }));
     setCategorias(reordered.map((c, i) => ({ ...c, ordem: i })));
-
     for (const u of updates) {
       await supabase.from('categorias').update({ ordem: u.ordem }).eq('id', u.id);
     }
@@ -123,15 +111,12 @@ function CategoriasTab({ canEdit }: { canEdit: boolean }) {
   return (
     <div>
       {canEdit && (
-        <button
-          onClick={() => { setEditing(null); setShowForm(true); }}
-          className="btn-primary mb-4"
-        >
+        <button onClick={() => { setEditing(null); setShowForm(true); }} className="btn-primary mb-3">
           <Plus className="w-4 h-4" /> Nova categoria
         </button>
       )}
 
-      <div className="space-y-2">
+      <div className="space-y-1">
         {categorias.map((cat) => (
           <div
             key={cat.id}
@@ -139,31 +124,25 @@ function CategoriasTab({ canEdit }: { canEdit: boolean }) {
             onDragStart={(e) => handleDragStart(e, cat.id)}
             onDragOver={handleDragOver}
             onDrop={(e) => handleDrop(e, cat.id)}
-            className="card flex items-center gap-3 py-4"
+            className="card flex items-center gap-3 py-3 px-3"
           >
-            {canEdit && <GripVertical className="w-4 h-4 text-neutral-300 cursor-grab" />}
-            <span className="text-sm text-neutral-400 w-6">{cat.ordem + 1}</span>
-            <span className="flex-1 text-sm font-medium text-neutral-900">{cat.nome}</span>
+            {canEdit && <GripVertical className="w-3.5 h-3.5 text-dim cursor-grab" />}
+            <span className="text-xs text-dim w-5">{cat.ordem + 1}</span>
+            <span className="flex-1 text-sm font-medium text-strong">{cat.nome}</span>
             {canEdit && (
-              <div className="flex gap-1">
-                <button
-                  onClick={() => { setEditing(cat); setShowForm(true); }}
-                  className="p-2 rounded-card hover:bg-neutral-100"
-                >
-                  <Pencil className="w-4 h-4 text-neutral-400" />
+              <div className="flex gap-0.5">
+                <button onClick={() => { setEditing(cat); setShowForm(true); }} className="p-1.5 rounded-md hover:bg-raised">
+                  <Pencil className="w-3.5 h-3.5 text-dim" />
                 </button>
-                <button
-                  onClick={() => deleteCategoria(cat.id)}
-                  className="p-2 rounded-card hover:bg-error-50"
-                >
-                  <Trash2 className="w-4 h-4 text-error-400" />
+                <button onClick={() => deleteCategoria(cat.id)} className="p-1.5 rounded-md hover:bg-error-500/10">
+                  <Trash2 className="w-3.5 h-3.5 text-error-500" />
                 </button>
               </div>
             )}
           </div>
         ))}
         {categorias.length === 0 && (
-          <p className="text-sm text-neutral-400 text-center py-8">Nenhuma categoria ainda.</p>
+          <p className="text-sm text-dim text-center py-6">Nenhuma categoria ainda.</p>
         )}
       </div>
 
@@ -180,18 +159,8 @@ function CategoriasTab({ canEdit }: { canEdit: boolean }) {
   );
 }
 
-function CategoriaForm({
-  categoria,
-  tenantId,
-  ordemMax,
-  onClose,
-  onSaved,
-}: {
-  categoria: Categoria | null;
-  tenantId: string;
-  ordemMax: number;
-  onClose: () => void;
-  onSaved: () => void;
+function CategoriaForm({ categoria, tenantId, ordemMax, onClose, onSaved }: {
+  categoria: Categoria | null; tenantId: string; ordemMax: number; onClose: () => void; onSaved: () => void;
 }) {
   const [nome, setNome] = useState(categoria?.nome ?? '');
   const [saving, setSaving] = useState(false);
@@ -209,7 +178,7 @@ function CategoriaForm({
 
   return (
     <Modal title={categoria ? 'Editar categoria' : 'Nova categoria'} onClose={onClose}>
-      <div className="space-y-4">
+      <div className="space-y-3">
         <div>
           <label className="label">Nome</label>
           <input className="input" value={nome} onChange={(e) => setNome(e.target.value)} placeholder="Ex: Pizzas" autoFocus />
@@ -223,8 +192,6 @@ function CategoriaForm({
   );
 }
 
-// ============ PRODUTOS TAB ============
-
 function ProdutosTab({ canEdit }: { canEdit: boolean }) {
   const { perfil } = useAuth();
   const tenantId = perfil?.tenant_id;
@@ -235,9 +202,7 @@ function ProdutosTab({ canEdit }: { canEdit: boolean }) {
   const [showForm, setShowForm] = useState(false);
   const [expandedProduto, setExpandedProduto] = useState<string | null>(null);
 
-  useEffect(() => {
-    load();
-  }, [tenantId]);
+  useEffect(() => { load(); }, [tenantId]);
 
   async function load() {
     if (!tenantId) return;
@@ -267,36 +232,33 @@ function ProdutosTab({ canEdit }: { canEdit: boolean }) {
   return (
     <div>
       {canEdit && (
-        <button
-          onClick={() => { setEditing(null); setShowForm(true); }}
-          className="btn-primary mb-4"
-        >
+        <button onClick={() => { setEditing(null); setShowForm(true); }} className="btn-primary mb-3">
           <Plus className="w-4 h-4" /> Novo produto
         </button>
       )}
 
       {categorias.length === 0 ? (
-        <p className="text-sm text-neutral-400 text-center py-8">
+        <p className="text-sm text-dim text-center py-6">
           Crie uma categoria primeiro na aba Categorias.
         </p>
       ) : (
-        <div className="space-y-3">
+        <div className="space-y-1.5">
           {produtos.map((produto) => {
             const cat = categorias.find((c) => c.id === produto.categoria_id);
             const isExpanded = expandedProduto === produto.id;
             return (
               <div key={produto.id} className="card overflow-hidden">
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 p-3">
                   {produto.imagem_url ? (
-                    <img src={produto.imagem_url} alt={produto.nome} className="w-12 h-12 rounded-lg object-cover shrink-0" />
+                    <img src={produto.imagem_url} alt={produto.nome} className="w-10 h-10 rounded-md object-cover shrink-0" loading="lazy" />
                   ) : (
-                    <div className="w-12 h-12 rounded-lg bg-neutral-100 flex items-center justify-center shrink-0">
-                      <ImageIcon className="w-5 h-5 text-neutral-300" />
+                    <div className="w-10 h-10 rounded-md bg-raised flex items-center justify-center shrink-0">
+                      <ImageIcon className="w-4 h-4 text-dim" />
                     </div>
                   )}
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-neutral-900 truncate">{produto.nome}</p>
-                    <p className="text-xs text-neutral-400">
+                    <p className="text-sm font-medium text-strong truncate">{produto.nome}</p>
+                    <p className="text-2xs text-dim">
                       {cat?.nome ?? 'Sem categoria'} · {formatCurrency(produto.preco)}
                     </p>
                   </div>
@@ -306,37 +268,31 @@ function ProdutosTab({ canEdit }: { canEdit: boolean }) {
                     title={produto.disponivel ? 'Disponível' : 'Indisponível'}
                   >
                     {produto.disponivel ? (
-                      <ToggleRight className="w-7 h-7 text-success-500" />
+                      <ToggleRight className="w-6 h-6 text-success-500" />
                     ) : (
-                      <ToggleLeft className="w-7 h-7 text-neutral-300" />
+                      <ToggleLeft className="w-6 h-6 text-dim" />
                     )}
                   </button>
                   <button
                     onClick={() => setExpandedProduto(isExpanded ? null : produto.id)}
-                    className="p-2 rounded-lg hover:bg-neutral-100"
+                    className="p-1 rounded-md hover:bg-raised"
                   >
-                    {isExpanded ? <ChevronDown className="w-4 h-4 text-neutral-400" /> : <ChevronRight className="w-4 h-4 text-neutral-400" />}
+                    {isExpanded ? <ChevronDown className="w-4 h-4 text-dim" /> : <ChevronRight className="w-4 h-4 text-dim" />}
                   </button>
                 </div>
 
                 {isExpanded && (
-                  <div className="mt-4 pt-4 border-t border-neutral-100">
+                  <div className="px-3 pb-3 pt-2 border-t border-line">
                     <AdicionaisSection produto={produto} canEdit={canEdit} />
                   </div>
                 )}
 
                 {canEdit && (
-                  <div className="flex gap-2 mt-3 pt-3 border-t border-neutral-100">
-                    <button
-                      onClick={() => { setEditing(produto); setShowForm(true); }}
-                      className="btn-ghost text-xs"
-                    >
+                  <div className="flex gap-1 px-3 pb-3 pt-1 border-t border-line">
+                    <button onClick={() => { setEditing(produto); setShowForm(true); }} className="btn-ghost text-xs">
                       <Pencil className="w-3.5 h-3.5" /> Editar
                     </button>
-                    <button
-                      onClick={() => deleteProduto(produto.id)}
-                      className="btn-ghost text-xs text-error-500 hover:bg-error-50"
-                    >
+                    <button onClick={() => deleteProduto(produto.id)} className="btn-ghost text-xs text-error-500 hover:bg-error-500/10">
                       <Trash2 className="w-3.5 h-3.5" /> Excluir
                     </button>
                   </div>
@@ -345,7 +301,7 @@ function ProdutosTab({ canEdit }: { canEdit: boolean }) {
             );
           })}
           {produtos.length === 0 && (
-            <p className="text-sm text-neutral-400 text-center py-8">Nenhum produto ainda.</p>
+            <p className="text-sm text-dim text-center py-6">Nenhum produto ainda.</p>
           )}
         </div>
       )}
@@ -363,18 +319,8 @@ function ProdutosTab({ canEdit }: { canEdit: boolean }) {
   );
 }
 
-function ProdutoForm({
-  produto,
-  tenantId,
-  categorias,
-  onClose,
-  onSaved,
-}: {
-  produto: Produto | null;
-  tenantId: string;
-  categorias: Categoria[];
-  onClose: () => void;
-  onSaved: () => void;
+function ProdutoForm({ produto, tenantId, categorias, onClose, onSaved }: {
+  produto: Produto | null; tenantId: string; categorias: Categoria[]; onClose: () => void; onSaved: () => void;
 }) {
   const [nome, setNome] = useState(produto?.nome ?? '');
   const [descricao, setDescricao] = useState(produto?.descricao ?? '');
@@ -406,13 +352,9 @@ function ProdutoForm({
   async function save() {
     setSaving(true);
     const payload = {
-      tenant_id: tenantId,
-      categoria_id: categoriaId,
-      nome,
-      descricao: descricao || null,
-      preco: parseFloat(preco) || 0,
-      imagem_url: imagemUrl || null,
-      disponivel,
+      tenant_id: tenantId, categoria_id: categoriaId, nome,
+      descricao: descricao || null, preco: parseFloat(preco) || 0,
+      imagem_url: imagemUrl || null, disponivel,
     };
     if (produto) {
       await supabase.from('produtos').update(payload).eq('id', produto.id);
@@ -425,7 +367,7 @@ function ProdutoForm({
 
   return (
     <Modal title={produto ? 'Editar produto' : 'Novo produto'} onClose={onClose}>
-      <div className="space-y-4">
+      <div className="space-y-3">
         <div>
           <label className="label">Nome</label>
           <input className="input" value={nome} onChange={(e) => setNome(e.target.value)} autoFocus />
@@ -434,7 +376,7 @@ function ProdutoForm({
           <label className="label">Descrição</label>
           <textarea className="input" rows={2} value={descricao} onChange={(e) => setDescricao(e.target.value)} />
         </div>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-2 gap-2">
           <div>
             <label className="label">Preço (R$)</label>
             <input className="input" type="number" step="0.01" value={preco} onChange={(e) => setPreco(e.target.value)} />
@@ -451,15 +393,15 @@ function ProdutoForm({
         <div>
           <label className="label">Imagem do produto</label>
           {imagemUrl && (
-            <img src={imagemUrl} alt="Preview" className="w-20 h-20 rounded-lg object-cover mb-2" />
+            <img src={imagemUrl} alt="Preview" className="w-16 h-16 rounded-md object-cover mb-2" />
           )}
-          <input type="file" accept="image/*" onChange={handleUpload} className="text-sm text-neutral-500" />
-          {uploading && <p className="text-xs text-neutral-400 mt-1">Enviando...</p>}
-          {uploadError && <p className="text-xs text-error-500 mt-1">{uploadError}</p>}
+          <input type="file" accept="image/*" onChange={handleUpload} className="text-xs text-mid" />
+          {uploading && <p className="text-2xs text-dim mt-1">Enviando...</p>}
+          {uploadError && <p className="text-2xs text-error-500 mt-1">{uploadError}</p>}
         </div>
         <label className="flex items-center gap-2 cursor-pointer">
-          <input type="checkbox" checked={disponivel} onChange={(e) => setDisponivel(e.target.checked)} className="w-4 h-4 rounded" />
-          <span className="text-sm text-neutral-700">Disponível para venda</span>
+          <input type="checkbox" checked={disponivel} onChange={(e) => setDisponivel(e.target.checked)} className="w-4 h-4 rounded-sm" />
+          <span className="text-sm text-mid">Disponível para venda</span>
         </label>
         <button onClick={save} disabled={saving || !nome.trim() || !categoriaId} className="btn-primary w-full">
           {saving && <Loader2 className="w-4 h-4 animate-spin" />}
@@ -470,8 +412,6 @@ function ProdutoForm({
   );
 }
 
-// ============ ADICIONAIS SECTION ============
-
 function AdicionaisSection({ produto, canEdit }: { produto: Produto; canEdit: boolean }) {
   const [grupos, setGrupos] = useState<(GrupoAdicional & { adicionais: Adicional[] })[]>([]);
   const [loading, setLoading] = useState(true);
@@ -479,43 +419,22 @@ function AdicionaisSection({ produto, canEdit }: { produto: Produto; canEdit: bo
   const [editingGrupo, setEditingGrupo] = useState<GrupoAdicional | null>(null);
   const [showAdicionalForm, setShowAdicionalForm] = useState<string | null>(null);
 
-  useEffect(() => {
-    load();
-  }, [produto.id]);
+  useEffect(() => { load(); }, [produto.id]);
 
   async function load() {
     const { data: gruposData } = await supabase
-      .from('grupos_adicionais')
-      .select('*')
-      .eq('produto_id', produto.id)
-      .order('created_at');
-
-    if (!gruposData || gruposData.length === 0) {
-      setGrupos([]);
-      setLoading(false);
-      return;
-    }
-
+      .from('grupos_adicionais').select('*').eq('produto_id', produto.id).order('created_at');
+    if (!gruposData || gruposData.length === 0) { setGrupos([]); setLoading(false); return; }
     const grupoIds = gruposData.map((g) => g.id);
     const { data: adicionaisData } = await supabase
-      .from('adicionais')
-      .select('*')
-      .in('grupo_adicional_id', grupoIds)
-      .order('created_at');
-
+      .from('adicionais').select('*').in('grupo_adicional_id', grupoIds).order('created_at');
     const porGrupo: Record<string, Adicional[]> = {};
     (adicionaisData ?? []).forEach((a) => {
       const gid = (a as Adicional).grupo_adicional_id;
       if (!porGrupo[gid]) porGrupo[gid] = [];
       porGrupo[gid].push(a as Adicional);
     });
-
-    setGrupos(
-      (gruposData as GrupoAdicional[]).map((g) => ({
-        ...g,
-        adicionais: porGrupo[g.id] ?? [],
-      }))
-    );
+    setGrupos((gruposData as GrupoAdicional[]).map((g) => ({ ...g, adicionais: porGrupo[g.id] ?? [] })));
     setLoading(false);
   }
 
@@ -534,108 +453,83 @@ function AdicionaisSection({ produto, canEdit }: { produto: Produto; canEdit: bo
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-3">
-        <h4 className="text-xs font-semibold text-neutral-500 uppercase">Grupos de adicionais</h4>
+      <div className="flex items-center justify-between mb-2">
+        <h4 className="text-2xs font-medium text-dim uppercase tracking-wide">Grupos de adicionais</h4>
         {canEdit && (
-          <button
-            onClick={() => { setEditingGrupo(null); setShowGrupoForm(true); }}
-            className="text-xs text-primary-600 font-medium hover:underline"
-          >
+          <button onClick={() => { setEditingGrupo(null); setShowGrupoForm(true); }} className="text-2xs text-primary-400 font-medium hover:underline">
             + Novo grupo
           </button>
         )}
       </div>
 
-      <div className="space-y-2">
+      <div className="space-y-1.5">
         {grupos.map((grupo) => (
-          <div key={grupo.id} className="rounded-card bg-neutral-50 p-3">
-            <div className="flex items-center justify-between mb-2">
+          <div key={grupo.id} className="bg-raised rounded-md p-2.5">
+            <div className="flex items-center justify-between mb-1.5">
               <div>
-                <p className="text-sm font-medium text-neutral-900">{grupo.nome}</p>
-                <p className="text-xs text-neutral-400">
+                <p className="text-sm font-medium text-strong">{grupo.nome}</p>
+                <p className="text-2xs text-dim">
                   {grupo.obrigatorio ? 'Obrigatório' : 'Opcional'}
                   {grupo.max_selecao > 1 && ` · Máx ${grupo.max_selecao}`}
                 </p>
               </div>
               {canEdit && (
-                <div className="flex gap-1">
-                  <button onClick={() => { setEditingGrupo(grupo); setShowGrupoForm(true); }} className="p-1.5 rounded-card hover:bg-white">
-                    <Pencil className="w-3.5 h-3.5 text-neutral-400" />
+                <div className="flex gap-0.5">
+                  <button onClick={() => { setEditingGrupo(grupo); setShowGrupoForm(true); }} className="p-1 rounded-md hover:bg-surface">
+                    <Pencil className="w-3 h-3 text-dim" />
                   </button>
-                  <button onClick={() => deleteGrupo(grupo.id)} className="p-1.5 rounded-card hover:bg-white">
-                    <Trash2 className="w-3.5 h-3.5 text-error-400" />
+                  <button onClick={() => deleteGrupo(grupo.id)} className="p-1 rounded-md hover:bg-error-500/10">
+                    <Trash2 className="w-3 h-3 text-error-500" />
                   </button>
                 </div>
               )}
             </div>
 
-            <div className="space-y-1">
+            <div className="space-y-0.5">
               {grupo.adicionais.map((adc) => (
                 <div key={adc.id} className="flex items-center justify-between text-sm pl-2">
-                  <span className="text-neutral-700">{adc.nome}</span>
-                  <div className="flex items-center gap-2">
-                    <span className="text-neutral-500">+ {formatCurrency(adc.preco_extra)}</span>
+                  <span className="text-mid">{adc.nome}</span>
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-dim">+ {formatCurrency(adc.preco_extra)}</span>
                     {canEdit && (
-                      <button onClick={() => deleteAdicional(adc.id)} className="p-1 rounded-card hover:bg-white">
-                        <Trash2 className="w-3 h-3 text-error-400" />
+                      <button onClick={() => deleteAdicional(adc.id)} className="p-0.5 rounded-md hover:bg-surface">
+                        <Trash2 className="w-2.5 h-2.5 text-error-500" />
                       </button>
                     )}
                   </div>
                 </div>
               ))}
               {grupo.adicionais.length === 0 && (
-                <p className="text-xs text-neutral-300 pl-2">Nenhum adicional.</p>
+                <p className="text-2xs text-dim pl-2">Nenhum adicional.</p>
               )}
             </div>
 
             {canEdit && (
-              <button
-                onClick={() => setShowAdicionalForm(grupo.id)}
-                className="text-xs text-primary-600 font-medium mt-2 hover:underline"
-              >
+              <button onClick={() => setShowAdicionalForm(grupo.id)} className="text-2xs text-primary-400 font-medium mt-1.5 hover:underline">
                 + Adicional
               </button>
             )}
           </div>
         ))}
         {grupos.length === 0 && (
-          <p className="text-xs text-neutral-400 text-center py-4">Nenhum grupo de adicionais.</p>
+          <p className="text-2xs text-dim text-center py-3">Nenhum grupo de adicionais.</p>
         )}
       </div>
 
       {showGrupoForm && (
-        <GrupoForm
-          grupo={editingGrupo}
-          produtoId={produto.id}
-          tenantId={produto.tenant_id}
-          onClose={() => setShowGrupoForm(false)}
-          onSaved={() => { setShowGrupoForm(false); load(); }}
-        />
+        <GrupoForm grupo={editingGrupo} produtoId={produto.id} tenantId={produto.tenant_id}
+          onClose={() => setShowGrupoForm(false)} onSaved={() => { setShowGrupoForm(false); load(); }} />
       )}
-
       {showAdicionalForm && (
-        <AdicionalForm
-          grupoId={showAdicionalForm}
-          onClose={() => setShowAdicionalForm(null)}
-          onSaved={() => { setShowAdicionalForm(null); load(); }}
-        />
+        <AdicionalForm grupoId={showAdicionalForm}
+          onClose={() => setShowAdicionalForm(null)} onSaved={() => { setShowAdicionalForm(null); load(); }} />
       )}
     </div>
   );
 }
 
-function GrupoForm({
-  grupo,
-  produtoId,
-  tenantId,
-  onClose,
-  onSaved,
-}: {
-  grupo: GrupoAdicional | null;
-  produtoId: string;
-  tenantId: string;
-  onClose: () => void;
-  onSaved: () => void;
+function GrupoForm({ grupo, produtoId, tenantId, onClose, onSaved }: {
+  grupo: GrupoAdicional | null; produtoId: string; tenantId: string; onClose: () => void; onSaved: () => void;
 }) {
   const [nome, setNome] = useState(grupo?.nome ?? '');
   const [obrigatorio, setObrigatorio] = useState(grupo?.obrigatorio ?? false);
@@ -644,13 +538,7 @@ function GrupoForm({
 
   async function save() {
     setSaving(true);
-    const payload = {
-      produto_id: produtoId,
-      tenant_id: tenantId,
-      nome,
-      obrigatorio,
-      max_selecao: parseInt(maxSelecao) || 1,
-    };
+    const payload = { produto_id: produtoId, tenant_id: tenantId, nome, obrigatorio, max_selecao: parseInt(maxSelecao) || 1 };
     if (grupo) {
       await supabase.from('grupos_adicionais').update(payload).eq('id', grupo.id);
     } else {
@@ -662,7 +550,7 @@ function GrupoForm({
 
   return (
     <Modal title={grupo ? 'Editar grupo' : 'Novo grupo'} onClose={onClose}>
-      <div className="space-y-4">
+      <div className="space-y-3">
         <div>
           <label className="label">Nome do grupo</label>
           <input className="input" value={nome} onChange={(e) => setNome(e.target.value)} placeholder="Ex: Tamanho" autoFocus />
@@ -672,8 +560,8 @@ function GrupoForm({
           <input className="input" type="number" min={1} value={maxSelecao} onChange={(e) => setMaxSelecao(e.target.value)} />
         </div>
         <label className="flex items-center gap-2 cursor-pointer">
-          <input type="checkbox" checked={obrigatorio} onChange={(e) => setObrigatorio(e.target.checked)} className="w-4 h-4 rounded" />
-          <span className="text-sm text-neutral-700">Obrigatório</span>
+          <input type="checkbox" checked={obrigatorio} onChange={(e) => setObrigatorio(e.target.checked)} className="w-4 h-4 rounded-sm" />
+          <span className="text-sm text-mid">Obrigatório</span>
         </label>
         <button onClick={save} disabled={saving || !nome.trim()} className="btn-primary w-full">
           {saving && <Loader2 className="w-4 h-4 animate-spin" />}
@@ -684,14 +572,8 @@ function GrupoForm({
   );
 }
 
-function AdicionalForm({
-  grupoId,
-  onClose,
-  onSaved,
-}: {
-  grupoId: string;
-  onClose: () => void;
-  onSaved: () => void;
+function AdicionalForm({ grupoId, onClose, onSaved }: {
+  grupoId: string; onClose: () => void; onSaved: () => void;
 }) {
   const [nome, setNome] = useState('');
   const [precoExtra, setPrecoExtra] = useState('0');
@@ -699,18 +581,14 @@ function AdicionalForm({
 
   async function save() {
     setSaving(true);
-    await supabase.from('adicionais').insert({
-      grupo_adicional_id: grupoId,
-      nome,
-      preco_extra: parseFloat(precoExtra) || 0,
-    });
+    await supabase.from('adicionais').insert({ grupo_adicional_id: grupoId, nome, preco_extra: parseFloat(precoExtra) || 0 });
     setSaving(false);
     onSaved();
   }
 
   return (
     <Modal title="Novo adicional" onClose={onClose}>
-      <div className="space-y-4">
+      <div className="space-y-3">
         <div>
           <label className="label">Nome</label>
           <input className="input" value={nome} onChange={(e) => setNome(e.target.value)} placeholder="Ex: Borda recheada" autoFocus />
@@ -728,30 +606,26 @@ function AdicionalForm({
   );
 }
 
-// ============ SHARED ============
-
 function Modal({ title, onClose, children }: { title: string; onClose: () => void; children: React.ReactNode }) {
   useScrollLock(true);
 
   useEffect(() => {
-    function onKeyDown(e: KeyboardEvent) {
-      if (e.key === 'Escape') onClose();
-    }
+    function onKeyDown(e: KeyboardEvent) { if (e.key === 'Escape') onClose(); }
     document.addEventListener('keydown', onKeyDown);
     return () => document.removeEventListener('keydown', onKeyDown);
   }, [onClose]);
 
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center">
-      <div className="absolute inset-0 bg-black/50" onClick={onClose} />
-      <div className="relative bg-white w-full sm:max-w-md sm:rounded-modal rounded-t-modal max-h-[90vh] flex flex-col animate-slide-up">
-        <div className="flex items-center justify-between px-5 py-4 border-b border-neutral-200">
-          <h2 className="text-base font-semibold text-neutral-900">{title}</h2>
-          <button onClick={onClose} className="p-2 rounded-card hover:bg-neutral-100">
-            <X className="w-5 h-5 text-neutral-500" />
+      <div className="absolute inset-0 bg-black/60" onClick={onClose} />
+      <div className="relative bg-surface w-full sm:max-w-md sm:rounded-lg rounded-t-lg max-h-[90vh] flex flex-col animate-slide-up shadow-elevated">
+        <div className="flex items-center justify-between px-4 py-3 border-b border-line">
+          <h2 className="text-sm font-semibold text-strong">{title}</h2>
+          <button onClick={onClose} className="p-1 rounded-md hover:bg-raised">
+            <X className="w-4 h-4 text-dim" />
           </button>
         </div>
-        <div className="overflow-y-auto flex-1 px-5 py-4">{children}</div>
+        <div className="overflow-y-auto flex-1 px-4 py-3">{children}</div>
       </div>
     </div>
   );
@@ -759,8 +633,8 @@ function Modal({ title, onClose, children }: { title: string; onClose: () => voi
 
 function LoadingSpinner() {
   return (
-    <div className="flex items-center justify-center py-20">
-      <Loader2 className="w-6 h-6 text-primary-500 animate-spin" />
+    <div className="flex items-center justify-center py-16">
+      <Loader2 className="w-5 h-5 text-primary-500 animate-spin" />
     </div>
   );
 }

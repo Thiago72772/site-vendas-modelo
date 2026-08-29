@@ -254,13 +254,13 @@ export function ProductModal({
 
       {/* Modal container */}
       <div className="absolute inset-x-0 bottom-0 flex max-h-[94vh] justify-center sm:inset-0 sm:items-center sm:p-6">
-        <div className="relative flex max-h-[94vh] w-full max-w-2xl flex-col overflow-hidden rounded-t-modal bg-white shadow-elevated sm:max-h-[88vh] sm:rounded-modal">
+        <div className="relative flex max-h-[94vh] w-full max-w-2xl flex-col overflow-hidden rounded-t-lg bg-white shadow-elevated sm:max-h-[88vh] sm:rounded-lg">
           {/* Header / close */}
           <div className="absolute right-4 top-4 z-10">
             <button
               type="button"
               onClick={onClose}
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-neutral-200 bg-white text-neutral-700 shadow-sm transition hover:bg-neutral-50"
+              className="flex h-10 w-10 items-center justify-center rounded-md border border-line bg-white text-mid transition hover:bg-page"
               aria-label="Fechar"
             >
               <X className="h-5 w-5" />
@@ -268,7 +268,7 @@ export function ProductModal({
           </div>
 
           {/* Image */}
-          <div className="relative shrink-0 bg-neutral-100">
+          <div className="relative shrink-0 bg-surface">
             {produto.imagem_url ? (
               <img
                 src={produto.imagem_url}
@@ -277,14 +277,14 @@ export function ProductModal({
                 className="h-56 w-full object-cover sm:h-72"
               />
             ) : (
-              <div className="flex h-48 w-full items-center justify-center bg-neutral-100 sm:h-64">
-                <ShoppingBag className="h-14 w-14 text-neutral-300" />
+              <div className="flex h-48 w-full items-center justify-center bg-surface sm:h-64">
+                <ShoppingBag className="h-14 w-14 text-dim" />
               </div>
             )}
 
             {produtoIndisponivel && (
               <div className="absolute inset-0 flex items-center justify-center bg-black/40">
-                <span className="rounded-full bg-white px-4 py-2 text-sm font-semibold text-neutral-700 shadow-lg">
+                <span className="rounded-full bg-white px-4 py-2 text-sm font-semibold text-mid">
                   Produto indisponível
                 </span>
               </div>
@@ -301,7 +301,7 @@ export function ProductModal({
                 </h2>
 
                 {produto.descricao && (
-                  <p className="mt-2 text-sm leading-6 text-neutral-500 sm:text-base">
+                  <p className="mt-2 text-sm leading-6 text-mid sm:text-base">
                     {produto.descricao}
                   </p>
                 )}
@@ -313,8 +313,8 @@ export function ProductModal({
 
               {/* Add-ons */}
               {adicionaisLoading ? (
-                <div className="rounded-card border border-neutral-200 bg-neutral-50 p-4">
-                  <p className="text-sm text-neutral-500">
+                <div className="rounded-md border border-line bg-neutral-50 p-4">
+                  <p className="text-sm text-mid">
                     Carregando opções...
                   </p>
                 </div>
@@ -342,7 +342,7 @@ export function ProductModal({
                               {grupo.nome}
                             </h3>
 
-                            <p className="mt-1 text-xs text-neutral-500">
+                            <p className="mt-1 text-xs text-mid">
                               {grupo.obrigatorio
                                 ? `Obrigatório • ${
                                     maxSelecao === 1
@@ -389,10 +389,10 @@ export function ProductModal({
                       adicional
                     )
                   }
-                  className={`flex items-center justify-between gap-4 rounded-card border p-4 text-left transition ${
+                  className={`flex items-center justify-between gap-4 rounded-md border p-4 text-left transition ${
                                     selecionado
                                       ? 'border-neutral-900 bg-neutral-50'
-                                      : 'border-neutral-200 bg-white hover:border-neutral-300 hover:bg-neutral-50'
+                                      : 'border-line bg-white hover:border-strong hover:bg-page'
                                   } ${
                                     maxAtingido
                                       ? 'cursor-not-allowed opacity-45'
@@ -400,14 +400,14 @@ export function ProductModal({
                                   }`}
                                 >
                                   <div className="min-w-0">
-                                    <p className="text-sm font-medium text-neutral-900">
+                                    <p className="text-sm font-medium text-strong">
                                       {adicional.nome}
                                     </p>
 
                                     {Number(
                                       adicional.preco_extra
                                     ) > 0 && (
-                                      <p className="mt-1 text-xs text-neutral-500">
+                                      <p className="mt-1 text-xs text-mid">
                                         +{' '}
                                         {formatCurrency(
                                           Number(
@@ -419,10 +419,10 @@ export function ProductModal({
                                   </div>
 
                                   <span
-                                    className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full border ${
+                                    className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-md border ${
                                       selecionado
                                         ? 'border-neutral-900 bg-neutral-900 text-white'
-                                        : 'border-neutral-300 bg-white text-transparent'
+                                        : 'border-strong bg-white text-transparent'
                                     }`}
                                   >
                                     <Check className="h-4 w-4" />
@@ -439,35 +439,35 @@ export function ProductModal({
               ) : null}
 
               {/* Quantity */}
-              <div className="flex items-center justify-between rounded-card border border-neutral-200 bg-neutral-50 p-4">
+              <div className="flex items-center justify-between rounded-md border border-line bg-neutral-50 p-4">
                 <div>
-                  <p className="text-sm font-semibold text-neutral-900">
+                  <p className="text-sm font-semibold text-strong">
                     Quantidade
                   </p>
-                  <p className="mt-1 text-xs text-neutral-500">
+                  <p className="mt-1 text-xs text-mid">
                     Escolha quantas unidades deseja.
                   </p>
                 </div>
 
-                <div className="flex items-center gap-3 rounded-full bg-white p-1 shadow-sm ring-1 ring-neutral-200">
+                <div className="flex items-center gap-3 rounded-md bg-white p-1 ring-1 ring-neutral-200">
                   <button
                     type="button"
                     onClick={() => alterarQuantidade(-1)}
                     disabled={quantidade <= 1}
-                    className="flex h-10 w-10 items-center justify-center rounded-full text-neutral-600 transition hover:bg-neutral-100 disabled:cursor-not-allowed disabled:opacity-35"
+                    className="flex h-10 w-10 items-center justify-center rounded-md text-mid transition hover:bg-surface disabled:cursor-not-allowed disabled:opacity-35"
                     aria-label="Diminuir quantidade"
                   >
                     <Minus className="h-4 w-4" />
                   </button>
 
-                  <span className="w-8 text-center text-sm font-semibold text-neutral-900">
+                  <span className="w-8 text-center text-sm font-semibold text-strong">
                     {quantidade}
                   </span>
 
                   <button
                     type="button"
                     onClick={() => alterarQuantidade(1)}
-                    className="flex h-10 w-10 items-center justify-center rounded-full bg-neutral-900 text-white transition hover:bg-neutral-800"
+                    className="flex h-10 w-10 items-center justify-center rounded-md bg-neutral-900 text-white transition hover:bg-neutral-800"
                     aria-label="Aumentar quantidade"
                   >
                     <Plus className="h-4 w-4" />
@@ -478,7 +478,7 @@ export function ProductModal({
           </div>
 
           {/* Footer */}
-          <div className="shrink-0 border-t border-neutral-200 bg-white p-4 sm:p-5">
+          <div className="shrink-0 border-t border-line bg-white p-4 sm:p-5">
             <button
               type="button"
               onClick={handleAddToCart}
@@ -487,7 +487,7 @@ export function ProductModal({
                 produtoIndisponivel ||
                 !validarAdicionais()
               }
-              className="flex w-full items-center justify-between gap-4 rounded-card bg-neutral-900 px-5 py-4 text-white transition hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-50"
+              className="flex w-full items-center justify-between gap-4 rounded-md bg-neutral-900 px-5 py-4 text-white transition hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-50"
             >
               <span className="flex items-center gap-2 text-sm font-semibold sm:text-base">
                 <ShoppingBag className="h-4 w-4" />

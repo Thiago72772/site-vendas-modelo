@@ -3,18 +3,28 @@
 @tailwind utilities;
 
 /* ============================================================
-   DESIGN SYSTEM — CONSOLIDATED TOKENS
+   DESIGN SYSTEM — THEME-AWARE TOKENS
 
-   Single source of truth for runtime-rebrandable values.
-   Tailwind tokens (tailwind.config.js) handle static utilities;
-   CSS vars here handle values that change per tenant at runtime.
+   :root = client (light theme)
+   .dark-admin = admin/cozinha/entregador (dark theme)
+
+   All semantic colors switch via these vars.
+   AdminLayout applies .dark-admin to its wrapper.
    ============================================================ */
 
 :root {
-  /* ----------------------------------------------------------
-     BRAND — Runtime-replaceable via applyTenantColors()
-     ---------------------------------------------------------- */
-  --cor-primaria-50: 255 247 237;
+  /* ---- Client (Light) theme ---- */
+  --c-page:    #FFFFFF;
+  --c-surface: #F7F7F8;
+  --c-raised:  #FFFFFF;
+  --c-line:    #E4E4E7;
+  --c-strong:  #18181B;
+  --c-mid:     #52525B;
+  --c-dim:     #A1A1AA;
+  --c-accent:  #18181B;
+
+  /* Brand primary — default (orange), replaced per-tenant at runtime */
+  --cor-primaria-50:  255 247 237;
   --cor-primaria-100: 255 237 213;
   --cor-primaria-200: 254 215 170;
   --cor-primaria-300: 253 186 116;
@@ -25,35 +35,43 @@
   --cor-primaria-800: 154 52 18;
   --cor-primaria-900: 124 45 18;
 
-  --cor-secundaria-50: 250 250 249;
-  --cor-secundaria-100: 245 245 244;
-  --cor-secundaria-200: 231 229 228;
-  --cor-secundaria-300: 214 211 209;
-  --cor-secundaria-400: 168 162 158;
-  --cor-secundaria-500: 120 113 108;
-  --cor-secundaria-600: 87 83 78;
-  --cor-secundaria-700: 68 64 60;
-  --cor-secundaria-800: 41 37 36;
-  --cor-secundaria-900: 28 25 23;
+  /* Radius */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
 
-  /* ----------------------------------------------------------
-     SEMANTIC — Used by component classes below
-     ---------------------------------------------------------- */
-  --border-soft: 228 228 231;
-  --border-strong: 212 212 216;
-  --text-primary: 17 17 17;
-  --text-secondary: 82 82 91;
-  --text-soft: 161 161 170;
-  --surface-soft: 250 250 249;
+  /* Modal shadow */
+  --shadow-modal: 0 8px 24px -4px rgba(0, 0, 0, 0.12);
+}
 
-  /* ----------------------------------------------------------
-     DESIGN TOKENS — Matches tailwind.config.js
-     ---------------------------------------------------------- */
-  --radius-card: 12px;
-  --radius-modal: 16px;
+/* ============================================================
+   ADMIN DARK THEME
+   Applied by AdminLayout via class="dark-admin"
+   ============================================================ */
 
-  --shadow-card: 0 1px 3px rgb(0 0 0 / 0.06), 0 1px 2px rgb(0 0 0 / 0.04);
-  --shadow-elevated: 0 8px 24px -4px rgb(0 0 0 / 0.10), 0 4px 8px -2px rgb(0 0 0 / 0.06);
+.dark-admin {
+  --c-page:    #0B0D10;
+  --c-surface: #14161A;
+  --c-raised:  #1C1F24;
+  --c-line:    #262A31;
+  --c-strong:  #F2F3F5;
+  --c-mid:     #8A8F98;
+  --c-dim:     #555B66;
+  --c-accent:  #3B82F6;
+
+  /* Override brand primary to admin accent (blue) */
+  --cor-primaria-50:  239 246 255;
+  --cor-primaria-100: 219 234 254;
+  --cor-primaria-200: 191 219 254;
+  --cor-primaria-300: 147 197 253;
+  --cor-primaria-400: 96 165 250;
+  --cor-primaria-500: 59 130 246;
+  --cor-primaria-600: 37 99 235;
+  --cor-primaria-700: 29 78 216;
+  --cor-primaria-800: 30 64 175;
+  --cor-primaria-900: 30 58 138;
+
+  --shadow-modal: 0 8px 24px -4px rgba(0, 0, 0, 0.4);
 }
 
 /* ============================================================
@@ -62,15 +80,7 @@
 
 @layer base {
   html {
-    font-family:
-      Inter,
-      ui-sans-serif,
-      system-ui,
-      -apple-system,
-      BlinkMacSystemFont,
-      "Segoe UI",
-      sans-serif;
-
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     color-scheme: light;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -79,12 +89,11 @@
   }
 
   body {
-    @apply bg-neutral-50 text-neutral-900;
-
     margin: 0;
     min-width: 320px;
     line-height: 1.5;
-    color: rgb(var(--text-primary));
+    color: var(--c-strong);
+    background: var(--c-page);
     font-feature-settings: "cv02" 1, "cv03" 1, "cv04" 1, "cv11" 1;
   }
 
@@ -95,32 +104,24 @@
 
   h1, h2, h3, h4, h5, h6 {
     margin: 0;
-    line-height: 1.15;
-    font-weight: 650;
-    letter-spacing: -0.025em;
+    line-height: 1.2;
+    font-weight: 600;
+    letter-spacing: -0.02em;
   }
-  h1 { letter-spacing: -0.04em; }
   p { margin: 0; }
   a { color: inherit; text-decoration: none; }
 
-  ::selection {
-    background: rgb(var(--cor-primaria-200));
-    color: rgb(var(--cor-secundaria-900));
-  }
-
   :focus-visible {
-    outline: 2px solid rgb(var(--cor-primaria-500));
+    outline: 2px solid var(--c-accent);
     outline-offset: 2px;
   }
 
-  ::-webkit-scrollbar { width: 8px; height: 8px; }
-  ::-webkit-scrollbar-track { background: rgb(var(--surface-soft)); }
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb {
     border-radius: 999px;
-    background: rgb(212 212 216);
-    border: 2px solid rgb(var(--surface-soft));
+    background: var(--c-dim);
   }
-  ::-webkit-scrollbar-thumb:hover { background: rgb(161 161 170); }
 }
 
 /* ============================================================
@@ -130,223 +131,129 @@
 @layer utilities {
   .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
   .scrollbar-hide::-webkit-scrollbar { display: none; }
-  .text-balance { text-wrap: balance; }
   .touch-target { min-width: 44px; min-height: 44px; }
-
-  /* Image loading placeholder — prevents CLS */
-  .img-placeholder {
-    background: rgb(244 244 245);
-  }
 }
 
 /* ============================================================
-   COMPONENTS — Design-system-aligned
+   COMPONENTS
    ============================================================ */
 
 @layer components {
 
-  /* ----------------------------------------------------------
-     Card — subtle surface for content blocks
-     ---------------------------------------------------------- */
+  /* Card — border only, NO shadow (per spec) */
   .card {
-    @apply bg-white;
-    border: 1px solid rgb(var(--border-soft));
-    border-radius: var(--radius-card);
-    box-shadow: var(--shadow-card);
-    transition: border-color 200ms cubic-bezier(0.2, 0.8, 0.2, 1);
+    background: var(--c-raised);
+    border: 1px solid var(--c-line);
+    border-radius: var(--radius-md);
+    transition: border-color 150ms ease;
   }
 
-  .card-hover {
-    transition: border-color 200ms cubic-bezier(0.2, 0.8, 0.2, 1),
-                box-shadow 200ms cubic-bezier(0.2, 0.8, 0.2, 1);
-  }
-
-  .card-hover:hover {
-    border-color: rgb(var(--border-strong));
-    box-shadow: var(--shadow-elevated);
-  }
-
-  /* ----------------------------------------------------------
-     Primary button — single accent color, no gradient
-     ---------------------------------------------------------- */
+  /* Primary button — solid accent, no gradient, no shadow, no scale */
   .btn-primary {
     @apply inline-flex items-center justify-center gap-2;
-    min-height: 44px;
-    padding: 0 1.25rem;
-    border-radius: var(--radius-card);
-    background: rgb(var(--cor-primaria-600));
+    min-height: 40px;
+    padding: 0 1rem;
+    border-radius: var(--radius-md);
+    background: var(--c-accent);
     color: white;
-    font-size: 0.875rem;
+    font-size: 0.8125rem;
     font-weight: 600;
-    transition: background-color 150ms ease, box-shadow 200ms ease;
+    border: none;
+    transition: opacity 150ms ease;
+    cursor: pointer;
   }
+  .btn-primary:hover { opacity: 0.9; }
+  .btn-primary:disabled { cursor: not-allowed; opacity: 0.4; }
 
-  .btn-primary:hover {
-    background: rgb(var(--cor-primaria-700));
-    box-shadow: 0 4px 12px rgb(var(--cor-primaria-600) / 0.2);
-  }
-
-  .btn-primary:active { background: rgb(var(--cor-primaria-800)); }
-
-  .btn-primary:disabled {
-    cursor: not-allowed;
-    opacity: 0.5;
-    box-shadow: none;
-  }
-
-  /* ----------------------------------------------------------
-     Secondary button — outlined, neutral
-     ---------------------------------------------------------- */
+  /* Secondary button — outline, transparent bg */
   .btn-secondary {
     @apply inline-flex items-center justify-center gap-2;
-    min-height: 44px;
-    padding: 0 1.25rem;
-    border: 1px solid rgb(var(--border-soft));
-    border-radius: var(--radius-card);
-    background: white;
-    color: rgb(var(--text-primary));
-    font-size: 0.875rem;
+    min-height: 40px;
+    padding: 0 1rem;
+    border: 1px solid var(--c-line);
+    border-radius: var(--radius-md);
+    background: transparent;
+    color: var(--c-strong);
+    font-size: 0.8125rem;
     font-weight: 600;
-    transition: border-color 150ms ease, background-color 150ms ease;
+    transition: background 150ms ease;
+    cursor: pointer;
   }
+  .btn-secondary:hover { background: var(--c-surface); }
+  .btn-secondary:disabled { cursor: not-allowed; opacity: 0.4; }
 
-  .btn-secondary:hover {
-    border-color: rgb(var(--border-strong));
-    background: rgb(var(--surface-soft));
-  }
-
-  .btn-secondary:active { background: rgb(240 240 239); }
-
-  .btn-secondary:disabled { cursor: not-allowed; opacity: 0.5; }
-
-  /* ----------------------------------------------------------
-     Ghost button — minimal, text-only
-     ---------------------------------------------------------- */
+  /* Ghost button */
   .btn-ghost {
     @apply inline-flex items-center justify-center gap-2;
-    min-height: 44px;
-    padding: 0 1rem;
-    border-radius: var(--radius-card);
-    color: rgb(var(--text-secondary));
-    font-size: 0.875rem;
-    font-weight: 600;
-    transition: background-color 120ms ease, color 120ms ease;
-  }
-
-  .btn-ghost:hover {
-    background: rgb(var(--surface-soft));
-    color: rgb(var(--text-primary));
-  }
-
-  /* ----------------------------------------------------------
-     Input — consistent 12px radius
-     ---------------------------------------------------------- */
-  .input {
-    width: 100%;
-    min-height: 44px;
-    padding: 0.625rem 0.875rem;
-    border: 1px solid rgb(var(--border-soft));
-    border-radius: var(--radius-card);
-    background: white;
-    color: rgb(var(--text-primary));
-    font-size: 0.875rem;
-    transition: border-color 200ms ease, box-shadow 200ms ease;
-  }
-
-  .input::placeholder { color: rgb(var(--text-soft)); }
-  .input:hover { border-color: rgb(203 203 207); }
-
-  .input:focus {
-    outline: none;
-    border-color: rgb(var(--cor-primaria-500));
-    box-shadow: 0 0 0 3px rgb(var(--cor-primaria-500) / 0.1);
-  }
-
-  .input:disabled {
-    cursor: not-allowed;
-    background: rgb(245 245 244);
-    color: rgb(var(--text-soft));
-  }
-
-  /* ----------------------------------------------------------
-     Label
-     ---------------------------------------------------------- */
-  .label {
-    display: block;
-    margin-bottom: 0.375rem;
-    color: rgb(var(--text-secondary));
+    min-height: 40px;
+    padding: 0 0.75rem;
+    border-radius: var(--radius-md);
+    color: var(--c-mid);
     font-size: 0.8125rem;
     font-weight: 500;
+    border: none;
+    background: transparent;
+    transition: background 150ms ease, color 150ms ease;
+    cursor: pointer;
+  }
+  .btn-ghost:hover {
+    background: var(--c-surface);
+    color: var(--c-strong);
   }
 
-  /* ----------------------------------------------------------
-     Divider
-     ---------------------------------------------------------- */
-  .divider {
+  /* Input — 4px radius per spec */
+  .input {
     width: 100%;
-    height: 1px;
-    background: rgb(var(--border-soft));
+    min-height: 40px;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--c-line);
+    border-radius: var(--radius-sm);
+    background: var(--c-raised);
+    color: var(--c-strong);
+    font-size: 0.8125rem;
+    transition: border-color 150ms ease;
   }
+  .input::placeholder { color: var(--c-dim); }
+  .input:hover { border-color: var(--c-mid); }
+  .input:focus { outline: none; border-color: var(--c-accent); }
+  .input:disabled { cursor: not-allowed; opacity: 0.5; }
 
-  /* ----------------------------------------------------------
-     Status badges — pill shape, state colors
-     ---------------------------------------------------------- */
-  .status-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.375rem;
-    min-height: 24px;
-    padding: 0.25rem 0.625rem;
-    border-radius: 9999px;
+  /* Label */
+  .label {
+    display: block;
+    margin-bottom: 0.25rem;
+    color: var(--c-mid);
     font-size: 0.75rem;
     font-weight: 500;
   }
 
-  .status-success { background: rgb(220 252 231); color: rgb(22 101 52); }
-  .status-warning { background: rgb(254 243 199); color: rgb(146 64 14); }
-  .status-danger  { background: rgb(254 226 226); color: rgb(153 27 27); }
-  .status-neutral { background: rgb(244 244 245); color: rgb(82 82 91); }
-
-  /* ----------------------------------------------------------
-     Product surface — card for product items
-     ---------------------------------------------------------- */
-  .product-surface {
-    overflow: hidden;
-    border: 1px solid rgb(var(--border-soft));
-    border-radius: var(--radius-card);
-    background: white;
-    box-shadow: var(--shadow-card);
-    transition: border-color 200ms ease, box-shadow 200ms ease;
+  /* Status badge — 4px radius (not pill) */
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.125rem 0.5rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.6875rem;
+    font-weight: 500;
   }
 
-  .product-surface:hover {
-    border-color: rgb(var(--border-strong));
-    box-shadow: var(--shadow-elevated);
-  }
-
-  /* ----------------------------------------------------------
-     Skeleton — loading placeholder
-     ---------------------------------------------------------- */
+  /* Skeleton loader */
   .skeleton {
     position: relative;
     overflow: hidden;
-    background: rgb(244 244 245);
-    border-radius: 12px;
+    background: var(--c-surface);
+    border-radius: var(--radius-md);
   }
-
   .skeleton::after {
     content: "";
     position: absolute;
     inset: 0;
     transform: translateX(-100%);
-    background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.6), transparent);
+    background: linear-gradient(90deg, transparent, var(--c-raised), transparent);
     animation: skeleton-shimmer 1.5s infinite;
   }
 }
-
-/* ============================================================
-   MOTION
-   ============================================================ */
 
 @keyframes skeleton-shimmer {
   100% { transform: translateX(100%); }

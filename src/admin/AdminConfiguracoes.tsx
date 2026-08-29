@@ -29,11 +29,7 @@ export default function AdminConfiguracoes() {
   useEffect(() => {
     (async () => {
       if (!tenantId) return;
-      const { data } = await supabase
-        .from('tenants')
-        .select('*')
-        .eq('id', tenantId)
-        .maybeSingle();
+      const { data } = await supabase.from('tenants').select('*').eq('id', tenantId).maybeSingle();
       if (data) {
         const t = data as Tenant;
         setTenant(t);
@@ -55,19 +51,14 @@ export default function AdminConfiguracoes() {
     e.preventDefault();
     setSaving(true);
     setSaved(false);
-
     const payload = {
-      nome,
-      logo_url: logoUrl || null,
-      banner_url: bannerUrl || null,
-      cor_primaria: corPrimaria || null,
-      cor_secundaria: corSecundaria || null,
+      nome, logo_url: logoUrl || null, banner_url: bannerUrl || null,
+      cor_primaria: corPrimaria || null, cor_secundaria: corSecundaria || null,
       telefone_whatsapp: telefoneWhatsapp || null,
       taxa_entrega_base: parseFloat(taxaEntregaBase) || 0,
       tempo_medio_preparo_min: tempoMedioPreparo ? parseInt(tempoMedioPreparo) : null,
       horario_funcionamento: horarios,
     };
-
     await supabase.from('tenants').update(payload).eq('id', tenantId);
     setSaving(false);
     setSaved(true);
@@ -87,7 +78,7 @@ export default function AdminConfiguracoes() {
     return (
       <AdminLayout>
         <div className="flex items-center justify-center py-20">
-          <Loader2 className="w-6 h-6 text-primary-500 animate-spin" />
+          <Loader2 className="w-5 h-5 text-primary-500 animate-spin" />
         </div>
       </AdminLayout>
     );
@@ -96,12 +87,13 @@ export default function AdminConfiguracoes() {
   if (!isDono) {
     return (
       <AdminLayout>
-        <h1 className="text-2xl font-semibold text-neutral-900 mb-1">Configurações</h1>
-        <div className="flex flex-col items-center justify-center py-20 text-center">            <div className="w-16 h-16 rounded-card bg-neutral-100 flex items-center justify-center mb-4">
-            <Lock className="w-8 h-8 text-neutral-400" />
+        <h1 className="text-lg font-semibold text-strong mb-0.5">Configurações</h1>
+        <div className="flex flex-col items-center justify-center py-16 text-center">
+          <div className="w-12 h-12 rounded-md bg-raised flex items-center justify-center mb-3">
+            <Lock className="w-6 h-6 text-dim" />
           </div>
-          <h2 className="text-lg font-semibold text-neutral-900">Acesso restrito</h2>
-          <p className="mt-1 text-sm text-neutral-500 max-w-md">
+          <h2 className="text-base font-semibold text-strong">Acesso restrito</h2>
+          <p className="mt-1 text-sm text-mid max-w-sm">
             Apenas o dono da loja pode alterar as configurações.
           </p>
         </div>
@@ -111,14 +103,13 @@ export default function AdminConfiguracoes() {
 
   return (
     <AdminLayout>
-      <h1 className="text-2xl font-semibold text-neutral-900 mb-1">Configurações</h1>
-      <p className="text-sm text-neutral-500 mb-6">Personalize sua loja</p>
+      <h1 className="text-lg font-semibold text-strong mb-0.5">Configurações</h1>
+      <p className="text-sm text-mid mb-5">Personalize sua loja</p>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
-        {/* Basic info */}
-        <div className="card space-y-4">
-          <h2 className="text-sm font-semibold text-neutral-900 flex items-center gap-2">
-            <Settings className="w-4 h-4 text-primary-500" />
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="card p-4 space-y-3">
+          <h2 className="text-xs font-semibold text-mid uppercase tracking-wide flex items-center gap-1.5">
+            <Settings className="w-3.5 h-3.5 text-primary-500" />
             Informações básicas
           </h2>
           <div>
@@ -139,31 +130,29 @@ export default function AdminConfiguracoes() {
           </div>
         </div>
 
-        {/* Branding */}
-        <div className="card space-y-4">
-          <h2 className="text-sm font-semibold text-neutral-900">Cores da marca</h2>
-          <div className="grid grid-cols-2 gap-3">
+        <div className="card p-4 space-y-3">
+          <h2 className="text-xs font-semibold text-mid uppercase tracking-wide">Cores da marca</h2>
+          <div className="grid grid-cols-2 gap-2">
             <div>
               <label className="label">Cor primária</label>
-              <div className="flex gap-2">
-                <input type="color" value={corPrimaria || '#2563eb'} onChange={(e) => setCorPrimaria(e.target.value)} className="w-12 h-10 rounded-card border border-neutral-200" />
+              <div className="flex gap-1.5">
+                <input type="color" value={corPrimaria || '#2563eb'} onChange={(e) => setCorPrimaria(e.target.value)} className="w-10 h-9 rounded-sm border border-line bg-raised" />
                 <input className="input" value={corPrimaria} onChange={(e) => setCorPrimaria(e.target.value)} placeholder="#2563eb" />
               </div>
             </div>
             <div>
               <label className="label">Cor secundária</label>
-              <div className="flex gap-2">
-                <input type="color" value={corSecundaria || '#10b981'} onChange={(e) => setCorSecundaria(e.target.value)} className="w-12 h-10 rounded-card border border-neutral-200" />
+              <div className="flex gap-1.5">
+                <input type="color" value={corSecundaria || '#10b981'} onChange={(e) => setCorSecundaria(e.target.value)} className="w-10 h-9 rounded-sm border border-line bg-raised" />
                 <input className="input" value={corSecundaria} onChange={(e) => setCorSecundaria(e.target.value)} placeholder="#10b981" />
               </div>
             </div>
           </div>
         </div>
 
-        {/* Delivery */}
-        <div className="card space-y-4">
-          <h2 className="text-sm font-semibold text-neutral-900">Entrega</h2>
-          <div className="grid grid-cols-2 gap-3">
+        <div className="card p-4 space-y-3">
+          <h2 className="text-xs font-semibold text-mid uppercase tracking-wide">Entrega</h2>
+          <div className="grid grid-cols-2 gap-2">
             <div>
               <label className="label">Taxa de entrega (R$)</label>
               <input className="input" type="number" step="0.01" value={taxaEntregaBase} onChange={(e) => setTaxaEntregaBase(e.target.value)} />
@@ -175,29 +164,18 @@ export default function AdminConfiguracoes() {
           </div>
         </div>
 
-        {/* Opening hours */}
-        <div className="card space-y-4">
-          <h2 className="text-sm font-semibold text-neutral-900">Horário de funcionamento</h2>
-          <div className="space-y-2">
+        <div className="card p-4 space-y-3">
+          <h2 className="text-xs font-semibold text-mid uppercase tracking-wide">Horário de funcionamento</h2>
+          <div className="space-y-1.5">
             {DIAS.map((dia) => {
               const h = horarios[dia] ?? { abre: null, fecha: null };
               return (
-                <div key={dia} className="flex items-center gap-3">
-                  <span className="text-sm text-neutral-700 w-24">{getDiaSemanaLabel(dia)}</span>
-                  <input
-                    type="time"
-                    value={h.abre ?? ''}
-                    onChange={(e) => updateHorario(dia, 'abre', e.target.value)}
-                    className="input py-1.5 text-sm w-32"
-                  />
-                  <span className="text-neutral-400 text-sm">até</span>
-                  <input
-                    type="time"
-                    value={h.fecha ?? ''}
-                    onChange={(e) => updateHorario(dia, 'fecha', e.target.value)}
-                    className="input py-1.5 text-sm w-32"
-                  />
-                  {!h.abre && !h.fecha && <span className="text-xs text-neutral-400">Fechado</span>}
+                <div key={dia} className="flex items-center gap-2">
+                  <span className="text-sm text-mid w-20">{getDiaSemanaLabel(dia)}</span>
+                  <input type="time" value={h.abre ?? ''} onChange={(e) => updateHorario(dia, 'abre', e.target.value)} className="input py-1 text-sm w-28" />
+                  <span className="text-dim text-sm">até</span>
+                  <input type="time" value={h.fecha ?? ''} onChange={(e) => updateHorario(dia, 'fecha', e.target.value)} className="input py-1 text-sm w-28" />
+                  {!h.abre && !h.fecha && <span className="text-2xs text-dim">Fechado</span>}
                 </div>
               );
             })}

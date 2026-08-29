@@ -26,21 +26,21 @@ export default function AdminLogin() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-neutral-50 px-4">
+    <div className="dark-admin min-h-screen flex items-center justify-center bg-page px-4">
       <div className="w-full max-w-sm">
-        <div className="text-center mb-8">
-          <div className="inline-flex w-14 h-14 rounded-card bg-primary-600 items-center justify-center mb-4">
-            <Store className="w-7 h-7 text-white" />
+        <div className="text-center mb-6">
+          <div className="inline-flex w-10 h-10 rounded-md bg-primary-600 items-center justify-center mb-3">
+            <Store className="w-5 h-5 text-white" />
           </div>
-          <h1 className="text-xl font-semibold text-neutral-900">Acessar painel</h1>
-          <p className="mt-1 text-sm text-neutral-500">Entre com suas credenciais de equipe</p>
+          <h1 className="text-base font-semibold text-strong">Acessar painel</h1>
+          <p className="mt-0.5 text-sm text-mid">Entre com suas credenciais de equipe</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="card space-y-4">
+        <form onSubmit={handleSubmit} className="card p-4 space-y-3">
           <div>
             <label htmlFor="email" className="label">E-mail</label>
             <div className="relative">
-              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400" />
+              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-dim" />
               <input
                 id="email"
                 type="email"
@@ -48,7 +48,7 @@ export default function AdminLogin() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="voce@exemplo.com"
-                className="input pl-10"
+                className="input pl-9"
               />
             </div>
           </div>
@@ -56,7 +56,7 @@ export default function AdminLogin() {
           <div>
             <label htmlFor="password" className="label">Senha</label>
             <div className="relative">
-              <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400" />
+              <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-dim" />
               <input
                 id="password"
                 type="password"
@@ -64,13 +64,13 @@ export default function AdminLogin() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="input pl-10"
+                className="input pl-9"
               />
             </div>
           </div>
 
           {error && (
-            <p className="text-sm text-error-600 bg-error-50 rounded-card px-4 py-2.5">{error}</p>
+            <p className="text-sm text-error-500 bg-error-500/10 rounded-md px-3 py-2">{error}</p>
           )}
 
           <button type="submit" disabled={submitting} className="btn-primary w-full">
@@ -79,9 +79,11 @@ export default function AdminLogin() {
           </button>
         </form>
 
-        <p className="mt-6 text-center text-sm text-neutral-500">
-          <Link to="/" className="text-primary-600 hover:underline">Ver lojas públicas</Link>
-        </p>
+        <div className="mt-4 text-center">
+          <Link to={`/admin/${slug}`} className="text-xs text-dim hover:text-mid transition-colors">
+            ← Voltar
+          </Link>
+        </div>
       </div>
     </div>
   );
