@@ -17,7 +17,6 @@ import {
   StickyNote,
   Bike,
   Loader2,
-  Sparkles,
 } from 'lucide-react';
 
 interface PedidoWithRelations extends Pedido {
@@ -199,15 +198,15 @@ export default function AdminPedidos() {
             >
               <div className="flex items-center justify-between mb-3 px-1">
                 <div className="flex items-center gap-2">
-                  <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${col.color}`}>
+                  <span className={`text-xs font-semibold px-2.5 py-1 rounded-pill ${col.color}`}>
                     {col.label}
                   </span>
                 </div>
-                <span className="text-xs text-neutral-400">{colPedidos.length}</span>
+                <span className="flex items-center justify-center min-w-[20px] h-5 rounded-pill bg-neutral-200 text-xs font-medium text-neutral-600 px-1.5">{colPedidos.length}</span>
               </div>
 
               <div
-                className={`space-y-2 min-h-[200px] rounded-xl p-2 transition-colors ${
+                className={`space-y-2 min-h-[200px] rounded-card p-2 transition-colors ${
                   isDragOver ? 'bg-primary-50 border-2 border-dashed border-primary-300' : 'bg-neutral-100/50'
                 }`}
               >
@@ -219,24 +218,37 @@ export default function AdminPedidos() {
                       draggable={canEdit}
                       onDragStart={(e) => handleDragStart(e, pedido.id)}
                       onClick={() => setSelectedPedido(pedido)}
-                      className={`bg-white rounded-lg shadow-card p-3 cursor-pointer hover:shadow-soft transition-all duration-200 ${
+                      className={`bg-white rounded-card shadow-card p-3 cursor-pointer hover:shadow-soft transition-all duration-200 ${
                         canEdit ? 'cursor-grab active:cursor-grabbing' : ''
-                      } ${isNew ? 'animate-pulse-once ring-2 ring-primary-400' : ''} ${
+                      } ${isNew ? 'animate-flash ring-2 ring-primary-400' : ''} ${
                         draggedId === pedido.id ? 'opacity-40' : ''
                       }`}
                     >
                       {isNew && (
                         <div className="flex items-center gap-1 mb-1">
-                          <Sparkles className="w-3 h-3 text-primary-500" />
+                          <span className="inline-block w-1.5 h-1.5 rounded-full bg-primary-500 animate-pulse" />
                           <span className="text-xs font-medium text-primary-600">Novo</span>
                         </div>
                       )}
                       <p className="text-sm font-medium text-neutral-900 truncate">
                         {pedido.clientes?.nome ?? 'Cliente'}
                       </p>
-                      <p className="text-xs text-neutral-400 mt-0.5">
-                        {new Date(pedido.created_at).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}
-                      </p>
+                      <div className="flex items-center gap-2 mt-0.5">
+                        <span className="text-xs text-neutral-400">
+                          {new Date(pedido.created_at).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}
+                        </span>
+                        <span className="text-xs text-neutral-400">•</span>
+                        <span className="text-xs text-neutral-400">
+                          {Math.floor((Date.now() - new Date(pedido.created_at).getTime()) / 60000)} min
+                        </span>
+                      </div>
+                      {/* Item summary */}
+                      {pedido.itens_pedido && pedido.itens_pedido.length > 0 && (
+                        <p className="text-xs text-neutral-500 mt-1.5 truncate">
+                          {pedido.itens_pedido.slice(0, 2).map((it) => `${it.quantidade}x ${it.produtos?.nome ?? 'Produto'}`).join(', ')}
+                          {pedido.itens_pedido.length > 2 && ` +${pedido.itens_pedido.length - 2}`}
+                        </p>
+                      )}
                       <div className="flex items-center justify-between mt-2">
                         <span className="text-xs text-neutral-500">
                           {pedido.itens_pedido?.length ?? 0} {pedido.itens_pedido?.length === 1 ? 'item' : 'itens'}
@@ -245,6 +257,23 @@ export default function AdminPedidos() {
                           {formatCurrency(Number(pedido.total))}
                         </span>
                       </div>
+                      {/* Quick actions for kitchen/read-only roles */}
+                      {isCozinha && pedido.status === 'recebido' && (
+                        <button
+                          onClick={(e) => { e.stopPropagation(); updateStatus(pedido.id, 'preparo'); }}
+                          className="mt-2 w-full text-xs font-semibold py-1.5 rounded-card bg-primary-50 text-primary-700 hover:bg-primary-100 transition-colors"
+                        >
+                          Aceitar e preparar
+                        </button>
+                      )}
+                      {isCozinha && pedido.status === 'preparo' && (
+                        <button
+                          onClick={(e) => { e.stopPropagation(); updateStatus(pedido.id, 'saiu_entrega'); }}
+                          className="mt-2 w-full text-xs font-semibold py-1.5 rounded-card bg-success-50 text-success-700 hover:bg-success-100 transition-colors"
+                        >
+                          Marcar como pronto
+                        </button>
+                      )}
                       {pedido.entregador_id && (
                         <div className="flex items-center gap-1 mt-2 text-xs text-neutral-400">
                           <Bike className="w-3 h-3" />
@@ -311,10 +340,10 @@ function PedidoDetailModal({
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center">
       <div className="absolute inset-0 bg-black/50" onClick={onClose} />
-      <div className="relative bg-white w-full sm:max-w-lg sm:rounded-2xl rounded-t-2xl max-h-[90vh] flex flex-col animate-slide-up">
+      <div className="relative bg-white w-full sm:max-w-lg sm:rounded-modal rounded-t-modal max-h-[90vh] flex flex-col animate-slide-up">
         <div className="flex items-center justify-between px-5 py-4 border-b border-neutral-200">
           <h2 className="text-base font-semibold text-neutral-900">Pedido #{pedido.id.slice(0, 8)}</h2>
-          <button onClick={onClose} className="p-2 rounded-lg hover:bg-neutral-100">
+          <button onClick={onClose} className="p-2 rounded-card hover:bg-neutral-100">
             <X className="w-5 h-5 text-neutral-500" />
           </button>
         </div>
@@ -324,7 +353,7 @@ function PedidoDetailModal({
           <div>
             <p className="text-xs text-neutral-400 mb-1">Status atual</p>
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-sm font-medium px-3 py-1.5 rounded-full bg-primary-50 text-primary-700">
+              <span className="text-sm font-medium px-3 py-1.5 rounded-pill bg-primary-50 text-primary-700">
                 {STATUS_PEDIDO_LABELS[pedido.status]}
               </span>
               {canEdit && (

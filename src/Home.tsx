@@ -58,8 +58,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="hidden items-center gap-2 sm:flex">
-            <div className="flex items-center gap-2 rounded-full border border-neutral-200 bg-white px-3 py-2 text-xs font-medium text-neutral-600">
+          <div className="hidden items-center gap-2 sm:flex">                  <div className="flex items-center gap-2 rounded-pill border border-neutral-200 bg-white px-3 py-2 text-xs font-medium text-neutral-600">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
               Experiência online
             </div>
@@ -70,14 +69,14 @@ export default function Home() {
       {loading ? (
         <main className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-10">
           <div className="grid gap-5 lg:grid-cols-[1.2fr_0.8fr]">
-            <div className="skeleton h-[470px] rounded-[30px] sm:h-[560px]" />
-            <div className="skeleton h-[470px] rounded-[30px] sm:h-[560px]" />
+            <div className="skeleton h-[470px] rounded-modal sm:h-[560px]" />
+            <div className="skeleton h-[470px] rounded-modal sm:h-[560px]" />
           </div>
         </main>
       ) : !loja ? (
         <main className="flex min-h-[calc(100vh-64px)] items-center justify-center px-4">
-          <div className="w-full max-w-md rounded-[30px] border border-neutral-200 bg-white p-8 text-center shadow-sm">
-            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-3xl bg-neutral-100">
+          <div className="w-full max-w-md rounded-modal border border-neutral-200 bg-white p-8 text-center shadow-card">
+            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-card bg-neutral-100">
               <Store className="h-7 w-7 text-neutral-500" />
             </div>
 
@@ -94,11 +93,12 @@ export default function Home() {
         <main className="mx-auto max-w-6xl px-4 py-5 sm:px-6 sm:py-8">
           <div className="grid gap-5 lg:grid-cols-[1.18fr_0.82fr]">
             {/* Main visual */}
-            <section className="relative min-h-[460px] overflow-hidden rounded-[30px] border border-neutral-900 bg-neutral-950 shadow-xl sm:min-h-[560px]">
+            <section className="relative min-h-[460px] overflow-hidden rounded-modal border border-neutral-900 bg-neutral-950 shadow-elevated sm:min-h-[560px]">
               {loja.banner_url ? (
                 <img
                   src={loja.banner_url}
                   alt={loja.nome}
+                  loading="lazy"
                   className="absolute inset-0 h-full w-full object-cover"
                 />
               ) : (
@@ -125,10 +125,11 @@ export default function Home() {
                       <img
                         src={loja.logo_url}
                         alt=""
-                        className="h-12 w-12 rounded-2xl border border-white/20 object-cover"
+                        loading="lazy"
+                        className="h-12 w-12 rounded-card border border-white/20 object-cover"
                       />
                     ) : (
-                      <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/15 bg-white/10 text-white">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-card border border-white/15 bg-white/10 text-white">
                         <Store className="h-5 w-5" />
                       </div>
                     )}
@@ -156,14 +157,14 @@ export default function Home() {
                   <div className="mt-7 flex flex-col gap-3 sm:flex-row">
                     <Link
                       to={`/loja/${loja.slug}`}
-                      className="inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl bg-white px-5 text-sm font-semibold text-neutral-950 transition hover:bg-neutral-100 active:scale-[0.99]"
+                      className="inline-flex min-h-12 items-center justify-center gap-2 rounded-card bg-white px-5 text-sm font-semibold text-neutral-950 transition hover:bg-neutral-100"
                     >
                       Ver experiência
                       <ArrowRight className="h-4 w-4" />
                     </Link>
 
                     {loja.tempo_medio_preparo_min && (
-                      <div className="inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl border border-white/15 bg-white/10 px-4 text-sm font-medium text-white/85 backdrop-blur-xl">
+                      <div className="inline-flex min-h-12 items-center justify-center gap-2 rounded-card border border-white/15 bg-white/10 px-4 text-sm font-medium text-white/85">
                         <Clock className="h-4 w-4" />
                         ~{loja.tempo_medio_preparo_min} min
                       </div>
@@ -174,7 +175,7 @@ export default function Home() {
             </section>
 
             {/* Supporting panel */}
-            <section className="flex flex-col rounded-[30px] border border-neutral-200 bg-white p-5 shadow-sm sm:p-7">
+            <section className="flex flex-col rounded-modal border border-neutral-200 bg-white p-5 shadow-card sm:p-7">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-400">
                   Sistema modelo
@@ -210,13 +211,9 @@ export default function Home() {
                 ].map((item) => {
                   const Icon = item.icon;
 
-                  return (
-                    <div
-                      key={item.title}
-                      className="group rounded-2xl border border-neutral-200 bg-neutral-50/70 p-4 transition hover:border-neutral-300 hover:bg-white hover:shadow-sm"
-                    >
+                  return (                    <div key={item.title} className="group rounded-card border border-neutral-200 bg-neutral-50/70 p-4 transition hover:border-neutral-300 hover:bg-white hover:shadow-card">
                       <div className="flex gap-4">
-                        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-neutral-900 text-white">
+                        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-card bg-neutral-900 text-white">
                           <Icon className="h-5 w-5" />
                         </div>
 
@@ -236,7 +233,7 @@ export default function Home() {
               </div>
 
               <div className="mt-auto pt-7">
-                <div className="rounded-2xl border border-neutral-200 bg-neutral-950 p-5 text-white">
+                <div className="rounded-card border border-neutral-200 bg-neutral-950 p-5 text-white">
                   <p className="text-xs font-medium uppercase tracking-[0.14em] text-white/45">
                     Modelo de demonstração
                   </p>

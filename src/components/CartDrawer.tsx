@@ -77,7 +77,7 @@ export function CartDrawer({
       <aside
         aria-label="Carrinho de compras"
         aria-hidden={!open}
-        className={`fixed right-0 top-0 z-50 flex h-[100dvh] w-full max-w-lg flex-col bg-[#fafaf8] shadow-2xl transition-transform duration-300 ease-out ${
+        className={`fixed right-0 top-0 z-50 flex h-[100dvh] w-full max-w-lg flex-col bg-[#fafaf8] shadow-elevated transition-transform duration-300 ease-out ${
           open
             ? 'translate-x-0'
             : 'translate-x-full'
@@ -132,7 +132,7 @@ export function CartDrawer({
         <div className="min-h-0 flex-1 overflow-y-auto">
           {items.length === 0 ? (
             <div className="flex min-h-full flex-col items-center justify-center px-8 py-16 text-center">
-              <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-neutral-100">
+              <div className="flex h-16 w-16 items-center justify-center rounded-card bg-neutral-100">
                 <ShoppingBag className="h-7 w-7 text-neutral-400" />
               </div>
 
@@ -165,7 +165,7 @@ export function CartDrawer({
                 return (
                   <article
                     key={item.id}
-                    className="rounded-2xl border border-neutral-200 bg-white p-4"
+                    className="rounded-card border border-neutral-200 bg-white p-4"
                   >
                     <div className="flex gap-3.5">
                       {/* Image */}
@@ -215,7 +215,7 @@ export function CartDrawer({
 
                         <div className="mt-4 flex items-end justify-between gap-3">
                           {/* Quantity */}
-                          <div className="inline-flex items-center rounded-xl border border-neutral-200 bg-neutral-50 p-1">
+                          <div className="inline-flex items-center rounded-card border border-neutral-200 bg-neutral-50 p-1">
                             <button
                               type="button"
                               onClick={() =>
@@ -266,8 +266,7 @@ export function CartDrawer({
         {/* Footer */}
         {items.length > 0 && (
           <footer className="shrink-0 border-t border-neutral-200 bg-white px-4 py-4 pb-[max(1rem,env(safe-area-inset-bottom))] sm:px-5 sm:py-5">
-            <div className="space-y-4">
-              <div className="rounded-2xl bg-neutral-50 p-4">
+            <div className="space-y-4">                <div className="rounded-card bg-neutral-50 p-4">
                 <div className="flex items-center justify-between gap-4">
                   <div>
                     <p className="text-xs font-medium text-neutral-500">
@@ -288,7 +287,7 @@ export function CartDrawer({
               <button
                 type="button"
                 onClick={handleCheckout}
-                className="flex w-full items-center justify-between gap-4 rounded-2xl bg-neutral-900 px-5 py-4 text-white transition hover:bg-neutral-800 active:scale-[0.99]"
+                className="flex w-full items-center justify-between gap-4 rounded-card bg-neutral-900 px-5 py-4 text-white transition hover:bg-neutral-800 active:scale-[0.99]"
               >
                 <span className="text-sm font-semibold sm:text-base">
                   Continuar para finalizar

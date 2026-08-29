@@ -222,10 +222,10 @@ function LojaHomeContent() {
               <img
                 src={tenant.logo_url}
                 alt={tenant.nome}
-                className="h-10 w-10 shrink-0 rounded-2xl object-cover ring-1 ring-black/5"
+                className="h-10 w-10 shrink-0 rounded-card object-cover ring-1 ring-black/5"
               />
             ) : (
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-neutral-950 text-white">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-card bg-neutral-950 text-white">
                 <Store className="h-5 w-5" />
               </div>
             )}
@@ -279,8 +279,7 @@ function LojaHomeContent() {
           <div className="flex items-center gap-2">
             {pedidoAtivoId && (
               <Link
-                to={`/loja/${slug}/pedido/${pedidoAtivoId}`}
-                className="hidden h-11 items-center gap-2 rounded-full border border-neutral-200 bg-white px-4 text-sm font-semibold text-neutral-800 transition hover:border-neutral-300 hover:bg-neutral-50 sm:inline-flex"
+                to={`/loja/${slug}/pedido/${pedidoAtivoId}`}                  className="hidden h-11 items-center gap-2 rounded-pill border border-neutral-200 bg-white px-4 text-sm font-semibold text-neutral-800 transition hover:border-neutral-300 hover:bg-neutral-50 sm:inline-flex"
               >
                 <span>Acompanhar pedido</span>
                 <ArrowRight className="h-4 w-4" />
@@ -290,7 +289,7 @@ function LojaHomeContent() {
             <button
               type="button"
               onClick={() => setCartOpen(true)}
-              className="relative flex h-11 items-center gap-2 rounded-full bg-neutral-950 px-4 text-sm font-semibold text-white transition hover:bg-neutral-800 active:scale-[0.99]"
+              className="relative flex h-11 items-center gap-2 rounded-pill bg-neutral-950 px-4 text-sm font-semibold text-white transition hover:bg-neutral-800"
             >
               <ShoppingBag className="h-4 w-4" />
 
@@ -324,16 +323,14 @@ function LojaHomeContent() {
       </header>
 
       {/* HERO */}
-      <section className="mx-auto max-w-7xl px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
-        <div className="relative overflow-hidden rounded-2xl bg-neutral-950">
+      <section className="mx-auto max-w-7xl px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">              <div className="relative overflow-hidden rounded-modal bg-neutral-950">
           {tenant.banner_url ? (
             <img
               src={tenant.banner_url}
-              alt={tenant.nome}
-              className="absolute inset-0 h-full w-full object-cover"
-            />
-          ) : (
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_15%,_#44403c,_#18181b_48%,_#09090b_100%)]" />
+              alt={tenant.nome}                className="absolute inset-0 h-full w-full object-cover"
+              />
+            ) : (
+              <div className="absolute inset-0 bg-neutral-900" />
           )}
 
           <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/35 to-black/10" />
@@ -383,7 +380,7 @@ function LojaHomeContent() {
                   setBusca(event.target.value)
                 }
                 placeholder="Buscar no cardápio"
-                className="h-11 w-full rounded-2xl border border-neutral-200 bg-white pl-10 pr-4 text-sm text-neutral-900 outline-none transition placeholder:text-neutral-400 hover:border-neutral-300 focus:border-neutral-400 focus:ring-4 focus:ring-black/[0.04]"
+                className="h-11 w-full rounded-card border border-neutral-200 bg-white pl-10 pr-4 text-sm text-neutral-900 outline-none transition placeholder:text-neutral-400 hover:border-neutral-300 focus:border-neutral-400 focus:ring-4 focus:ring-black/[0.04]"
               />
             </div>
 
@@ -516,14 +513,15 @@ function LojaHomeContent() {
                                 alt={
                                   produto.nome
                                 }
-                                className="h-full w-full object-cover transition duration-300 group-hover:scale-[1.02]"
+                                loading="lazy"
+                                className="h-full w-full object-cover transition duration-200 group-hover:scale-[1.02]"
                               />
 
                               
 
                               {!produto.disponivel && (
                                 <div className="absolute inset-0 flex items-center justify-center bg-black/35">
-                                  <span className="rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-neutral-700 shadow-sm">
+                                  <span className="rounded-pill bg-white px-3 py-1.5 text-xs font-semibold text-neutral-700 shadow-card">
                                     Indisponível
                                   </span>
                                 </div>
@@ -531,7 +529,7 @@ function LojaHomeContent() {
                             </div>
                           ) : (
                             <div className="flex aspect-[1.42/1] items-center justify-center bg-neutral-100">
-                              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-neutral-300 shadow-sm">
+                              <div className="flex h-14 w-14 items-center justify-center rounded-card bg-white text-neutral-300 shadow-card">
                                 <ShoppingBag className="h-6 w-6" />
                               </div>
                             </div>
@@ -565,7 +563,7 @@ function LojaHomeContent() {
                               </div>
 
                               {produto.disponivel && (
-                                <span className="inline-flex min-h-10 items-center justify-center rounded-full bg-neutral-950 px-4 text-xs font-semibold text-white transition group-hover:bg-neutral-800">
+                                <span className="inline-flex min-h-10 items-center justify-center rounded-pill bg-neutral-950 px-4 text-xs font-semibold text-white transition group-hover:bg-neutral-800">
                                   Adicionar
                                 </span>
                               )}

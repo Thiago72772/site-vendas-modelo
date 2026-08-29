@@ -698,7 +698,7 @@ function LojaCheckoutContent() {
           <div className="mx-auto flex max-w-3xl items-center gap-3 px-4 py-4 sm:px-6">
             <Link
               to={`/loja/${slug}/pedido/${createdOrderId}`}
-              className="-ml-2 flex h-10 w-10 items-center justify-center rounded-full transition-colors hover:bg-neutral-100"
+              className="-ml-2 flex h-10 w-10 items-center justify-center rounded-pill transition-colors hover:bg-neutral-100"
               aria-label="Acompanhar pedido"
             >
               <ChevronLeft className="h-5 w-5 text-neutral-600" />
@@ -727,7 +727,7 @@ function LojaCheckoutContent() {
 
           <Link
             to={`/loja/${slug}/pedido/${createdOrderId}`}
-            className="flex w-full items-center justify-center rounded-2xl border border-neutral-200 bg-white py-3.5 text-sm font-semibold text-neutral-700 transition hover:bg-neutral-50"
+            className="flex w-full items-center justify-center rounded-card border border-neutral-200 bg-white py-3.5 text-sm font-semibold text-neutral-700 transition hover:bg-neutral-50"
           >
             Acompanhar pedido
           </Link>
@@ -766,7 +766,7 @@ function LojaCheckoutContent() {
       >
         {/* Empty cart */}
         {items.length === 0 && (
-          <div className="flex flex-col items-center rounded-2xl border border-neutral-200 bg-white px-6 py-10 text-center">
+          <div className="flex flex-col items-center rounded-card border border-neutral-200 bg-white px-6 py-10 text-center">
             <ShoppingBag className="mb-3 h-10 w-10 text-neutral-300" />
 
             <p className="text-sm text-neutral-500">
@@ -775,7 +775,7 @@ function LojaCheckoutContent() {
 
             <Link
               to={`/loja/${slug}`}
-              className="mt-5 rounded-full bg-neutral-900 px-5 py-2.5 text-sm font-semibold text-white"
+              className="mt-5 rounded-pill bg-neutral-900 px-5 py-2.5 text-sm font-semibold text-white"
             >
               Ver cardápio
             </Link>
@@ -783,7 +783,7 @@ function LojaCheckoutContent() {
         )}
 
         {/* Customer */}
-        <div className="space-y-4 rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm sm:p-6">
+        <div className="space-y-4 rounded-card border border-neutral-200 bg-white p-5 shadow-card sm:p-6">
           <div>
             <h2 className="text-base font-semibold text-neutral-900">
               Seus dados
@@ -851,7 +851,7 @@ function LojaCheckoutContent() {
         </div>
 
         {/* Address */}
-        <div className="space-y-4 rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm sm:p-6">
+        <div className="space-y-4 rounded-card border border-neutral-200 bg-white p-5 shadow-card sm:p-6">
           <div>
             <h2 className="flex items-center gap-2 text-base font-semibold text-neutral-900">
               <MapPin className="h-4 w-4 text-primary-500" />
@@ -1048,7 +1048,7 @@ function LojaCheckoutContent() {
         </div>
 
         {/* Payment */}
-        <div className="space-y-4 rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm sm:p-6">
+        <div className="space-y-4 rounded-card border border-neutral-200 bg-white p-5 shadow-card sm:p-6">
           <h2 className="text-base font-semibold text-neutral-900">
             Pagamento
           </h2>
@@ -1069,7 +1069,7 @@ function LojaCheckoutContent() {
                     forma
                   )
                 }
-                className={`rounded-xl px-3 py-3 text-sm font-medium transition-all ${
+                className={`rounded-card px-3 py-3 text-sm font-medium transition-all ${
                   formaPagamento === forma
                     ? 'bg-neutral-900 text-white'
                     : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'
@@ -1106,7 +1106,7 @@ function LojaCheckoutContent() {
         </div>
 
         {/* Coupon */}
-        <div className="space-y-3 rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm sm:p-6">
+        <div className="space-y-3 rounded-card border border-neutral-200 bg-white p-5 shadow-card sm:p-6">
           <h2 className="flex items-center gap-2 text-base font-semibold text-neutral-900">
             <Tag className="h-4 w-4 text-primary-500" />
             Cupom de desconto
@@ -1114,7 +1114,7 @@ function LojaCheckoutContent() {
 
           <div className="relative">
             <input
-              className="input pr-11 uppercase"
+              className="input pr-11 uppercase rounded-card"
               value={cupomCodigo}
               onChange={(e) =>
                 setCupomCodigo(
@@ -1148,7 +1148,7 @@ function LojaCheckoutContent() {
         </div>
 
         {/* Summary */}
-        <div className="space-y-3 rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm sm:p-6">
+        <div className="space-y-3 rounded-card border border-neutral-200 bg-white p-5 shadow-card sm:p-6">
           <h2 className="text-base font-semibold text-neutral-900">
             Resumo do pedido
           </h2>
@@ -1227,7 +1227,7 @@ function LojaCheckoutContent() {
 
         {/* Error */}
         {submitError && (
-          <div className="rounded-2xl border border-rose-100 bg-rose-50 p-5">
+          <div className="rounded-card border border-rose-100 bg-rose-50 p-5">
             <p className="text-sm text-error-700">
               {submitError}
             </p>
@@ -1239,7 +1239,7 @@ function LojaCheckoutContent() {
           <button
             type="submit"
             disabled={submitting}
-            className="sticky bottom-4 flex w-full items-center justify-center gap-2 rounded-2xl bg-neutral-900 py-4 text-base font-semibold text-white shadow-xl transition hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-60"
+            className="sticky bottom-4 flex w-full items-center justify-center gap-2 rounded-card bg-neutral-900 py-4 text-base font-semibold text-white shadow-elevated transition hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-60"
           >
             {submitting && (
               <Loader2 className="h-5 w-5 animate-spin" />

@@ -59,7 +59,7 @@ export function CookieConsent() {
 
   return (
     <div className="fixed inset-x-0 bottom-0 z-[100] p-4 sm:p-6">
-      <div className="mx-auto max-w-2xl rounded-2xl border border-neutral-200 bg-white p-5 shadow-xl sm:p-6">
+      <div            className="mx-auto max-w-2xl rounded-modal border border-neutral-200 bg-white p-5 shadow-elevated sm:p-6">
         <div className="flex items-start gap-4">
           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-50">
             <Cookie className="h-5 w-5 text-primary-600" />
@@ -102,7 +102,7 @@ export function CookieConsent() {
               <button
                 type="button"
                 onClick={handleAccept}
-                className="inline-flex min-h-10 items-center justify-center gap-2 rounded-xl bg-neutral-900 px-5 text-sm font-semibold text-white transition hover:bg-neutral-800 active:scale-[0.98]"
+                className="inline-flex min-h-10 items-center justify-center gap-2 rounded-card bg-neutral-900 px-5 text-sm font-semibold text-white transition hover:bg-neutral-800"
               >
                 <Check className="h-4 w-4" />
                 Aceitar todos
@@ -111,7 +111,7 @@ export function CookieConsent() {
               <button
                 type="button"
                 onClick={handleReject}
-                className="inline-flex min-h-10 items-center justify-center gap-2 rounded-xl border border-neutral-200 bg-white px-5 text-sm font-semibold text-neutral-700 transition hover:bg-neutral-50 active:scale-[0.98]"
+                className="inline-flex min-h-10 items-center justify-center gap-2 rounded-card border border-neutral-200 bg-white px-5 text-sm font-semibold text-neutral-700 transition hover:bg-neutral-50"
               >
                 Apenas essenciais
               </button>
@@ -119,7 +119,7 @@ export function CookieConsent() {
               <button
                 type="button"
                 onClick={() => setShowDetails(!showDetails)}
-                className="inline-flex min-h-10 items-center justify-center gap-2 rounded-xl px-4 text-sm font-medium text-neutral-500 transition hover:text-neutral-700"
+                className="inline-flex min-h-10 items-center justify-center gap-2 rounded-card px-4 text-sm font-medium text-neutral-500 transition hover:text-neutral-700"
               >
                 <Settings className="h-4 w-4" />
                 {showDetails ? 'Ocultar detalhes' : 'Gerenciar preferências'}

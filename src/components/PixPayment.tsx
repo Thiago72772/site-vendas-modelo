@@ -327,7 +327,7 @@ export function PixPayment({ orderId, amount, onConfirmed }: PixPaymentProps) {
             <button
               type="button"
               onClick={handleCopy}
-              className="flex h-9 shrink-0 items-center gap-1.5 rounded-lg bg-neutral-900 px-3 text-xs font-semibold text-white transition hover:bg-neutral-800 active:scale-[0.97]"
+              className="flex h-9 shrink-0 items-center gap-1.5 rounded-card bg-neutral-900 px-3 text-xs font-semibold text-white transition hover:bg-neutral-800"
             >
               {copied ? (
                 <>
@@ -367,7 +367,7 @@ export function PixPayment({ orderId, amount, onConfirmed }: PixPaymentProps) {
           <button
             type="button"
             onClick={handleConfirmPayment}
-            className="w-full rounded-xl bg-amber-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-amber-700 active:scale-[0.98]"
+            className="w-full rounded-card bg-amber-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-amber-700"
           >
             Confirmar pagamento (demo)
           </button>

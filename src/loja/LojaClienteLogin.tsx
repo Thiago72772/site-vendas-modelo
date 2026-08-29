@@ -188,7 +188,7 @@ export default function LojaClienteLogin() {
                     }
                     placeholder="voce@exemplo.com"
                     autoComplete="email"
-                    className="input h-12 rounded-2xl"
+                    className="input h-12 rounded-card"
                   />
                 </div>
 
@@ -220,7 +220,7 @@ export default function LojaClienteLogin() {
                         ? 'current-password'
                         : 'new-password'
                     }
-                    className="input h-12 rounded-2xl"
+                    className="input h-12 rounded-card"
                   />
                 </div>
 
@@ -235,7 +235,7 @@ export default function LojaClienteLogin() {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="flex h-12 w-full items-center justify-center gap-2 rounded-2xl bg-neutral-950 px-5 text-sm font-semibold text-white transition hover:bg-neutral-800 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-50"
+                  className="flex h-12 w-full items-center justify-center gap-2 rounded-card bg-neutral-950 px-5 text-sm font-semibold text-white transition hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   {submitting && (
                     <Loader2 className="h-4 w-4 animate-spin" />

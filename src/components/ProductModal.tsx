@@ -254,7 +254,7 @@ export function ProductModal({
 
       {/* Modal container */}
       <div className="absolute inset-x-0 bottom-0 flex max-h-[94vh] justify-center sm:inset-0 sm:items-center sm:p-6">
-        <div className="relative flex max-h-[94vh] w-full max-w-2xl flex-col overflow-hidden rounded-t-[28px] bg-white shadow-2xl sm:max-h-[88vh] sm:rounded-[28px]">
+        <div className="relative flex max-h-[94vh] w-full max-w-2xl flex-col overflow-hidden rounded-t-modal bg-white shadow-elevated sm:max-h-[88vh] sm:rounded-modal">
           {/* Header / close */}
           <div className="absolute right-4 top-4 z-10">
             <button
@@ -273,6 +273,7 @@ export function ProductModal({
               <img
                 src={produto.imagem_url}
                 alt={produto.nome}
+                loading="lazy"
                 className="h-56 w-full object-cover sm:h-72"
               />
             ) : (
@@ -312,7 +313,7 @@ export function ProductModal({
 
               {/* Add-ons */}
               {adicionaisLoading ? (
-                <div className="rounded-2xl border border-neutral-200 bg-neutral-50 p-4">
+                <div className="rounded-card border border-neutral-200 bg-neutral-50 p-4">
                   <p className="text-sm text-neutral-500">
                     Carregando opções...
                   </p>
@@ -378,18 +379,17 @@ export function ProductModal({
                                 selecionadosGrupo.length >=
                                   maxSelecao;
 
-                              return (
-                                <button
-                                  key={adicional.id}
-                                  type="button"
-                                  disabled={maxAtingido}
-                                  onClick={() =>
-                                    selecionarAdicional(
-                                      grupo,
-                                      adicional
-                                    )
-                                  }
-                                  className={`flex items-center justify-between gap-4 rounded-2xl border p-4 text-left transition ${
+                              return (                <button
+                  key={adicional.id}
+                  type="button"
+                  disabled={maxAtingido}
+                  onClick={() =>
+                    selecionarAdicional(
+                      grupo,
+                      adicional
+                    )
+                  }
+                  className={`flex items-center justify-between gap-4 rounded-card border p-4 text-left transition ${
                                     selecionado
                                       ? 'border-neutral-900 bg-neutral-50'
                                       : 'border-neutral-200 bg-white hover:border-neutral-300 hover:bg-neutral-50'
@@ -439,7 +439,7 @@ export function ProductModal({
               ) : null}
 
               {/* Quantity */}
-              <div className="flex items-center justify-between rounded-2xl border border-neutral-200 bg-neutral-50 p-4">
+              <div className="flex items-center justify-between rounded-card border border-neutral-200 bg-neutral-50 p-4">
                 <div>
                   <p className="text-sm font-semibold text-neutral-900">
                     Quantidade
@@ -487,7 +487,7 @@ export function ProductModal({
                 produtoIndisponivel ||
                 !validarAdicionais()
               }
-              className="flex w-full items-center justify-between gap-4 rounded-2xl bg-neutral-900 px-5 py-4 text-white transition hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-50"
+              className="flex w-full items-center justify-between gap-4 rounded-card bg-neutral-900 px-5 py-4 text-white transition hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-50"
             >
               <span className="flex items-center gap-2 text-sm font-semibold sm:text-base">
                 <ShoppingBag className="h-4 w-4" />
