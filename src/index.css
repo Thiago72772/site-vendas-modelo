@@ -13,14 +13,14 @@
    ============================================================ */
 
 :root {
-  /* ---- Client (Light) theme ---- */
-  --c-page:    #FFFFFF;
-  --c-surface: #F7F7F8;
+  /* ---- Client (Light) theme — warm, comfortable ---- */
+  --c-page:    #FAFAF9;
+  --c-surface: #F2F1EF;
   --c-raised:  #FFFFFF;
-  --c-line:    #E4E4E7;
-  --c-strong:  #18181B;
-  --c-mid:     #52525B;
-  --c-dim:     #A1A1AA;
+  --c-line:    #E7E5E2;
+  --c-strong:  #1C1B19;
+  --c-mid:     #6B6862;
+  --c-dim:     #9C9890;
   --c-accent:  #18181B;
 
   /* Brand primary — default (orange), replaced per-tenant at runtime */

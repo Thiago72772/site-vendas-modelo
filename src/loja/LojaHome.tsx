@@ -208,9 +208,9 @@ function LojaHomeContent() {
   );
 
   return (
-    <div className="min-h-screen bg-[#f6f6f4] text-neutral-950">
+    <div className="min-h-screen bg-page text-strong">
       {/* HEADER */}
-      <header className="sticky top-0 z-40 border-b border-line bg-white">
+      <header className="sticky top-0 z-40 border-b border-line bg-raised">
         <div className="mx-auto flex h-[72px] max-w-7xl items-center gap-3 px-4 sm:px-6 lg:px-8">
           {/* Brand */}
           <Link
@@ -237,7 +237,7 @@ function LojaHomeContent() {
                 </h1>
 
                 <span
-                  className={`hidden rounded-sm px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide sm:inline-flex ${
+                  className={`hidden rounded-sm px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide sm:inline-flex ${
                     aberto
                       ? 'bg-emerald-50 text-emerald-700'
                       : 'bg-rose-50 text-rose-700'
@@ -308,7 +308,7 @@ function LojaHomeContent() {
 
         {/* Mobile active order */}
         {pedidoAtivoId && (
-          <div className="border-t border-line bg-white sm:hidden">
+          <div className="border-t border-line bg-raised sm:hidden">
             <div className="mx-auto max-w-7xl px-4 py-2.5">
               <Link
                 to={`/loja/${slug}/pedido/${pedidoAtivoId}`}
@@ -367,7 +367,7 @@ function LojaHomeContent() {
       </section>
 
       {/* SEARCH + CATEGORIES */}
-      <section className="sticky top-[72px] z-30 mt-4 border-y border-line bg-neutral-50 sm:mt-5">
+      <section className="sticky top-[72px] z-30 mt-4 border-y border-line bg-surface sm:mt-5">
         <div className="mx-auto max-w-7xl px-4 py-3 sm:px-6 lg:px-8">
           <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
             <div className="relative lg:w-[320px] lg:shrink-0">
@@ -380,7 +380,7 @@ function LojaHomeContent() {
                   setBusca(event.target.value)
                 }
                 placeholder="Buscar no cardápio"
-                className="h-11 w-full rounded-md border border-line bg-white pl-10 pr-4 text-sm text-strong outline-none transition placeholder:text-dim hover:border-strong focus:border-neutral-400 focus:ring-4 focus:ring-black/[0.04]"
+                className="h-10 w-full rounded-md border border-line bg-raised pl-9 pr-3 text-sm text-strong outline-none transition placeholder:text-dim hover:border-strong focus:border-neutral-400 focus:ring-4 focus:ring-black/[0.04]"
               />
             </div>
 
@@ -400,10 +400,10 @@ function LojaHomeContent() {
                             categoria.id
                           )
                         }
-                        className={`shrink-0 rounded-sm border px-4 py-2.5 text-sm font-medium transition ${
+                        className={`shrink-0 rounded-sm border px-3 py-1.5 text-xs font-medium transition ${
                           ativa
                             ? 'border-neutral-950 bg-neutral-950 text-white'
-                            : 'border-line bg-white text-mid hover:border-strong hover:bg-page hover:text-neutral-950'
+                            : 'border-line bg-raised text-mid hover:border-strong hover:text-neutral-950'
                         }`}
                       >
                         {categoria.nome}
@@ -484,7 +484,7 @@ function LojaHomeContent() {
                     </p>
                   </div>
                 ) : (
-                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                  <div className="grid grid-cols-2 gap-2 sm:gap-3 md:gap-4 sm:grid-cols-2 xl:grid-cols-3">
                     {produtosCategoria.map(
                       (produto) => (
                         <button
@@ -497,15 +497,15 @@ function LojaHomeContent() {
                             )
                           }
                           disabled={!produto.disponivel}
-                          className={`group overflow-hidden rounded-lg border bg-white text-left transition ${
+                          className={`group overflow-hidden rounded-md border bg-raised text-left transition ${
                             produto.disponivel
-                              ? 'border-line hover:border-strong hover:shadow-md'
+                              ? 'border-line hover:border-strong'
                               : 'cursor-not-allowed border-line opacity-60'
                           }`}
                         >
                           {/* Product image */}
                           {produto.imagem_url ? (
-                            <div className="relative aspect-[1.42/1] overflow-hidden bg-surface">
+                            <div className="relative aspect-square overflow-hidden bg-surface sm:aspect-[1.42/1]">
                               <img
                                 src={
                                   produto.imagem_url
@@ -517,55 +517,47 @@ function LojaHomeContent() {
                                 className="h-full w-full object-cover transition duration-200 group-hover:scale-[1.02]"
                               />
 
-                              
-
                               {!produto.disponivel && (
                                 <div className="absolute inset-0 flex items-center justify-center bg-black/35">
-                                  <span className="rounded-pill bg-white px-3 py-1.5 text-xs font-semibold text-mid ">
+                                  <span className="rounded-sm bg-white px-2 py-1 text-[10px] font-semibold text-mid">
                                     Indisponível
                                   </span>
                                 </div>
                               )}
                             </div>
                           ) : (
-                            <div className="flex aspect-[1.42/1] items-center justify-center bg-surface">
-                              <div className="flex h-14 w-14 items-center justify-center rounded-md bg-white text-dim ">
-                                <ShoppingBag className="h-6 w-6" />
+                            <div className="flex aspect-square items-center justify-center bg-surface sm:aspect-[1.42/1]">
+                              <div className="flex h-10 w-10 items-center justify-center rounded-md bg-raised text-dim sm:h-14 sm:w-14">
+                                <ShoppingBag className="h-5 w-5 sm:h-6 sm:w-6" />
                               </div>
                             </div>
                           )}
 
                           {/* Product details */}
-                          <div className="p-4 sm:p-5">
-                            <div className="min-h-[78px]">
-                              <h4 className="text-base font-semibold leading-tight tracking-tight text-neutral-950 sm:text-lg">
-                                {produto.nome}
-                              </h4>
+                          <div className="p-2.5 sm:p-4">
+                            <h4 className="text-xs font-semibold leading-tight tracking-tight text-strong line-clamp-2 sm:text-sm lg:text-base">
+                              {produto.nome}
+                            </h4>
 
-                              {produto.descricao && (
-                                <p className="mt-2 line-clamp-2 text-sm leading-5 text-mid">
-                                  {produto.descricao}
-                                </p>
-                              )}
-                            </div>
-
-                            <div className="mt-4 flex items-center justify-between gap-3 border-t border-line pt-4">
-                              <div>
-                                <p className="text-[11px] font-medium uppercase tracking-[0.12em] text-dim">
-                                  A partir de
-                                </p>
-
-                                <p className="mt-0.5 text-lg font-semibold tracking-tight text-neutral-950 sm:text-xl">
-                                  {formatCurrency(
-                                    produto.preco
-                                  )}
-                                </p>
-                              </div>
+                            <div className="mt-2 flex items-end justify-between gap-2">
+                              <p className="text-sm font-semibold tracking-tight text-strong sm:text-base">
+                                {formatCurrency(
+                                  produto.preco
+                                )}
+                              </p>
 
                               {produto.disponivel && (
-                                <span className="inline-flex min-h-10 items-center justify-center rounded-pill bg-neutral-950 px-4 text-xs font-semibold text-white transition group-hover:bg-neutral-800">
-                                  Adicionar
-                                </span>
+                                <button
+                                  type="button"
+                                  className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-neutral-950 text-white transition hover:bg-neutral-800 sm:h-9 sm:w-9"
+                                  aria-label={`Adicionar ${produto.nome}`}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    setProdutoSelecionado(produto);
+                                  }}
+                                >
+                                  <span className="text-base font-bold leading-none">+</span>
+                                </button>
                               )}
                             </div>
                           </div>
