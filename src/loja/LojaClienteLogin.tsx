@@ -87,7 +87,7 @@ export default function LojaClienteLogin() {
                       className="h-12 w-12 rounded-2xl border border-white/20 object-cover"
                     />
                   ) : (
-                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/15 bg-white/10 text-white backdrop-blur">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/15 bg-white/10 text-white">
                       <Store className="h-5 w-5" />
                     </div>
                   )}
@@ -104,7 +104,7 @@ export default function LojaClienteLogin() {
                 </div>
 
                 <div className="max-w-xl">
-                  <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-2 text-xs font-medium text-white/85 backdrop-blur-xl">
+                  <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-2 text-xs font-medium text-white/85">
                     <ShieldCheck className="h-3.5 w-3.5" />
                     Experiência segura
                   </span>

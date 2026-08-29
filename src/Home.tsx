@@ -32,7 +32,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-[#f7f7f5] text-neutral-900">
       {/* Header */}
-      <header className="sticky top-0 z-30 border-b border-neutral-200 bg-white/92 backdrop-blur-xl">
+      <header className="sticky top-0 z-30 border-b border-neutral-200 bg-white">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
           <div className="flex min-w-0 items-center gap-3">
             {loja?.logo_url ? (
@@ -109,12 +109,12 @@ export default function Home() {
 
               <div className="relative flex h-full min-h-[460px] flex-col justify-between p-5 sm:min-h-[560px] sm:p-8">
                 <div className="flex items-start justify-between gap-4">
-                  <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-2 text-xs font-medium text-white/85 backdrop-blur-xl">
+                  <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-2 text-xs font-medium text-white/85">
                     <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
                     Loja online
                   </div>
 
-                  <div className="hidden rounded-full border border-white/15 bg-black/20 px-3 py-2 text-xs text-white/70 backdrop-blur-xl sm:block">
+                  <div className="hidden rounded-full border border-white/15 bg-black/20 px-3 py-2 text-xs text-white/70 sm:block">
                     Modelo de demonstração
                   </div>
                 </div>
@@ -128,7 +128,7 @@ export default function Home() {
                         className="h-12 w-12 rounded-2xl border border-white/20 object-cover"
                       />
                     ) : (
-                      <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/15 bg-white/10 text-white backdrop-blur">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/15 bg-white/10 text-white">
                         <Store className="h-5 w-5" />
                       </div>
                     )}

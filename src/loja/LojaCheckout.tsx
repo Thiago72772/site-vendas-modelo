@@ -7,6 +7,7 @@ import {
   calculateItemPrice,
 } from '@/hooks/useCart';
 import { LoadingScreen, ErrorState } from '@/components/ui';
+import { PixPayment } from '@/components/PixPayment';
 import {
   formatCurrency,
   maskPhone,
@@ -71,6 +72,7 @@ function LojaCheckoutContent() {
   const [formErrors, setFormErrors] = useState<
     Record<string, string>
   >({});
+  const [createdOrderId, setCreatedOrderId] = useState<string | null>(null);
 
   /*
    * 1. Recupera dados já salvos para esta loja.
@@ -610,10 +612,19 @@ function LojaCheckoutContent() {
       }
 
       /*
-       * 6. Limpa o carrinho e abre
-       * o acompanhamento.
+       * 6. Limpa o carrinho.
        */
       clearCart();
+
+      /*
+       * If PIX was selected, show the PIX payment panel
+       * instead of navigating away immediately.
+       */
+      if (formaPagamento === 'pix') {
+        setCreatedOrderId(pedidoId);
+        setSubmitting(false);
+        return;
+      }
 
       navigate(
         `/loja/${slug}/pedido/${pedidoId}`
@@ -650,9 +661,55 @@ function LojaCheckoutContent() {
     );
   }
 
+  /* PIX payment after order creation */
+  if (createdOrderId) {
+    return (
+      <div className="min-h-screen bg-[#f7f7f5]">
+        <header className="sticky top-0 z-10 border-b border-neutral-200 bg-white">
+          <div className="mx-auto flex max-w-3xl items-center gap-3 px-4 py-4 sm:px-6">
+            <Link
+              to={`/loja/${slug}/pedido/${createdOrderId}`}
+              className="-ml-2 flex h-10 w-10 items-center justify-center rounded-full transition-colors hover:bg-neutral-100"
+              aria-label="Acompanhar pedido"
+            >
+              <ChevronLeft className="h-5 w-5 text-neutral-600" />
+            </Link>
+
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-400">
+                {tenant.nome}
+              </p>
+
+              <h1 className="mt-0.5 text-lg font-semibold tracking-tight text-neutral-900">
+                Pagamento PIX
+              </h1>
+            </div>
+          </div>
+        </header>
+
+        <div className="mx-auto max-w-3xl px-4 py-6 sm:px-6 sm:py-8 space-y-5">
+          <PixPayment
+            orderId={createdOrderId}
+            amount={total}
+            onConfirmed={() => {
+              navigate(`/loja/${slug}/pedido/${createdOrderId}`);
+            }}
+          />
+
+          <Link
+            to={`/loja/${slug}/pedido/${createdOrderId}`}
+            className="flex w-full items-center justify-center rounded-2xl border border-neutral-200 bg-white py-3.5 text-sm font-semibold text-neutral-700 transition hover:bg-neutral-50"
+          >
+            Acompanhar pedido
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-[#f7f7f5]">
-      <header className="sticky top-0 z-10 border-b border-neutral-200 bg-white/95 backdrop-blur">
+      <header className="sticky top-0 z-10 border-b border-neutral-200 bg-white">
         <div className="mx-auto flex max-w-3xl items-center gap-3 px-4 py-4 sm:px-6">
           <Link
             to={`/loja/${slug}`}

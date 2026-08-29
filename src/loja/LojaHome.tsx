@@ -210,7 +210,7 @@ function LojaHomeContent() {
   return (
     <div className="min-h-screen bg-[#f6f6f4] text-neutral-950">
       {/* HEADER */}
-      <header className="sticky top-0 z-40 border-b border-black/5 bg-white/90 backdrop-blur-xl">
+      <header className="sticky top-0 z-40 border-b border-neutral-200 bg-white">
         <div className="mx-auto flex h-[72px] max-w-7xl items-center gap-3 px-4 sm:px-6 lg:px-8">
           {/* Brand */}
           <Link
@@ -341,7 +341,7 @@ function LojaHomeContent() {
           <div className="relative min-h-[300px] px-5 py-7 sm:min-h-[380px] sm:px-8 sm:py-9 lg:min-h-[420px] lg:px-12">
             <div className="flex h-full min-h-[260px] flex-col justify-end sm:min-h-[340px] lg:min-h-[380px]">
               <div className="max-w-2xl">
-                <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-2 text-xs font-medium text-white/90 backdrop-blur-xl">
+                <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-2 text-xs font-medium text-white/90">
                   <span
                     className={`h-1.5 w-1.5 rounded-full ${
                       aberto
@@ -370,7 +370,7 @@ function LojaHomeContent() {
       </section>
 
       {/* SEARCH + CATEGORIES */}
-      <section className="sticky top-[72px] z-30 mt-4 border-y border-black/5 bg-[#f6f6f4]/92 backdrop-blur-xl sm:mt-5">
+      <section className="sticky top-[72px] z-30 mt-4 border-y border-neutral-200 bg-neutral-50 sm:mt-5">
         <div className="mx-auto max-w-7xl px-4 py-3 sm:px-6 lg:px-8">
           <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
             <div className="relative lg:w-[320px] lg:shrink-0">

@@ -210,7 +210,7 @@ function LojaPedidoStatusContent() {
   return (
     <div className="min-h-screen bg-[#f7f7f5] text-neutral-900">
       {/* Header */}
-      <header className="sticky top-0 z-20 border-b border-neutral-200 bg-white/95 backdrop-blur">
+      <header className="sticky top-0 z-20 border-b border-neutral-200 bg-white">
         <div className="mx-auto flex h-16 max-w-3xl items-center gap-3 px-4 sm:px-6">
           <Link
             to={`/loja/${slug}`}

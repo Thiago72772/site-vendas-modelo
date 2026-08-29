@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, type DragEvent } from 'react';
+import { useScrollLock } from '@/hooks/useScrollLock';
 import { AdminLayout } from '@/components/AdminLayout';
 import { useAuth, canEditOrders } from '@/hooks/useAuth';
 import { supabase } from '@/lib/supabase';
@@ -296,6 +297,16 @@ function PedidoDetailModal({
   updating: boolean;
 }) {
   const end = pedido.endereco_entrega;
+
+  useScrollLock(true);
+
+  useEffect(() => {
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key === 'Escape') onClose();
+    }
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, [onClose]);
 
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center">

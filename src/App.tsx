@@ -7,6 +7,7 @@ import {
 
 import { AuthProvider } from '@/hooks/useAuth';
 import { ProtectedRoute } from '@/components/ProtectedRoute';
+import { CookieConsent } from '@/components/CookieConsent';
 
 import LojaHome from '@/loja/LojaHome';
 import LojaCheckout from '@/loja/LojaCheckout';
@@ -29,6 +30,7 @@ const LOJA_MODELO_SLUG = 'loja-teste';
 export default function App() {
   return (
     <AuthProvider>
+      <CookieConsent />
       <BrowserRouter>
         <Routes>
 

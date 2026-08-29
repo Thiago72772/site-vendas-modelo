@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   X,
@@ -11,6 +12,7 @@ import {
   useCart,
   calculateItemPrice,
 } from '@/hooks/useCart';
+import { useScrollLock } from '@/hooks/useScrollLock';
 import { formatCurrency } from '@/lib/format';
 import type { Tenant } from '@/lib/types';
 
@@ -37,6 +39,20 @@ export function CartDrawer({
 
   const navigate = useNavigate();
 
+  useScrollLock(open);
+
+  // Handle Escape key
+  useEffect(() => {
+    if (!open) return;
+
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key === 'Escape') onClose();
+    }
+
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, [open, onClose]);
+
   function handleCheckout() {
     if (items.length === 0) return;
 
@@ -48,7 +64,7 @@ export function CartDrawer({
     <>
       {/* Backdrop */}
       <div
-        className={`fixed inset-0 z-40 bg-neutral-950/50 backdrop-blur-[3px] transition-opacity duration-300 ${
+        className={`fixed inset-0 z-40 bg-black/40 transition-opacity duration-300 ${
           open
             ? 'opacity-100'
             : 'pointer-events-none opacity-0'

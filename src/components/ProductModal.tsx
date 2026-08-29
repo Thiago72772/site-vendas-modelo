@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { X, Plus, Minus, ShoppingBag, Check } from 'lucide-react';
 import { useCart, type CartItemAdicional } from '@/hooks/useCart';
+import { useScrollLock } from '@/hooks/useScrollLock';
 import { formatCurrency } from '@/lib/format';
 import type { Produto, GrupoAdicional, Adicional } from '@/lib/types';
 import { supabase } from '@/lib/supabase';
@@ -97,16 +98,19 @@ export function ProductModal({
     };
   }, [produto]);
 
+  useScrollLock(!!produto);
+
+  // Handle Escape key
   useEffect(() => {
     if (!produto) return;
 
-    const originalOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key === 'Escape') onClose();
+    }
 
-    return () => {
-      document.body.style.overflow = originalOverflow;
-    };
-  }, [produto]);
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, [produto, onClose]);
 
   const totalAdicionais = useMemo(() => {
     return Object.values(selecionados).reduce(
@@ -244,7 +248,7 @@ export function ProductModal({
       <button
         type="button"
         aria-label="Fechar produto"
-        className="absolute inset-0 h-full w-full cursor-default bg-black/50 backdrop-blur-[2px]"
+        className="absolute inset-0 h-full w-full cursor-default bg-black/40"
         onClick={onClose}
       />
 
@@ -256,7 +260,7 @@ export function ProductModal({
             <button
               type="button"
               onClick={onClose}
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-neutral-200 bg-white/90 text-neutral-700 shadow-sm backdrop-blur transition hover:bg-white"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-neutral-200 bg-white text-neutral-700 shadow-sm transition hover:bg-neutral-50"
               aria-label="Fechar"
             >
               <X className="h-5 w-5" />

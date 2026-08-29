@@ -1,4 +1,5 @@
 import { useState, useEffect, type DragEvent } from 'react';
+import { useScrollLock } from '@/hooks/useScrollLock';
 import { AdminLayout } from '@/components/AdminLayout';
 import { useAuth, canEditMenu } from '@/hooks/useAuth';
 import { supabase } from '@/lib/supabase';
@@ -730,6 +731,16 @@ function AdicionalForm({
 // ============ SHARED ============
 
 function Modal({ title, onClose, children }: { title: string; onClose: () => void; children: React.ReactNode }) {
+  useScrollLock(true);
+
+  useEffect(() => {
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key === 'Escape') onClose();
+    }
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, [onClose]);
+
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center">
       <div className="absolute inset-0 bg-black/50" onClick={onClose} />

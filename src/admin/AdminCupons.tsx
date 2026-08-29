@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useScrollLock } from '@/hooks/useScrollLock';
 import { AdminLayout } from '@/components/AdminLayout';
 import { supabase } from '@/lib/supabase';
 import { formatCurrency } from '@/lib/format';
@@ -176,6 +177,16 @@ function CupomForm({
     setSaving(false);
     onSaved();
   }
+
+  useScrollLock(true);
+
+  useEffect(() => {
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key === 'Escape') onClose();
+    }
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, [onClose]);
 
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center">
